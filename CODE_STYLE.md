@@ -208,3 +208,14 @@ public class Example {
  * Les tokens ouvrant et fermants la javadoc (réspectivement, `/**` et `*/`), doivent se trouver sur une ligne à part
  * Veillez à précéder chaques lignes des commentaires javadoc par une étoile, et à garder cette étoile alignée avec la première étoile du token ouvrant
  * Veillez à documenter au maximum les méthodes et les constantes non-privées (public, protected et package-local)
+
+Exemple:
+```java
+/**
+ * @name test
+ * @desc description
+ */
+public void test() {
+    //...
+}
+```
