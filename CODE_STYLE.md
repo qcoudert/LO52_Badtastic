@@ -44,9 +44,9 @@ public class Test {
 
 Enchaînement d'appels: le développeur peut, si il le désire, placer des "enchaînements d'appels" sur plusieurs lignes, à condition d'ajouter un niveau d'indentation:
 ```java
-Arrays.stream(tableau).filter(Objects::nonNull).forEach(MonObjet::action); //Valid
+Arrays.stream(array).filter(Objects::nonNull).forEach(MyObj::action); //Valid
 
-Arrays.stream(tableau)
+Arrays.stream(array)
     .filter(Objects::nonNull)
     .forEach(MyObj::action); //Valid as well
 ```
