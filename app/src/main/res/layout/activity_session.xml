@@ -7,14 +7,14 @@
     android:background="@color/caldroid_white"
     tools:context=".MainActivity">
 
-    <View
-        android:id="@+id/rectangle_green"
-        android:layout_width="320dp"
-        android:layout_height="448dp"
-        android:background="@drawable/rectangle_green"
+    <fragment
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:name="com.bonsoirdabord.lo52_badtastic.SessionManagerFragment"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <View
         android:id="@+id/rectangle_red"
