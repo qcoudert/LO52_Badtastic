@@ -2,4 +2,5 @@
     <string name="app_name">LO52_Badtastic</string>
     <string name="title_activity_calendar">CalendarActivity</string>
     <string name="sched_session_manager_name">Sessions planifiées</string>
+    <string name="session_number_format">Séance %d</string>
 </resources>
