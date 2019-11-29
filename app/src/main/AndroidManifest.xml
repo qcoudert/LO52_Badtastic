@@ -10,9 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AddScheduledSessionActivity"
+            android:label="@string/title_activity_add_scheduled_session"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,5 +1,8 @@
 package com.bonsoirdabord.lo52_badtastic;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -14,7 +17,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,6 +27,7 @@ public class CalendarActivity extends AppCompatActivity {
 
     private TextView currentDateLabel;
     private ScheduledSessionAdapter daySessions;
+    private ListView daySessionsList;
     private Date prevDate;
     private CaldroidFragment calendar;
 
@@ -36,14 +39,24 @@ public class CalendarActivity extends AppCompatActivity {
         currentDateLabel = findViewById(R.id.selectedDayLabel);
         daySessions = new ScheduledSessionAdapter(this);
 
-        ListView sessions = findViewById(R.id.schedSessionList);
-        sessions.setAdapter(daySessions);
+        daySessionsList = findViewById(R.id.schedSessionList);
+        daySessionsList.setAdapter(daySessions);
 
         daySessions.setDeleteListener(new ScheduledSessionAdapter.EntryDeleteListener() {
             @Override
-            public void deleteEntry(ScheduledSessionAdapter.Entry e) {
-                //TODO: Ask user for confirmation and code a real delete
-                daySessions.remove(e);
+            public void deleteEntry(final ScheduledSessionAdapter.Entry e) {
+                new AlertDialog.Builder(CalendarActivity.this)
+                        .setTitle(R.string.confirm_deletion_title)
+                        .setMessage(String.format(Locale.getDefault(), getString(R.string.confirm_deletion_text), e.getStartHour()))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface di, int which) {
+                                daySessions.remove(e);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.ic_delete_black)
+                        .show();
             }
         });
 
@@ -71,22 +84,10 @@ public class CalendarActivity extends AppCompatActivity {
         prevDate = Calendar.getInstance().getTime();
         calendar.setSelectedDate(prevDate);
         selectDate(prevDate);
-
-        /*FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
     }
 
     private static ScheduledSessionAdapter.Entry randomSession(int i, Random r) {
-        int start = r.nextInt(4) + 8;
-        int end = start + r.nextInt(2) + 1;
-
-        return new ScheduledSessionAdapter.Entry(-1, i, start, end);
+        return new ScheduledSessionAdapter.Entry(-1, i, (r.nextInt(4) + 8) * 60);
     }
 
     private void selectDate(Date date) {
@@ -106,6 +107,8 @@ public class CalendarActivity extends AppCompatActivity {
         calendar.setTextColorForDate(R.color.caldroid_black, prevDate);
         calendar.setTextColorForDate(R.color.caldroid_holo_blue_light, date);
         calendar.refreshView();
+        daySessionsList.refreshDrawableState();
+
         prevDate = date;
     }
 
@@ -118,7 +121,12 @@ public class CalendarActivity extends AppCompatActivity {
                 max = e.getDayNumber();
         }
 
-        daySessions.add(randomSession(max + 1, ThreadLocalRandom.current()));
+        Intent intent = new Intent(this, AddScheduledSessionActivity.class);
+        intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_ID, -1); //-1 => new ss
+        intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_NUMBER, max + 1);
+        intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_DATE, prevDate);
+
+        startActivity(intent);
     }
 
 }

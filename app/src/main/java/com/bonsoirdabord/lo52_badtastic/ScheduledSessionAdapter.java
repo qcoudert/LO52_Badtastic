@@ -19,13 +19,11 @@ public class ScheduledSessionAdapter extends ArrayAdapter<ScheduledSessionAdapte
         private final int id;
         private final int dayNumber;
         private final int startHour;
-        private final int endHour;
 
-        public Entry(int id, int dayNumber, int startHour, int endHour) {
+        public Entry(int id, int dayNumber, int startHour) {
             this.id = id;
             this.dayNumber = dayNumber;
             this.startHour = startHour;
-            this.endHour = endHour;
         }
 
         public int getID() {
@@ -38,10 +36,6 @@ public class ScheduledSessionAdapter extends ArrayAdapter<ScheduledSessionAdapte
 
         public int getStartHour() {
             return startHour;
-        }
-
-        public int getEndHour() {
-            return endHour;
         }
     }
 
@@ -97,7 +91,7 @@ public class ScheduledSessionAdapter extends ArrayAdapter<ScheduledSessionAdapte
         Entry entry = getItem(position);
 
         vh.sessionNumberLabel.setText(String.format(curLocale, getContext().getString(R.string.session_number_format), entry.dayNumber + 1));
-        vh.sessionTimeLabel.setText(String.format(curLocale, "%02dh - %02dh", entry.startHour, entry.endHour));
+        vh.sessionTimeLabel.setText(TimeSeparators.H.format(entry.startHour));
         vh.entry = entry;
 
         return convertView;
