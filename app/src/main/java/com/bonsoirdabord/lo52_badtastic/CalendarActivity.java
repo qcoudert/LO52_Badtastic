@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,6 +42,21 @@ public class CalendarActivity extends AppCompatActivity {
 
         daySessionsList = findViewById(R.id.schedSessionList);
         daySessionsList.setAdapter(daySessions);
+
+        daySessionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                ScheduledSessionAdapter.Entry e = daySessions.getItem(pos);
+
+                Intent intent = new Intent(CalendarActivity.this, AddScheduledSessionActivity.class);
+                intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_ID, e.getID());
+                intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_NUMBER, e.getDayNumber());
+                intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_DATE, prevDate);
+                intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_TIME, e.getStartHour());
+
+                startActivity(intent);
+            }
+        });
 
         daySessions.setDeleteListener(new ScheduledSessionAdapter.EntryDeleteListener() {
             @Override
@@ -90,7 +106,7 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     private static ScheduledSessionAdapter.Entry randomSession(int i, Random r) {
-        return new ScheduledSessionAdapter.Entry(-1, i, (r.nextInt(4) + 8) * 60);
+        return new ScheduledSessionAdapter.Entry(i, i, (r.nextInt(4) + 8) * 60);
     }
 
     private void selectDate(Calendar date) {
