@@ -28,7 +28,7 @@ public class CalendarActivity extends AppCompatActivity {
     private TextView currentDateLabel;
     private ScheduledSessionAdapter daySessions;
     private ListView daySessionsList;
-    private Date prevDate;
+    private Calendar prevDate;
     private CaldroidFragment calendar;
 
     @Override
@@ -47,7 +47,7 @@ public class CalendarActivity extends AppCompatActivity {
             public void deleteEntry(final ScheduledSessionAdapter.Entry e) {
                 new AlertDialog.Builder(CalendarActivity.this)
                         .setTitle(R.string.confirm_deletion_title)
-                        .setMessage(String.format(Locale.getDefault(), getString(R.string.confirm_deletion_text), e.getStartHour()))
+                        .setMessage(String.format(Locale.getDefault(), getString(R.string.confirm_deletion_text), TimeSeparators.H.format(e.getStartHour())))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface di, int which) {
@@ -77,12 +77,15 @@ public class CalendarActivity extends AppCompatActivity {
         calendar.setCaldroidListener(new CaldroidListener() {
             @Override
             public void onSelectDate(Date date, View view) {
-                selectDate(date);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+
+                selectDate(cal);
             }
         });
 
-        prevDate = Calendar.getInstance().getTime();
-        calendar.setSelectedDate(prevDate);
+        prevDate = Calendar.getInstance();
+        calendar.setSelectedDate(prevDate.getTime());
         selectDate(prevDate);
     }
 
@@ -90,9 +93,9 @@ public class CalendarActivity extends AppCompatActivity {
         return new ScheduledSessionAdapter.Entry(-1, i, (r.nextInt(4) + 8) * 60);
     }
 
-    private void selectDate(Date date) {
+    private void selectDate(Calendar date) {
         DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-        String dateStr = dateFormat.format(date);
+        String dateStr = dateFormat.format(date.getTime());
 
         if(dateStr.length() >= 2)
             dateStr = dateStr.substring(0, 1).toUpperCase() + dateStr.substring(1); //If you know a better way, I'll gladly use it...
@@ -100,12 +103,12 @@ public class CalendarActivity extends AppCompatActivity {
         currentDateLabel.setText(dateStr);
         daySessions.clear();
 
-        Random r = new Random(date.getTime());
+        Random r = new Random(date.getTime().getTime());
         for(int i = 0; i < r.nextInt(10); i++)
             daySessions.add(randomSession(i, r));
 
-        calendar.setTextColorForDate(R.color.caldroid_black, prevDate);
-        calendar.setTextColorForDate(R.color.caldroid_holo_blue_light, date);
+        calendar.setTextColorForDate(R.color.caldroid_black, prevDate.getTime());
+        calendar.setTextColorForDate(R.color.caldroid_holo_blue_light, date.getTime());
         calendar.refreshView();
         daySessionsList.refreshDrawableState();
 

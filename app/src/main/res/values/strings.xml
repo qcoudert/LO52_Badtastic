@@ -4,11 +4,14 @@
     <string name="sched_session_manager_name">Sessions planifiées</string>
     <string name="session_number_format">Séance %d</string>
     <string name="confirm_deletion_title">Supprimer une séance</string>
-    <string name="confirm_deletion_text">Voulez-vous vraiment supprimer la séance de %02dh ?</string>
+    <string name="confirm_deletion_text">Voulez-vous vraiment supprimer la séance de %s ?</string>
     <string name="title_activity_add_scheduled_session">AddScheduledSessionActivity</string>
     <string name="validate_changes">Valider</string>
     <string name="label_date">Date</string>
     <string name="label_hour">Heure</string>
     <string name="sched_session_add">Planification d\'une nouvelle séance</string>
     <string name="sched_session_edit">Modification d\'une séance planifiée</string>
+    <string name="session_select">Choix de la séance</string>
+    <string name="session_search">Rechercher une séance&#8230;</string>
+    <string name="session_invalid">Séance inexistante</string>
 </resources>
