@@ -4,26 +4,39 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
+import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
-import java.util.Random;
+import java.util.TimeZone;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    private static final String DATE_FORMAT = "EEEE d MMMM YYYY";
+    public static final DateFormat SQL_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+    private static final String DISPLAY_DATE_FORMAT = "EEEE d MMMM YYYY";
+    private static final int EDIT_SCHEDSESS_REQUEST = 0xBEEF;
+
+    static {
+        SQL_DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
+    }
 
     private TextView currentDateLabel;
     private ScheduledSessionAdapter daySessions;
@@ -53,7 +66,7 @@ public class CalendarActivity extends AppCompatActivity {
                 intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_DATE, prevDate);
                 intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_TIME, e.getStartHour());
 
-                startActivity(intent);
+                startActivityForResult(intent, EDIT_SCHEDSESS_REQUEST);
             }
         });
 
@@ -67,6 +80,12 @@ public class CalendarActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface di, int which) {
                                 daySessions.remove(e);
+                                calendar.decrementSessionCountForDate(prevDate.getTime());
+                                calendar.refreshView();
+
+                                ScheduledSession bean = new ScheduledSession("", 0);
+                                bean.setId(e.getID());
+                                ExerciseDatabase.getInstance(CalendarActivity.this).scheduledSessionDAO().delete(bean);
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -104,12 +123,14 @@ public class CalendarActivity extends AppCompatActivity {
         selectDate(prevDate);
     }
 
-    private static ScheduledSessionAdapter.Entry randomSession(int i, Random r) {
-        return new ScheduledSessionAdapter.Entry(i, i, (r.nextInt(4) + 8) * 60);
+    private static boolean dateEquals(Calendar d1, Calendar d2) {
+        return d1.get(Calendar.YEAR) == d2.get(Calendar.YEAR)
+                && d1.get(Calendar.MONTH) == d2.get(Calendar.MONTH)
+                && d1.get(Calendar.DAY_OF_MONTH) == d2.get(Calendar.DAY_OF_MONTH);
     }
 
     private void selectDate(Calendar date) {
-        DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+        DateFormat dateFormat = new SimpleDateFormat(DISPLAY_DATE_FORMAT, Locale.getDefault());
         String dateStr = dateFormat.format(date.getTime());
 
         if(dateStr.length() >= 2)
@@ -118,13 +139,32 @@ public class CalendarActivity extends AppCompatActivity {
         currentDateLabel.setText(dateStr);
         daySessions.clear();
 
-        Random r = new Random(date.getTime().getTime());
-        for(int i = 0; i < r.nextInt(10); i++)
-            daySessions.add(randomSession(i, r));
+        int curDayCount = 0;
+        List<ScheduledSession> data = ExerciseDatabase.getInstance(this).scheduledSessionDAO().getAllScheduledSession();
+        calendar.clearSessionCount();
+
+        if(data == null)
+            Log.d("SCHEDSESS", "ScheduledSession list from database is null");
+        else {
+            for(int i = 0; i < data.size(); i++) {
+                ScheduledSession ss = data.get(i);
+
+                try {
+                    Calendar ssCal = Calendar.getInstance();
+                    ssCal.setTime(SQL_DATE_FORMAT.parse(ss.getDate())); //FIXME: Make sure there's no issue with timezones here...
+
+                    if(dateEquals(ssCal, date))
+                        daySessions.add(new ScheduledSessionAdapter.Entry(ss.getId(), curDayCount++, ss.getHour()));
+
+                    calendar.incrementSessionCountForDate(ssCal.getTime());
+                } catch(ParseException e) {
+                    Log.e("SCHEDSESS", "Failed to parse **DATABASE** date (" + ss.getDate() + ")", e);
+                }
+            }
+        }
 
         calendar.clearTextColorForDate(prevDate.getTime());
         calendar.setTextColorForDate(R.color.caldroid_holo_blue_light, date.getTime());
-        calendar.setSessionCountForDate(daySessions.getCount(), date.getTime());
         calendar.refreshView();
         daySessionsList.refreshDrawableState();
 
@@ -145,7 +185,15 @@ public class CalendarActivity extends AppCompatActivity {
         intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_NUMBER, max + 1);
         intent.putExtra(AddScheduledSessionActivity.PROPERTY_SESSION_DATE, prevDate);
 
-        startActivity(intent);
+        startActivityForResult(intent, EDIT_SCHEDSESS_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == EDIT_SCHEDSESS_REQUEST && resultCode == RESULT_OK)
+            selectDate(prevDate);
     }
 
 }

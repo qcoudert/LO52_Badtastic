@@ -4,12 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.room.Database;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
-
 import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
 import com.bonsoirdabord.lo52_badtastic.beans.ExerciseSet;
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
@@ -22,6 +16,12 @@ import com.bonsoirdabord.lo52_badtastic.dao.GroupTrainingDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.ScheduledSessionDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.ScheduledSessionSessionLinkDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.SessionDAO;
+
+import androidx.annotation.NonNull;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Exercise.class, ExerciseSet.class, GroupTraining.class, ScheduledSession.class,
         ScheduledSessionSessionLink.class, Session.class}, exportSchema = false, version = 1)
@@ -39,6 +39,7 @@ public abstract class ExerciseDatabase extends RoomDatabase {
                             new PopulateDbAsync(instance);
                         }
                     })
+                    .allowMainThreadQueries()
                     .build();
         }
         return instance;

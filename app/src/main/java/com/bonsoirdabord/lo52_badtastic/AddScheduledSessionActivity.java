@@ -17,9 +17,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
+import com.bonsoirdabord.lo52_badtastic.dao.ScheduledSessionDAO;
+import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -32,6 +37,7 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
     public static final String PROPERTY_SESSION_NUMBER = "sessionNumber";
     public static final String PROPERTY_SESSION_DATE = "sessionDate";
     public static final String PROPERTY_SESSION_TIME = "sessionTime";
+
     private static final TimeSeparators TIME_SEP = TimeSeparators.COLONS;
 
     private DateFormat dateFormat;
@@ -64,6 +70,7 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });
@@ -113,8 +120,33 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.validate_menu_item) {
-            //TODO: Add entry to database
-            finish();
+            if(validateSession((AutoCompleteTextView) findViewById(R.id.session_field)))
+                return true;
+
+            try {
+                Date date = dateFormat.parse(dateField.getText().toString());
+                String sqlDate = CalendarActivity.SQL_DATE_FORMAT.format(date);
+                int time = TIME_SEP.parse(timeField.getText().toString());
+
+                if(time < 0)
+                    throw new ParseException("Could not parse time", 0);
+
+                ScheduledSessionDAO ssdao = ExerciseDatabase.getInstance(this).scheduledSessionDAO();
+                ScheduledSession bean = new ScheduledSession(sqlDate, time);
+
+                if(sid < 0)
+                    ssdao.insert(bean);
+                else {
+                    bean.setId(sid);
+                    ssdao.update(bean);
+                }
+
+                setResult(RESULT_OK);
+                finish();
+            } catch(ParseException ex) {
+                Log.e("SCHEDSESS", "Failed to parse date", ex);
+            }
+
             return true;
         }
 
