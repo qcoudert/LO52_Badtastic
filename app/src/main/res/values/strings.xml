@@ -14,4 +14,5 @@
     <string name="session_select">Choix de la séance</string>
     <string name="session_search">Rechercher une séance&#8230;</string>
     <string name="session_invalid">Séance inexistante</string>
+    <string name="placeholder">Placeholder</string>
 </resources>

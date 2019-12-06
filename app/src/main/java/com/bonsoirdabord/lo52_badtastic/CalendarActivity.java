@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.text.DateFormat;
@@ -24,13 +23,13 @@ import androidx.appcompat.widget.Toolbar;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    private static final String DATE_FORMAT = "EEEE dd MMMM YYYY";
+    private static final String DATE_FORMAT = "EEEE d MMMM YYYY";
 
     private TextView currentDateLabel;
     private ScheduledSessionAdapter daySessions;
     private ListView daySessionsList;
     private Calendar prevDate;
-    private CaldroidFragment calendar;
+    private CalendarFragment calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +85,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        calendar = (CaldroidFragment) getSupportFragmentManager().findFragmentById(R.id.calendar);
+        calendar = (CalendarFragment) getSupportFragmentManager().findFragmentById(R.id.calendar);
         if(calendar == null)
             throw new RuntimeException("Could not find calendar fragment in CalendarActivity (WTF?)");
 
@@ -123,8 +122,9 @@ public class CalendarActivity extends AppCompatActivity {
         for(int i = 0; i < r.nextInt(10); i++)
             daySessions.add(randomSession(i, r));
 
-        calendar.setTextColorForDate(R.color.caldroid_black, prevDate.getTime());
+        calendar.clearTextColorForDate(prevDate.getTime());
         calendar.setTextColorForDate(R.color.caldroid_holo_blue_light, date.getTime());
+        calendar.setSessionCountForDate(daySessions.getCount(), date.getTime());
         calendar.refreshView();
         daySessionsList.refreshDrawableState();
 
