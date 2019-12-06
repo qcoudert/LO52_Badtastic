@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">LO52_Badtastic</string>
+
+    <!-- Activité AddExerciseActivity -->
+    <string name="add_ex_name">Nom de l\'exercice</string>
+    <string name="add_ex_desc">Description de l\'exercice</string>
+    <string name="add_ex_diff">Difficulté:</string>
+    <string name="add_ex_tag">Thématiques</string>
+    <string name="add_ex_public">Type de public:</string>
 </resources>

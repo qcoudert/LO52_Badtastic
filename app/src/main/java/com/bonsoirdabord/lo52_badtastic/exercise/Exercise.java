@@ -32,13 +32,12 @@ public class Exercise {
     /**
      * Category of people that can participate to the exercise.
      * Must be a value {@link #PUBLIC_BEGINNER} or {@link #PUBLIC_EXPERIENCED}
-     * TODO: Modifier le type de la variable en fonction de la réponse à l'issue 2 github
      */
     private int publicCategory;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({PUBLIC_BEGINNER, PUBLIC_EXPERIENCED})
-    public @interface  PUBLIC_CATEGORY{}
+    public @interface PUBLIC_CATEGORY{}
     public static final int PUBLIC_BEGINNER = 1;
     public static final int PUBLIC_EXPERIENCED = 2;
 
@@ -60,4 +59,43 @@ public class Exercise {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public int getPublicCategory() {
+        return publicCategory;
+    }
+
+    public void setPublicCategory(@PUBLIC_CATEGORY int publicCategory) {
+        this.publicCategory = publicCategory;
+    }
 }
