@@ -21,7 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,13 +28,16 @@ import androidx.appcompat.widget.Toolbar;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    public static final DateFormat SQL_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-
+    private static final DateFormat SQL_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     private static final String DISPLAY_DATE_FORMAT = "EEEE d MMMM YYYY";
     private static final int EDIT_SCHEDSESS_REQUEST = 0xBEEF;
 
-    static {
-        SQL_DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
+    public static Date parseSQLDate(String date) throws ParseException {
+        return SQL_DATE_FORMAT.parse(date);
+    }
+
+    public static String formatSQLDate(Date date) {
+        return SQL_DATE_FORMAT.format(date);
     }
 
     private TextView currentDateLabel;
@@ -151,7 +153,7 @@ public class CalendarActivity extends AppCompatActivity {
 
                 try {
                     Calendar ssCal = Calendar.getInstance();
-                    ssCal.setTime(SQL_DATE_FORMAT.parse(ss.getDate())); //FIXME: Make sure there's no issue with timezones here...
+                    ssCal.setTime(parseSQLDate(ss.getDate())); //FIXME: Make sure there's no issue with timezones here...
 
                     if(dateEquals(ssCal, date))
                         daySessions.add(new ScheduledSessionAdapter.Entry(ss.getId(), curDayCount++, ss.getHour()));

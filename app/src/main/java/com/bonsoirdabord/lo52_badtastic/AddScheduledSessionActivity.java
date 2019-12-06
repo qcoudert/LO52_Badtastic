@@ -24,7 +24,6 @@ import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -124,8 +123,7 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
                 return true;
 
             try {
-                Date date = dateFormat.parse(dateField.getText().toString());
-                String sqlDate = CalendarActivity.SQL_DATE_FORMAT.format(date);
+                String sqlDate = CalendarActivity.formatSQLDate(dateFormat.parse(dateField.getText().toString()));
                 int time = TIME_SEP.parse(timeField.getText().toString());
 
                 if(time < 0)
