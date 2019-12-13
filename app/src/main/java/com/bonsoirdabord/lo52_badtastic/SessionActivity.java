@@ -1,13 +1,14 @@
 package com.bonsoirdabord.lo52_badtastic;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.LinearLayout;
+import android.os.SystemClock;
+import android.view.View;
+import android.widget.Chronometer;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,11 @@ public class SessionActivity extends AppCompatActivity {
     private final int green = 0xff93c47d;
     private final int blue = 0xff9fc5f8;
 
-    ArrayList<SessionManagerFragment> fragments;
+    private ArrayList<SessionManagerFragment> fragments;
+    private ArrayList<Chronometer> chronos;
+    private Chronometer globChrono;
+    private boolean isChronoPaused;
+    private long timeChrono;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +30,60 @@ public class SessionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_session);
 
         fragments = new ArrayList<>();
+        chronos = new ArrayList<>();
+        timeChrono = 0;
 
-        createNewFragment(green);
-        createNewFragment(blue);
-        createNewFragment(red);
+        createNewFragment(green, 1);
+        createNewFragment(blue, 2);
+        createNewFragment(red, 3);
 
+        globChrono = findViewById(R.id.globchrono);
+        globChrono.start();
+        isChronoPaused = false;
     }
 
-    private void createNewFragment(int color){
-        SessionManagerFragment sessionManagerFragment = new SessionManagerFragment(color);
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Fermeture de l'entraînement")
+                .setMessage("Etes-vous certain de vouloir mettre fin à l'entraînement ?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        //TODO : implement save before leaving
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    public void onBackPressed(View view) {
+        onBackPressed();
+    }
+
+    public void pauseChronometers(View view) {
+        if(isChronoPaused) {
+            globChrono.setBase(SystemClock.elapsedRealtime() + timeChrono);
+            globChrono.start();
+            for(SessionManagerFragment fragment : fragments)
+                fragment.startChrono();
+        }
+        else {
+            timeChrono = globChrono.getBase() - SystemClock.elapsedRealtime();
+            globChrono.stop();
+            for(SessionManagerFragment fragment : fragments)
+                fragment.stopChrono();
+        }
+
+        isChronoPaused = !isChronoPaused;
+    }
+
+    private void createNewFragment(int color, int index){
+        SessionManagerFragment sessionManagerFragment = new SessionManagerFragment(color, index);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.linlayout1, sessionManagerFragment);
         fragmentTransaction.commitNow();

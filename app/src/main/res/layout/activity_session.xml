@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/caldroid_white"
-    tools:context=".MainActivity">
+    tools:context=".SessionActivity">
 
     <LinearLayout
         android:id="@+id/linlayout1"
@@ -31,7 +31,8 @@
         android:src="@drawable/pause_button"
         app:layout_constraintBottom_toBottomOf="@+id/globchrono"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="pauseChronometers"/>
 
     <ImageButton
         android:id="@+id/leave"
@@ -43,7 +44,8 @@
         android:src="@drawable/leave_button"
         app:layout_constraintBottom_toBottomOf="@+id/globchrono"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="onBackPressed"/>
 
     <Chronometer
         android:id="@+id/globchrono"

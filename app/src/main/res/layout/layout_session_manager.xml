@@ -5,10 +5,11 @@
     android:id="@+id/fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1">
+    android:layout_weight="1"
+    tools:context=".SessionManagerFragment">
 
     <Chronometer
-        android:id="@+id/globchrono"
+        android:id="@+id/layoutchrono"
         android:layout_width="600dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -29,7 +30,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomlinlayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/globchrono">
+        app:layout_constraintTop_toBottomOf="@+id/layoutchrono">
 
         <LinearLayout
             android:layout_width="match_parent"
