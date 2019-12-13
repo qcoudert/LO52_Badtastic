@@ -39,7 +39,6 @@ public abstract class ExerciseDatabase extends RoomDatabase {
                             new PopulateDbAsync(instance);
                         }
                     })
-                    .allowMainThreadQueries()
                     .build();
         }
         return instance;
