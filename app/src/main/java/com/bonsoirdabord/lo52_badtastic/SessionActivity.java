@@ -10,6 +10,10 @@ import android.widget.Chronometer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
+import com.bonsoirdabord.lo52_badtastic.dao.ScheduledSessionDAO_Impl;
+import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
+
 import java.util.ArrayList;
 
 public class SessionActivity extends AppCompatActivity {
@@ -23,11 +27,14 @@ public class SessionActivity extends AppCompatActivity {
     private Chronometer globChrono;
     private boolean isChronoPaused;
     private long timeChrono;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session);
+
+        id = getIntent().getIntExtra("scheduled_session", -1);
 
         fragments = new ArrayList<>();
         chronos = new ArrayList<>();
@@ -82,11 +89,28 @@ public class SessionActivity extends AppCompatActivity {
         isChronoPaused = !isChronoPaused;
     }
 
-    private void createNewFragment(int color, int index){
-        SessionManagerFragment sessionManagerFragment = new SessionManagerFragment(color, index);
+    // marche pas pour l'instant : détruit tout le layout
+    public void swapFragment(View view)
+    {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+        ft.replace(R.id.linlayout1, createNewFragment(green, 1), "fragment1");
+        ft.commit();
+    }
+
+    private SessionManagerFragment createNewFragment(int color, int index){
+        SessionManagerFragment sessionManagerFragment = new SessionManagerFragment(color, index, getScheduledSession(id));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.linlayout1, sessionManagerFragment);
+        fragmentTransaction.add(R.id.linlayout1, sessionManagerFragment, "fragment"+index);
         fragmentTransaction.commitNow();
         fragments.add(sessionManagerFragment);
+        return sessionManagerFragment;
+    }
+
+    private ScheduledSession getScheduledSession(int id){
+        ScheduledSessionDAO_Impl scheduledSessionDAO = new ScheduledSessionDAO_Impl(ExerciseDatabase.getInstance(this));
+        //return scheduledSessionDAO.getScheduledSession(id);
+        return null;
     }
 }

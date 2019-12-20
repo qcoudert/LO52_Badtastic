@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    tools:context=".SessionManagerFragment">
+    tools:context=".SessionActivity">
 
     <Chronometer
         android:id="@+id/layoutchrono"
@@ -107,7 +107,13 @@
             android:layout_height="match_parent"
             android:layout_gravity=""
             android:background="@null"
-            android:src="@drawable/next_button"
+            android:padding="25dp"
+            android:scaleType="centerInside"
+            android:scaleX="3"
+            android:scaleY="3"
+            android:onClick="swapFragment"
+            android:src="@android:drawable/ic_media_ff"
+            android:tint="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/scrollView2" />

@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
+
 public class SessionManagerFragment extends Fragment {
 
     private int color;
@@ -17,17 +19,20 @@ public class SessionManagerFragment extends Fragment {
     private long timeChrono;
     private Chronometer chrono;
     private TextView groupNbr;
+    private ScheduledSession scheduledSession;
 
-    public SessionManagerFragment(int color, int index){
+    public SessionManagerFragment(int color, int index, ScheduledSession scheduledSession){
         super();
         this.color = color;
         this.index = index;
+        this.scheduledSession = scheduledSession;
         this.timeChrono = 0;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_session_manager,
                 container, false);
         view.setBackgroundColor(color);
