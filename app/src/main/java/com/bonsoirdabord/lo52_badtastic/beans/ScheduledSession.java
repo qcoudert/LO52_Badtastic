@@ -19,6 +19,9 @@ public class ScheduledSession {
     @ColumnInfo(name = "hour")
     private int hour;
 
+    @Ignore
+    private Session session;
+
     public ScheduledSession(String date, int hour) {
         this.date = date;
         this.hour = hour;
@@ -46,5 +49,13 @@ public class ScheduledSession {
 
     public void setHour(int hour) {
         this.hour = hour;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 }

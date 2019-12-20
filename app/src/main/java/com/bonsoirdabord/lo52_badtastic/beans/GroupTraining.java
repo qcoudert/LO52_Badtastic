@@ -6,6 +6,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(tableName = GroupTraining.TABLE_NAME, foreignKeys = {
         @ForeignKey(entity = Session.class, parentColumns = "id", childColumns = "session_id",
                 onDelete = ForeignKey.CASCADE)
@@ -26,10 +29,15 @@ public class GroupTraining {
     @ColumnInfo(name = "session_id")
     private int sessionId;
 
+    @Ignore
+    private List<ExerciseSet> exerciseSets;
+
+
     public GroupTraining(int publicTarget, int difficulty, int sessionId) {
         this.publicTarget = publicTarget;
         this.difficulty = difficulty;
         this.sessionId = sessionId;
+        exerciseSets = new ArrayList<>();
     }
 
     public int getSessionId() {

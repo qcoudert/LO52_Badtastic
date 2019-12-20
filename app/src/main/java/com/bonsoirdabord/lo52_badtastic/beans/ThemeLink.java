@@ -15,16 +15,16 @@ public class ThemeLink {
     public static final String TABLE_NAME = "theme_link";
 
     @PrimaryKey(autoGenerate = true)
-    int id;
+    public int id;
 
     @ColumnInfo(name = "is_exercise")
-    boolean isExerciseLink;
+    public boolean isExerciseLink;
 
     @ColumnInfo(name = "exercise_id")
-    int exerciseId;
+    public int exerciseId;
 
     @ColumnInfo(name = "groupe_training_id")
-    int groupeTrainingId;
+    public int groupeTrainingId;
 
     public ThemeLink(boolean isExerciseLink, int exerciseId, int groupeTrainingId) {
         this.isExerciseLink = isExerciseLink;

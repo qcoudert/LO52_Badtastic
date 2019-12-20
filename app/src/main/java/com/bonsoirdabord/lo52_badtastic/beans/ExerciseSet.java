@@ -33,6 +33,9 @@ public class ExerciseSet {
     @ColumnInfo(name = "group_training_id")
     private int groupTrainingId;
 
+    @Ignore
+    private Exercise exercise;
+
     public ExerciseSet(int reps, double duration, int intensity, int exerciseId, int groupTrainingId) {
         this.reps = reps;
         this.duration = duration;
@@ -87,5 +90,13 @@ public class ExerciseSet {
 
     public void setGroupTrainingId(int groupTrainingId) {
         this.groupTrainingId = groupTrainingId;
+    }
+
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
     }
 }

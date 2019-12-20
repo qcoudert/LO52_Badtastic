@@ -9,10 +9,10 @@ public class Theme {
     public static final String TABLE_NAME = "theme";
 
     @PrimaryKey(autoGenerate = true)
-    int id;
+    public int id;
 
     @ColumnInfo(name = "name")
-    int name;
+    public int name;
 
     public Theme(int name) {
         this.name = name;
