@@ -6,13 +6,16 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(tableName = GroupTraining.TABLE_NAME, foreignKeys = {
         @ForeignKey(entity = Session.class, parentColumns = "id", childColumns = "session_id",
                 onDelete = ForeignKey.CASCADE)
 })
 public class GroupTraining {
     @Ignore
-    public static final String TABLE_NAME = "groupe_training";
+    public static final String TABLE_NAME = "group_training";
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -26,10 +29,18 @@ public class GroupTraining {
     @ColumnInfo(name = "session_id")
     private int sessionId;
 
+    @Ignore
+    private List<ExerciseSet> exerciseSets;
+
+    @Ignore
+    private List<Theme> themes;
+
+
     public GroupTraining(int publicTarget, int difficulty, int sessionId) {
         this.publicTarget = publicTarget;
         this.difficulty = difficulty;
         this.sessionId = sessionId;
+        exerciseSets = new ArrayList<>();
     }
 
     public int getSessionId() {
@@ -62,5 +73,21 @@ public class GroupTraining {
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public List<ExerciseSet> getExerciseSets() {
+        return exerciseSets;
+    }
+
+    public void setExerciseSets(List<ExerciseSet> exerciseSets) {
+        this.exerciseSets = exerciseSets;
+    }
+
+    public List<Theme> getThemes() {
+        return themes;
+    }
+
+    public void setThemes(List<Theme> themes) {
+        this.themes = themes;
     }
 }
