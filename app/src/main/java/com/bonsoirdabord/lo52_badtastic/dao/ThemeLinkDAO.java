@@ -15,9 +15,16 @@ public interface ThemeLinkDAO {
     @Query("SELECT * FROM " + ThemeLink.TABLE_NAME)
     LiveData<List<ThemeLink>> getAllThemeLink();
 
+    @Query("SELECT * FROM " + ThemeLink.TABLE_NAME + " WHERE group_training_id = :groupTrainingId")
+    LiveData<List<ThemeLink>> getThemeLinkForGroupTraining(int groupTrainingId);
+
+    @Query("SELECT * FROM " + ThemeLink.TABLE_NAME + " WHERE exercise_id = :exerciseId")
+    LiveData<List<ThemeLink>> getThemeLinkForExercise(int exerciseId);
+
     @Query("DELETE FROM " + ThemeLink.TABLE_NAME)
     void deleteAll();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insert(ThemeLink themeLink);
+
 }

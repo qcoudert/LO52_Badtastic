@@ -15,7 +15,7 @@ import java.util.List;
 })
 public class GroupTraining {
     @Ignore
-    public static final String TABLE_NAME = "groupe_training";
+    public static final String TABLE_NAME = "group_training";
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -31,6 +31,9 @@ public class GroupTraining {
 
     @Ignore
     private List<ExerciseSet> exerciseSets;
+
+    @Ignore
+    private List<Theme> themes;
 
 
     public GroupTraining(int publicTarget, int difficulty, int sessionId) {
@@ -70,5 +73,21 @@ public class GroupTraining {
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public List<ExerciseSet> getExerciseSets() {
+        return exerciseSets;
+    }
+
+    public void setExerciseSets(List<ExerciseSet> exerciseSets) {
+        this.exerciseSets = exerciseSets;
+    }
+
+    public List<Theme> getThemes() {
+        return themes;
+    }
+
+    public void setThemes(List<Theme> themes) {
+        this.themes = themes;
     }
 }

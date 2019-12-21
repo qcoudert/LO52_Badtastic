@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = ThemeLink.TABLE_NAME, foreignKeys = {
         @ForeignKey(entity = Exercise.class, parentColumns = "id", childColumns = "exercise_id",
                 onDelete = ForeignKey.CASCADE),
-        @ForeignKey(entity = GroupTraining.class, parentColumns = "id", childColumns = "groupe_training_id",
+        @ForeignKey(entity = GroupTraining.class, parentColumns = "id", childColumns = "group_training_id",
                 onDelete = ForeignKey.CASCADE)
 })
 public class ThemeLink {
@@ -17,19 +17,23 @@ public class ThemeLink {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    @ColumnInfo(name = "theme_id")
+    public int themeId;
+
     @ColumnInfo(name = "is_exercise")
     public boolean isExerciseLink;
 
     @ColumnInfo(name = "exercise_id")
     public int exerciseId;
 
-    @ColumnInfo(name = "groupe_training_id")
-    public int groupeTrainingId;
+    @ColumnInfo(name = "group_training_id")
+    public int groupTrainingId;
 
-    public ThemeLink(boolean isExerciseLink, int exerciseId, int groupeTrainingId) {
+    public ThemeLink(int themeId, boolean isExerciseLink, int exerciseId, int groupTrainingId) {
+        this.themeId = themeId;
         this.isExerciseLink = isExerciseLink;
         this.exerciseId = exerciseId;
-        this.groupeTrainingId = groupeTrainingId;
+        this.groupTrainingId = groupTrainingId;
     }
 
     public boolean isExerciseLink() {
@@ -48,11 +52,19 @@ public class ThemeLink {
         this.exerciseId = exerciseId;
     }
 
-    public int getGroupeTrainingId() {
-        return groupeTrainingId;
+    public int getGroupTrainingId() {
+        return groupTrainingId;
     }
 
-    public void setGroupeTrainingId(int groupeTrainingId) {
-        this.groupeTrainingId = groupeTrainingId;
+    public void setGroupTrainingId(int groupTrainingId) {
+        this.groupTrainingId = groupTrainingId;
+    }
+
+    public int getThemeId() {
+        return themeId;
+    }
+
+    public void setThemeId(int themeId) {
+        this.themeId = themeId;
     }
 }

@@ -37,6 +37,9 @@ public class Exercise {
     @ColumnInfo(name = "is_favourite")
     private boolean isFavourite;
 
+    @Ignore
+    private List<Theme> themes;
+
     public Exercise(String name, String descriptino, int difficulty, int publicType, String picturePath, double duration, boolean isFavourite) {
         this.name = name;
         this.descriptino = descriptino;
@@ -109,5 +112,13 @@ public class Exercise {
 
     public void setIsFavourite(boolean isFavourite) {
         this.isFavourite = isFavourite;
+    }
+
+    public List<Theme> getThemes() {
+        return themes;
+    }
+
+    public void setThemes(List<Theme> themes) {
+        this.themes = themes;
     }
 }

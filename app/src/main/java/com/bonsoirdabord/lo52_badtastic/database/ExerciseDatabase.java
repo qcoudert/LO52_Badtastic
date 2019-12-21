@@ -14,7 +14,6 @@ import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
 import com.bonsoirdabord.lo52_badtastic.beans.ExerciseSet;
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
-import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSessionSessionLink;
 import com.bonsoirdabord.lo52_badtastic.beans.Session;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
 import com.bonsoirdabord.lo52_badtastic.beans.ThemeLink;
@@ -22,13 +21,12 @@ import com.bonsoirdabord.lo52_badtastic.dao.ExerciseDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.ExerciseSetDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.GroupTrainingDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.ScheduledSessionDAO;
-import com.bonsoirdabord.lo52_badtastic.dao.ScheduledSessionSessionLinkDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.SessionDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.ThemeDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.ThemeLinkDAO;
 
 @Database(entities = {Exercise.class, ExerciseSet.class, GroupTraining.class, ScheduledSession.class,
-        ScheduledSessionSessionLink.class, Session.class, Theme.class, ThemeLink.class}, exportSchema = false, version = 2)
+        Session.class, Theme.class, ThemeLink.class}, exportSchema = false, version = 3)
 public abstract class ExerciseDatabase extends RoomDatabase {
     public static final String DB_NAME = "exercise_badtastic.db";
     private static ExerciseDatabase instance;
@@ -62,8 +60,6 @@ public abstract class ExerciseDatabase extends RoomDatabase {
     public abstract GroupTrainingDAO groupTrainingDAO();
 
     public abstract ScheduledSessionDAO scheduledSessionDAO();
-
-    public abstract ScheduledSessionSessionLinkDAO scheduledSessionSessionLinkDAO();
 
     public abstract SessionDAO sessionDAO();
 

@@ -19,12 +19,16 @@ public class ScheduledSession {
     @ColumnInfo(name = "hour")
     private int hour;
 
+    @ColumnInfo(name = "session_id")
+    private int sessionId;
+
     @Ignore
     private Session session;
 
-    public ScheduledSession(String date, int hour) {
+    public ScheduledSession(String date, int hour, int sessionId) {
         this.date = date;
         this.hour = hour;
+        this.sessionId = sessionId;
     }
 
     public int getId() {
@@ -49,6 +53,14 @@ public class ScheduledSession {
 
     public void setHour(int hour) {
         this.hour = hour;
+    }
+
+    public int getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(int sessionId) {
+        this.sessionId = sessionId;
     }
 
     public Session getSession() {

@@ -6,19 +6,46 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
+import com.bonsoirdabord.lo52_badtastic.beans.ThemeLink;
+import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
-public interface ThemeDAO {
+public abstract class ThemeDAO {
     @Query("SELECT * FROM " + Theme.TABLE_NAME)
-    LiveData<List<Theme>> getAllTheme();
+    public abstract LiveData<List<Theme>> getAllTheme();
+
+    @Query("SELECT * FROM " + Theme.TABLE_NAME + " WHERE id = :id")
+    public abstract LiveData<Theme> getTheme(int id);
+
+    @Query("SELECT * FROM " + Theme.TABLE_NAME + " WHERE id IN (:ids)")
+    public abstract LiveData<List<Theme>> getThemes(List<Integer> ids);
 
     @Query("DELETE FROM " + Theme.TABLE_NAME)
-    void deleteAll();
+    public abstract void deleteAll();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    long insert(Theme theme);
+    public abstract long insert(Theme theme);
 
+    public LiveData<List<Theme>> getThemeForGroupTraining(int groupTrainingId, ExerciseDatabase database){
+        List<ThemeLink> themeLinks = database.themeLinkDAO().getThemeLinkForGroupTraining(groupTrainingId).getValue();
+        List<Integer> themes = new ArrayList<>();
+        for (ThemeLink themeLink : themeLinks) {
+            themes.add(themeLink.themeId);
+        }
+        return getThemes(themes);
+    }
+
+    public LiveData<List<Theme>> getThemeForExercise(int exerciseId, ExerciseDatabase database){
+        List<ThemeLink> themeLinks = database.themeLinkDAO().getThemeLinkForExercise(exerciseId).getValue();
+        List<Integer> themes = new ArrayList<>();
+        for (ThemeLink themeLink : themeLinks) {
+            themes.add(themeLink.themeId);
+        }
+        return getThemes(themes);
+    }
 }
