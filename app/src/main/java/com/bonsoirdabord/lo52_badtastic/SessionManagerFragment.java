@@ -20,6 +20,7 @@ public class SessionManagerFragment extends Fragment {
     private Chronometer chrono;
     private TextView groupNbr;
     private ScheduledSession scheduledSession;
+    private View view;
 
     public SessionManagerFragment(int color, int index, ScheduledSession scheduledSession){
         super();
@@ -40,6 +41,7 @@ public class SessionManagerFragment extends Fragment {
         groupNbr.setText("Groupe " + index);
         chrono = view.findViewById(R.id.layoutchrono);
         chrono.start();
+        this.view = view;
         return view;
     }
 
@@ -61,5 +63,13 @@ public class SessionManagerFragment extends Fragment {
     {
         chrono.setBase(SystemClock.elapsedRealtime() + timeChrono);
         chrono.start();
+    }
+
+    public View getView(){
+        return this.view;
+    }
+
+    public int getIndex(){
+        return this.index;
     }
 }
