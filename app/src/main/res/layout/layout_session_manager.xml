@@ -111,7 +111,6 @@
             android:scaleType="centerInside"
             android:scaleX="3"
             android:scaleY="3"
-            android:onClick="swapFragment"
             android:src="@android:drawable/ic_media_ff"
             android:tint="#000000"
             app:layout_constraintEnd_toEndOf="parent"

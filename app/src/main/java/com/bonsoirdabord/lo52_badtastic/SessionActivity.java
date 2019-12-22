@@ -18,9 +18,9 @@ import java.util.ArrayList;
 
 public class SessionActivity extends AppCompatActivity {
 
-    private final int red = 0xffcf2a27;
-    private final int green = 0xff93c47d;
-    private final int blue = 0xff9fc5f8;
+    public final int red = 0xffcf2a27;
+    public final int green = 0xff93c47d;
+    public final int blue = 0xff9fc5f8;
 
     private ArrayList<SessionManagerFragment> fragments;
     private ArrayList<Chronometer> chronos;
@@ -28,6 +28,7 @@ public class SessionActivity extends AppCompatActivity {
     private boolean isChronoPaused;
     private long timeChrono;
     private int id;
+    private SessionManagerFragment firstFragment; // necessary to fix the ghost Fragment bug
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class SessionActivity extends AppCompatActivity {
         chronos = new ArrayList<>();
         timeChrono = 0;
 
-        createNewFragment(green, 1);
+        firstFragment = createNewFragment(green, 1);
         createNewFragment(blue, 2);
         createNewFragment(red, 3);
 
@@ -89,61 +90,21 @@ public class SessionActivity extends AppCompatActivity {
         isChronoPaused = !isChronoPaused;
     }
 
-    // marche pas totalement : on a pas de moyen d'identifier les 3 fragments....
-    public void swapFragment(View view)
-    {
-        System.out.println(view.getBackground());
-        int fragmentIndex = 1;
-        int listIndex = 0;
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-        SessionManagerFragment newFragment = null;
-
-        for(int i = 0;i<fragments.size(); i++) {
-            if(fragments.get(i).getView() == view) {
-                fragmentIndex = fragments.get(i).getIndex();
-                listIndex = i;
-            }
-        }
-
-        if(fragmentIndex == 1) {
-            newFragment = new SessionManagerFragment(green, 1, getScheduledSession(id));
-            ft.replace(R.id.fragment, newFragment);
-            ft.commitNow();
-        }
-        else if(fragmentIndex == 2) {
-            // On doit retirer le dernier fragment en conservant son chronomètre
-            FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-            ft2.remove(fragments.get(2));
-            ft2.commitNow();
-
-            newFragment = new SessionManagerFragment(blue, 2, getScheduledSession(id));
-            ft.remove(fragments.get(1));
-            ft.add(R.id.linlayout1,  newFragment);
-            ft.commitNow();
-
-            //On remet le troisième fragment retiré au début
-            FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
-            ft3.add(R.id.linlayout1, fragments.get(2));
-            ft3.commitNow();
-        }
-        else if(fragmentIndex == 3)
-        {
-            newFragment = new SessionManagerFragment(red, 3, getScheduledSession(id));
-            ft.remove(fragments.get(listIndex));
-            ft.add(R.id.linlayout1, newFragment);
-            ft.commitNow();
-        }
-        fragments.remove(listIndex);
-        fragments.add(newFragment);
+    public ArrayList<SessionManagerFragment> getFragments() {
+        return fragments;
     }
 
-    private void createNewFragment(int color, int index){
-        SessionManagerFragment sessionManagerFragment = new SessionManagerFragment(color, index, getScheduledSession(id));
+    public SessionManagerFragment getFirstFragment() {
+        return firstFragment;
+    }
+
+    private SessionManagerFragment createNewFragment(int color, int index){
+        SessionManagerFragment sessionManagerFragment = new SessionManagerFragment(color, index, this, getScheduledSession(id));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.linlayout1, sessionManagerFragment, "fragment"+index);
         fragmentTransaction.commitNow();
         fragments.add(sessionManagerFragment);
+        return sessionManagerFragment;
     }
 
     private ScheduledSession getScheduledSession(int id){
