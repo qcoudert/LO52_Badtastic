@@ -5,72 +5,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/caldroid_white"
-    tools:context=".MainActivity">
+    tools:context=".SessionActivity">
 
-    <View
-        android:id="@+id/rectangle_green"
-        android:layout_width="320dp"
-        android:layout_height="448dp"
-        android:background="@drawable/rectangle_green"
+    <LinearLayout
+        android:id="@+id/linlayout1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/globchrono">
 
-
-    <View
-        android:id="@+id/rectangle_red"
-        android:layout_width="320dp"
-        android:layout_height="446dp"
-        android:layout_marginStart="320dp"
-        android:layout_marginLeft="320dp"
-        android:background="@drawable/rectangle_red"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/rectangle_blue"
-        android:layout_width="320dp"
-        android:layout_height="448dp"
-        android:layout_marginStart="640dp"
-        android:layout_marginLeft="640dp"
-        android:background="@drawable/rectangle_blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/pause"
-        android:layout_width="107dp"
-        android:layout_height="107dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/caldroid_white"
+        android:layout_marginStart="32dp"
+        android:background="@null"
         android:gravity="center"
-        android:src="@drawable/pause_button"
+        android:onClick="pauseChronometers"
+        android:scaleType="centerInside"
+        android:scaleX="4"
+        android:scaleY="4"
+        android:src="@android:drawable/ic_media_pause"
+        android:tint="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/globchrono"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/leave"
-        android:layout_width="107dp"
-        android:layout_height="107dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@color/caldroid_white"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="35dp"
+        android:background="@null"
         android:gravity="center"
-        android:src="@drawable/leave_button"
+        android:onClick="onBackPressed"
+        android:scaleType="centerInside"
+        android:scaleX="4"
+        android:scaleY="4"
+        android:src="@android:drawable/ic_delete"
+        android:tint="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/globchrono"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Chronometer
         android:id="@+id/globchrono"
-        android:layout_width="400dp"
-        android:layout_height="119dp"
-        android:layout_marginStart="327dp"
-        android:layout_marginLeft="327dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="327dp"
-        android:layout_marginRight="327dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:textAlignment="center"
         android:textSize="80dp"
         app:layout_constraintEnd_toEndOf="parent"
