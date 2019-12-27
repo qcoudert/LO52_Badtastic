@@ -109,7 +109,6 @@ public class SessionActivity extends AppCompatActivity {
 
     private ScheduledSession getScheduledSession(int id){
         ScheduledSessionDAO_Impl scheduledSessionDAO = new ScheduledSessionDAO_Impl(ExerciseDatabase.getInstance(this));
-        //return scheduledSessionDAO.getScheduledSession(id);
-        return null;
+        return scheduledSessionDAO.getScheduledSessionCompleted(id, ExerciseDatabase.getInstance(this)).getValue();
     }
 }
