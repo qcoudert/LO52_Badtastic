@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
 
 import java.util.ArrayList;
@@ -20,16 +21,20 @@ public class SessionManagerFragment extends Fragment {
 
     private int color;
     private int index;
+    private int exerciceNbr;
+    private int repetitionNbr;
+    private int maxRepetitions;
     private long timeChrono;
     private Chronometer chrono;
-    private TextView groupNbr;
     private ScheduledSession scheduledSession;
     private SessionActivity activity;
 
-    public SessionManagerFragment(int color, int index, SessionActivity activity, ScheduledSession scheduledSession){
+    public SessionManagerFragment(int color, int index, int exerciceNbr, int repetitionNbr, SessionActivity activity, ScheduledSession scheduledSession){
         super();
         this.color = color;
         this.index = index;
+        this.exerciceNbr = exerciceNbr;
+        this.repetitionNbr = repetitionNbr;
         this.scheduledSession = scheduledSession;
         this.timeChrono = 0;
         this.activity = activity;
@@ -42,9 +47,35 @@ public class SessionManagerFragment extends Fragment {
         View view = inflater.inflate(R.layout.layout_session_manager,
                 container, false);
         view.setBackgroundColor(color);
-        groupNbr = view.findViewById(R.id.textView);
-        groupNbr.setText("Groupe " + index);
+
+        //getting the current Exercise and setting all informations
+        Exercise exercise = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getExercise();
+        maxRepetitions = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getReps();
+        ((TextView)view.findViewById(R.id.textView)).setText("Groupe " + index);
+        ((TextView)view.findViewById(R.id.textView7)).setText("Exercice Numéro : " + exerciceNbr);
+        ((TextView)view.findViewById(R.id.textView6)).setText("Nom : " + exercise.getName());
+        ((TextView)view.findViewById(R.id.textView4)).setText("Répétitions : " + repetitionNbr +"/" + maxRepetitions);
+        ((TextView)view.findViewById(R.id.textView3)).setText("Descriptif : " + exercise.getDescriptino());
+
+        String themesText = "Thème(s) : ";
+        for(int i = 0; i<exercise.getThemes().size(); i++) {
+            themesText += exercise.getThemes().get(i);
+
+            if(i != exercise.getThemes().size() - 1)
+                themesText += ", ";
+        }
+        ((TextView)view.findViewById(R.id.textView5)).setText(themesText);
+
+
         chrono = view.findViewById(R.id.layoutchrono);
+        chrono.setBase((long)(SystemClock.elapsedRealtime() + exercise.getDuration()));
+        chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                if(chronometer.getText().equals("00:00"))
+                    setClickReaction();
+            }
+        });
         chrono.start();
         view.findViewById(R.id.next).setOnClickListener(new View.OnClickListener(){
             @Override
@@ -81,7 +112,11 @@ public class SessionManagerFragment extends Fragment {
                will result on a deleting of the whole fragment. We could as well use the same method as for index 2 (remove the 2 other
                fragments, add the new green one and put back the 2 others, but it would have a bigger computational cost
              */
-            newFragment = new SessionManagerFragment(activity.green, 1, activity, scheduledSession);
+            if(repetitionNbr < maxRepetitions)
+                newFragment = new SessionManagerFragment(activity.green, 1, exerciceNbr, repetitionNbr + 1, activity, scheduledSession);
+            else
+                newFragment = new SessionManagerFragment(activity.green, 1, exerciceNbr + 1, 1, activity, scheduledSession);
+
             ft.replace(R.id.fragment, newFragment);
             ft.hide(activity.getFirstFragment());
             ft.show(activity.getFirstFragment());
@@ -100,7 +135,11 @@ public class SessionManagerFragment extends Fragment {
                 ft2.commitNow();
             }
 
-            newFragment = new SessionManagerFragment(activity.blue, 2, activity, scheduledSession);
+            if(repetitionNbr < maxRepetitions)
+                newFragment = new SessionManagerFragment(activity.blue, 2, exerciceNbr, repetitionNbr + 1, activity, scheduledSession);
+            else
+                newFragment = new SessionManagerFragment(activity.blue, 2, exerciceNbr + 1, 1, activity, scheduledSession);
+
             ft.remove(this);
             ft.add(R.id.linlayout1, newFragment);
             ft.commitNow();
@@ -116,7 +155,11 @@ public class SessionManagerFragment extends Fragment {
         }
         else if(index == 3)
         {
-            newFragment = new SessionManagerFragment(activity.red, 3, activity, scheduledSession);
+            if(repetitionNbr < maxRepetitions)
+                newFragment = new SessionManagerFragment(activity.red, 3, exerciceNbr, repetitionNbr + 1, activity, scheduledSession);
+            else
+                newFragment = new SessionManagerFragment(activity.red, 3, exerciceNbr + 1, 1, activity, scheduledSession);
+
             ft.remove(this);
             ft.add(R.id.linlayout1, newFragment);
             ft.commitNow();
