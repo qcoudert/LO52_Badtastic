@@ -12,17 +12,17 @@ public class Theme {
     public int id;
 
     @ColumnInfo(name = "name")
-    public int name;
+    public String name;
 
-    public Theme(int name) {
+    public Theme(String name) {
         this.name = name;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
