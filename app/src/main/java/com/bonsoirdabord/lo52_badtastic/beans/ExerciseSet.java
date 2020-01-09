@@ -18,6 +18,9 @@ public class ExerciseSet {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "order")
+    private int order;
+
     @ColumnInfo(name = "reps")
     private int reps;
 
@@ -33,7 +36,11 @@ public class ExerciseSet {
     @ColumnInfo(name = "group_training_id")
     private int groupTrainingId;
 
-    public ExerciseSet(int reps, double duration, int intensity, int exerciseId, int groupTrainingId) {
+    @Ignore
+    private Exercise exercise;
+
+    public ExerciseSet(int order, int reps, double duration, int intensity, int exerciseId, int groupTrainingId) {
+        this.order = order;
         this.reps = reps;
         this.duration = duration;
         this.intensity = intensity;
@@ -87,5 +94,21 @@ public class ExerciseSet {
 
     public void setGroupTrainingId(int groupTrainingId) {
         this.groupTrainingId = groupTrainingId;
+    }
+
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 }

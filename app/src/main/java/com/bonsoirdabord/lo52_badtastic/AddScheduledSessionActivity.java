@@ -130,7 +130,7 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
                     throw new ParseException("Could not parse time", 0);
 
                 ScheduledSessionDAO ssdao = ExerciseDatabase.getInstance(this).scheduledSessionDAO();
-                ScheduledSession bean = new ScheduledSession(sqlDate, time);
+                ScheduledSession bean = new ScheduledSession(sqlDate, time, 0); //TODO: Fill in the good ID
 
                 if(sid < 0)
                     ssdao.insert(bean);

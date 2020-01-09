@@ -1,23 +1,46 @@
 package com.bonsoirdabord.lo52_badtastic.dao;
 
-import androidx.lifecycle.LiveData;
+import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
+import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
+
+import java.util.List;
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
-
-import java.util.List;
+import androidx.room.Update;
 
 @Dao
-public interface ExerciseDAO {
+public abstract class ExerciseDAO {
     @Query("SELECT * FROM " + Exercise.TABLE_NAME)
-    LiveData<List<Exercise>> getAllExercise();
+    public abstract List<Exercise> getAllExercise();
+
+    @Query("SELECT * FROM " + Exercise.TABLE_NAME + " WHERE id = :id")
+    public abstract Exercise getExercise(int id);
 
     @Query("DELETE FROM " + Exercise.TABLE_NAME)
-    void deleteAll();
+    public abstract void deleteAll();
+
+    @Update
+    public abstract void update(Exercise... exercises);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    long insert(Exercise exercise);
+    public abstract long insert(Exercise exercise);
+
+    public Exercise getExerciseCompleted(int id, ExerciseDatabase database){
+        Exercise exercise = getExercise(id);
+        exercise.setThemes(database.themeDAO()
+                .getThemeForExercise(id, database));
+        return exercise;
+    }
+
+    public List<Exercise> getAllExerciseCompleted(ExerciseDatabase database){
+        List<Exercise> exercises = getAllExercise();
+        for (Exercise exercise : exercises) {
+            exercise.setThemes(database.themeDAO()
+                    .getThemeForExercise(exercise.getId(), database));
+        }
+        return exercises;
+    }
 }

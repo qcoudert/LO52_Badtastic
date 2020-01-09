@@ -85,9 +85,7 @@ public class CalendarActivity extends AppCompatActivity {
                                 calendar.decrementSessionCountForDate(prevDate.getTime());
                                 calendar.refreshView();
 
-                                ScheduledSession bean = new ScheduledSession("", 0);
-                                bean.setId(e.getID());
-                                ExerciseDatabase.getInstance(CalendarActivity.this).scheduledSessionDAO().delete(bean);
+                                ExerciseDatabase.getInstance(CalendarActivity.this).scheduledSessionDAO().delete(e.getID());
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)

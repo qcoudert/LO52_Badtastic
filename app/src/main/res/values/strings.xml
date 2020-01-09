@@ -1,18 +1,59 @@
 <resources>
     <string name="app_name">Badtastic</string>
+
+    <!-- Activité AddExerciseActivity -->
+    <string name="add_ex_title">Ajouter un exercice</string>
+    <string name="add_ex_name">Nom de l\'exercice</string>
+    <string name="add_ex_desc">Description de l\'exercice</string>
+    <string name="add_ex_diff">Difficulté:</string>
+    <string name="add_ex_tag">Thématiques</string>
+    <string name="add_ex_duree">Durée</string>
+    <string name="add_ex_public">Type de public:</string>
+
+    <!-- Activité SessionActivity -->
+    <string name="session_title">Exécuter une session (debug)</string>
+    <string name="exercise_nbr">Exercice numéro </string>
+    <string name="exercise_name">Nom : </string>
+    <string name="exercise_theme">Thème(s) : </string>
+    <string name="exercise_rep">Répétitions : </string>
+    <string name="exercise_desc">Descriptif : </string>
+    <string name="grp_nbr">Groupe </string>
+
+    <!-- Activité CreateSessionRandomActivity -->
+    <string name="create_session_title">Créer une session aléatoirement</string>
+    <string name="create_session_name">Nom de la session</string>
+    <string name="create_session_duration">Durée totale de la séance (en min)</string>
+
+    <!-- Activité CreateGroupTraining -->
+    <string name="create_group_title">Créer un groupe</string>
+    <string name="create_group_difficulte">Difficulté:</string>
+    <string name="create_group_tags">Thématiques</string>
+    <string name="create_group_public">Type de public:</string>
+
+    <!-- Utils -->
+    <string name="confirm_util">Confirmer</string>
+    <string name="ajouter_util">Ajouter</string>
+    <string name="creer_util">Créer</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="validate_changes">Valider</string>
+    <string name="label_date">Date</string>
+    <string name="label_hour">Heure</string>
+
+    <!-- Levels -->
+    <string name="type_public_debutant">Débutant</string>
+    <string name="type_public_confirme">Confirmé</string>
+    <string name="type_public_deux">Les deux</string>
+
+    <!-- Scheduled session manager -->
     <string name="title_activity_calendar">CalendarActivity</string>
     <string name="sched_session_manager_name">Sessions planifiées</string>
     <string name="session_number_format">Séance %d</string>
     <string name="confirm_deletion_title">Supprimer une séance</string>
     <string name="confirm_deletion_text">Voulez-vous vraiment supprimer la séance de %s ?</string>
     <string name="title_activity_add_scheduled_session">AddScheduledSessionActivity</string>
-    <string name="validate_changes">Valider</string>
-    <string name="label_date">Date</string>
-    <string name="label_hour">Heure</string>
     <string name="sched_session_add">Planification d\'une nouvelle séance</string>
     <string name="sched_session_edit">Modification d\'une séance planifiée</string>
     <string name="session_select">Choix de la séance</string>
     <string name="session_search">Rechercher une séance&#8230;</string>
     <string name="session_invalid">Séance inexistante</string>
-    <string name="placeholder">Placeholder</string>
 </resources>

@@ -1,10 +1,10 @@
 package com.bonsoirdabord.lo52_badtastic;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,8 +14,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void startSchedulerActivity(View v) {
-        startActivity(new Intent(this, CalendarActivity.class));
+    public void launchSessionActivity(View v) {
+        Intent i = new Intent(getApplicationContext(), SessionActivity.class);
+        startActivity(i);
     }
 
+    public void launchAddExercise(View v) {
+        Intent i = new Intent(getApplicationContext(), AddExerciseActivity.class);
+        startActivity(i);
+    }
+
+    public void launchCreateSessionRandomActivity(View v) {
+        Intent i = new Intent(getApplicationContext(), CreateSessionRandomActivity.class);
+        startActivity(i);
+    }
+
+    public void launchSchedSessMgr(View v) {
+        Intent i = new Intent(getApplicationContext(), CalendarActivity.class);
+        startActivity(i);
+    }
 }

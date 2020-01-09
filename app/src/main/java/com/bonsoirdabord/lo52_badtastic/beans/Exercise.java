@@ -1,5 +1,7 @@
 package com.bonsoirdabord.lo52_badtastic.beans;
 
+import java.util.List;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -22,6 +24,12 @@ public class Exercise {
     @ColumnInfo(name = "difficulty")
     private int difficulty;
 
+    /**
+     * Type de public adapté à l'exercice.
+     * 0 -> Débutant
+     * 1 -> Confirmé
+     * 2 -> Les deux
+     */
     @ColumnInfo(name = "public_type")
     private int publicType;
 
@@ -34,6 +42,9 @@ public class Exercise {
     @ColumnInfo(name = "is_favourite")
     private boolean isFavourite;
 
+    @Ignore
+    private List<Theme> themes;
+
     public Exercise(String name, String descriptino, int difficulty, int publicType, String picturePath, double duration, boolean isFavourite) {
         this.name = name;
         this.descriptino = descriptino;
@@ -42,6 +53,17 @@ public class Exercise {
         this.picturePath = picturePath;
         this.duration = duration;
         this.isFavourite = isFavourite;
+    }
+
+    public Exercise() {
+        this.name = null;
+        this.descriptino = null;
+        this.difficulty = -1;
+        this.publicType = 1;
+        this.picturePath = null;
+        this.duration = -1;
+        this.isFavourite = false;
+        this.themes = null;
     }
 
     public int getId() {
@@ -106,5 +128,13 @@ public class Exercise {
 
     public void setIsFavourite(boolean isFavourite) {
         this.isFavourite = isFavourite;
+    }
+
+    public List<Theme> getThemes() {
+        return themes;
+    }
+
+    public void setThemes(List<Theme> themes) {
+        this.themes = themes;
     }
 }

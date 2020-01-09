@@ -1,30 +1,41 @@
 package com.bonsoirdabord.lo52_badtastic.dao;
 
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
+import com.bonsoirdabord.lo52_badtastic.beans.Session;
+import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 
 import java.util.List;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
 @Dao
-public interface ScheduledSessionDAO {
+public abstract class ScheduledSessionDAO {
     @Query("SELECT * FROM " + ScheduledSession.TABLE_NAME)
-    List<ScheduledSession> getAllScheduledSession();
+    public abstract List<ScheduledSession> getAllScheduledSession();
+
+    @Query("SELECT * FROM " + ScheduledSession.TABLE_NAME + " WHERE id =:id")
+    public abstract ScheduledSession getScheduledSession(int id);
+
+    @Query("DELETE FROM " + ScheduledSession.TABLE_NAME + " WHERE id =:id")
+    public abstract void delete(int id);
 
     @Query("DELETE FROM " + ScheduledSession.TABLE_NAME)
-    void deleteAll();
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    long insert(ScheduledSession scheduledSession);
+    public abstract void deleteAll();
 
     @Update
-    void update(ScheduledSession ss);
+    public abstract void update(ScheduledSession... scheduledSessions);
 
-    @Delete
-    void delete(ScheduledSession ss);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    public abstract long insert(ScheduledSession scheduledSession);
+
+    public ScheduledSession getScheduledSessionCompleted(int id, ExerciseDatabase database){
+        ScheduledSession scheduledSession = getScheduledSession(id);
+        Session session = database.sessionDAO().getSessionCompleted(id, database);
+        scheduledSession.setSession(session);
+        return scheduledSession;
+    }
 }

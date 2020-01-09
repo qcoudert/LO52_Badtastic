@@ -11,19 +11,20 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AddScheduledSessionActivity"
-            android:label="@string/title_activity_add_scheduled_session"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_add_scheduled_session" />
 
         <activity
             android:name=".CalendarActivity"
-            android:label="@string/title_activity_calendar"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_calendar" />
 
         <activity
             android:name=".ExerciseBrowserActivity"
-            android:label="@string/placeholder"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/placeholder" />
 
+        <activity android:name=".CreatGroupTrainingActivity"></activity>
+        <activity android:name=".CreateSessionRandomActivity" />
+        <activity android:name=".AddExerciseActivity" />
+        <activity android:name=".SessionActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
