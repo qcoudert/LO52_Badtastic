@@ -25,14 +25,18 @@ public class Session {
     @ColumnInfo(name = "number_of_group")
     private int numberOfGroup;
 
+    @ColumnInfo(name = "sessionTime")
+    private int sessionTime;
+
     @Ignore
     private List<GroupTraining> groupTrainings;
 
-    public Session(String name, boolean isFavourite, int numberOfGroup) {
+    public Session(String name, boolean isFavourite, int numberOfGroup, int sessionTime) {
         this.name = name;
         this.isFavourite = isFavourite;
         this.numberOfGroup = numberOfGroup;
-        this.groupTrainings = new ArrayList<>();
+        this.sessionTime = sessionTime;
+        groupTrainings = new ArrayList<>();
     }
 
     public Session() {
@@ -80,5 +84,13 @@ public class Session {
 
     public String getName() {
         return this.name;
+    }
+
+    public int getSessionTime() {
+        return sessionTime;
+    }
+
+    public void setSessionTime(int sessionTime) {
+        this.sessionTime = sessionTime;
     }
 }
