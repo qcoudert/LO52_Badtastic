@@ -12,6 +12,12 @@
 
     <!-- Activité SessionActivity -->
     <string name="session_title">Exécuter une session (debug)</string>
+    <string name="exercise_nbr">Exercice numéro </string>
+    <string name="exercise_name">Nom : </string>
+    <string name="exercise_theme">Thème(s) : </string>
+    <string name="exercise_rep">Répétitions : </string>
+    <string name="exercise_desc">Descriptif : </string>
+    <string name="grp_nbr">Groupe </string>
 
     <!-- Activité CreateSessionRandomActivity -->
     <string name="create_session_title">Créer une session aléatoirement</string>

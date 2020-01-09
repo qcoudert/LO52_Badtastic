@@ -17,10 +17,6 @@ import java.util.Map;
 import java.util.Random;
 
 public class SessionGenerator {
-    // Si la durée d’une répétition est inférieure à une minute, alors le nombre de répétition est environ égal à 8.
-    // Si la durée d’une répétition est supérieure à deux minutes, alors le nombre de répétition est environ égal à 5 répétitions.
-    // Le temps total de la séance soit modifié en conséquence et soit clairement affiché à l’utilisateur.
-
     private static final int EXERCISE_TIME_MAX = 120;
     private static final int EXERCISE_TIME_MIN = 60;
     private static final int EXERCISE_TIME_MAX_REPS = 5;
@@ -53,6 +49,8 @@ public class SessionGenerator {
                 } else{
                     reps = (int)(Math.random()*VARIATION_TIME*2)+(EXERCISE_TIME_MIN_REPS+EXERCISE_TIME_MAX_REPS)/2-VARIATION_TIME;
                 }
+
+                time += reps*exercise.getDuration();
 
                 ExerciseSet exerciseSet = new ExerciseSet(i, reps, reps*exercise.getDuration(), 0, exercise.getId(), groupTraining.getId());
                 exerciseSet.setExercise(exercise);

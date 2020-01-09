@@ -51,11 +51,11 @@ public class SessionManagerFragment extends Fragment {
         //getting the current Exercise and setting all informations
         Exercise exercise = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getExercise();
         maxRepetitions = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getReps();
-        ((TextView)view.findViewById(R.id.textView)).setText("Groupe " + index);
-        ((TextView)view.findViewById(R.id.textView7)).setText("Exercice Numéro : " + exerciceNbr);
-        ((TextView)view.findViewById(R.id.textView6)).setText("Nom : " + exercise.getName());
-        ((TextView)view.findViewById(R.id.textView4)).setText("Répétitions : " + repetitionNbr +"/" + maxRepetitions);
-        ((TextView)view.findViewById(R.id.textView3)).setText("Descriptif : " + exercise.getDescriptino());
+        ((TextView)view.findViewById(R.id.textView)).setText(R.string.grp_nbr + index);
+        ((TextView)view.findViewById(R.id.textView7)).setText(R.string.exercise_nbr + exerciceNbr);
+        ((TextView)view.findViewById(R.id.textView6)).setText(R.string.exercise_name + exercise.getName());
+        ((TextView)view.findViewById(R.id.textView4)).setText(R.string.exercise_rep + repetitionNbr +"/" + maxRepetitions);
+        ((TextView)view.findViewById(R.id.textView3)).setText(R.string.exercise_desc + exercise.getDescriptino());
 
         String themesText = "Thème(s) : ";
         for(int i = 0; i<exercise.getThemes().size(); i++) {
