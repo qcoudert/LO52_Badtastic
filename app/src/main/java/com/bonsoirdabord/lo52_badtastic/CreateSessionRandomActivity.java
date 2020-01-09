@@ -74,7 +74,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    sessionToCreate.setSessionTime(Integer.valueOf(s.toString()));
+                    sessionToCreate.setSessionTime(Integer.valueOf(s.toString())*60);
                 }
                 catch(NumberFormatException e){
                     e.printStackTrace();

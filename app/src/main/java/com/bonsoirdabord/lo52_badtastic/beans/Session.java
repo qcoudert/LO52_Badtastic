@@ -22,9 +22,6 @@ public class Session {
     @ColumnInfo(name = "is_favourite")
     private boolean isFavourite;
 
-    @ColumnInfo(name = "number_of_group")
-    private int numberOfGroup;
-
     @ColumnInfo(name = "sessionTime")
     private int sessionTime;
 
@@ -34,7 +31,6 @@ public class Session {
     public Session(String name, boolean isFavourite, int numberOfGroup, int sessionTime) {
         this.name = name;
         this.isFavourite = isFavourite;
-        this.numberOfGroup = numberOfGroup;
         this.sessionTime = sessionTime;
         groupTrainings = new ArrayList<>();
     }
@@ -42,7 +38,6 @@ public class Session {
     public Session() {
         this.name = null;
         this.isFavourite = false;
-        this.numberOfGroup = 0;
         this.groupTrainings = new ArrayList<>();
     }
 
@@ -60,14 +55,6 @@ public class Session {
 
     public void setFavourite(boolean favourite) {
         isFavourite = favourite;
-    }
-
-    public int getNumberOfGroup() {
-        return numberOfGroup;
-    }
-
-    public void setNumberOfGroup(int numberOfGroup) {
-        this.numberOfGroup = numberOfGroup;
     }
 
     public List<GroupTraining> getGroupTrainings() {

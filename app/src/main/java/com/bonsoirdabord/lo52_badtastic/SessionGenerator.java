@@ -32,14 +32,12 @@ public class SessionGenerator {
         List<Exercise> exercises = ExerciseDatabase.getInstance(context).exerciseDAO()
                 .getAllExerciseCompleted(ExerciseDatabase.getInstance(context));
 
-        Map<Integer,List<Exercise>> compatibleExerciseMap = getCompatibleExerciseMap(exercises, session);
-
         for (GroupTraining groupTraining : session.getGroupTrainings()) {
-            List<Exercise> compatibleExercises = compatibleExerciseMap.get(groupTraining.getId());
+            List<Exercise> compatibleExercises = getCompatibleExercises(exercises, groupTraining);
             int time = 0; // time of the actual session
             int i = 0;
             Collections.shuffle(compatibleExercises, new Random());
-            while(time < session.getSessionTime()){
+            while(time < session.getSessionTime() && i < compatibleExercises.size()){
                 Exercise exercise = compatibleExercises.get(i);
                 int reps = 0;
                 if(exercise.getDuration() > EXERCISE_TIME_MAX){
@@ -55,31 +53,28 @@ public class SessionGenerator {
                 ExerciseSet exerciseSet = new ExerciseSet(i, reps, reps*exercise.getDuration(), 0, exercise.getId(), groupTraining.getId());
                 exerciseSet.setExercise(exercise);
                 groupTraining.getExerciseSets().add(exerciseSet);
+
+                i = i + 1 % compatibleExercises.size();
             }
         }
     }
 
-    private static Map<Integer,List<Exercise>> getCompatibleExerciseMap(List<Exercise> exercises, Session session){
-        Map<Integer,List<Exercise>> compatibleExerciseMap = new HashMap<>();
-
-        for (GroupTraining groupTraining : session.getGroupTrainings()) {
-            List<Exercise> compatibles = new ArrayList<>();
-            for (Exercise exercise : exercises) {
-                Boolean test = false;
-                for (final Theme theme : groupTraining.getThemes()) {
-                    for (Theme exerciseTheme : exercise.getThemes()) {
-                        if(theme.equals(exerciseTheme)){
-                            compatibles.add(exercise);
-                            test = true;
-                            break;
-                        }
-                    }
-                    if (test)
+    private static List<Exercise> getCompatibleExercises(List<Exercise> exercises, GroupTraining groupTraining){
+        List<Exercise> compatibles = new ArrayList<>();
+        for (Exercise exercise : exercises) {
+            Boolean test = false;
+            for (final Theme theme : groupTraining.getThemes()) {
+                for (Theme exerciseTheme : exercise.getThemes()) {
+                    if(theme.equals(exerciseTheme)){
+                        compatibles.add(exercise);
+                        test = true;
                         break;
+                    }
                 }
+                if (test)
+                    break;
             }
-            compatibleExerciseMap.put(groupTraining.getId(), compatibles);
         }
-        return compatibleExerciseMap;
+        return compatibles;
     }
 }
