@@ -65,121 +65,41 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_cs_3"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-
-        android:layout_marginEnd="16dp"
-        android:hint="@string/create_group_tags"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_cs_2">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/edit_text_tags_create_sess"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chip_group_create_sess"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_cs_3" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_cs_4"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-
-        android:layout_marginEnd="16dp"
-        android:hint="@string/create_group_difficulte"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chip_group_create_sess">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/edit_text_difficulte_create_sess"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <RadioGroup
-        android:id="@+id/radio_group_public_add_ex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_cs_4">
-
-        <RadioButton
-            android:id="@+id/radio_button_debutant_add_ex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:text="@string/type_public_debutant"
-            android:buttonTint="@color/colorAccent"
-            android:checked="true"/>
-
-        <RadioButton
-            android:id="@+id/radio_button_confirme_add_ex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:text="@string/type_public_confirme"
-            android:buttonTint="@color/colorAccent"/>
-
-        <RadioButton
-            android:id="@+id/radio_button_deux_add_ex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:text="@string/type_public_deux"
-            android:buttonTint="@color/colorAccent"/>
-
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/create_group_public"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/radio_group_public_add_ex"
-        app:layout_constraintEnd_toStartOf="@+id/radio_group_public_add_ex"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/radio_group_public_add_ex" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/valid_button_create_sess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/creer_util"
         android:enabled="false"
         android:onClick="onCreatePressed"
+        android:text="@string/creer_util"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radio_group_public_add_ex" />
+        app:layout_constraintTop_toBottomOf="@+id/add_group_button_create_sess" />
+
+    <ListView
+        android:id="@+id/group_list_create_sess"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_cs_2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_group_button_create_sess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:onClick="onCreatePressed"
+
+        android:text="@string/create_session_add_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_list_create_sess" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

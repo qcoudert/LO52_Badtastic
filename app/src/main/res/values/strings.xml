@@ -23,6 +23,7 @@
     <string name="create_session_title">Créer une session aléatoirement</string>
     <string name="create_session_name">Nom de la session</string>
     <string name="create_session_duration">Durée totale de la séance (en min)</string>
+    <string name="create_session_add_group">Ajouter un groupe</string>
 
     <!-- Activité CreateGroupTraining -->
     <string name="create_group_title">Créer un groupe</string>
@@ -34,6 +35,7 @@
     <string name="confirm_util">Confirmer</string>
     <string name="ajouter_util">Ajouter</string>
     <string name="creer_util">Créer</string>
+    <string name="placeholder_util">Placeholder</string>
 
     <string name="type_public_debutant">Débutant</string>
     <string name="type_public_confirme">Confirmé</string>

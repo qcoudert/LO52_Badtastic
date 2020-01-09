@@ -2,11 +2,13 @@ package com.bonsoirdabord.lo52_badtastic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
@@ -82,10 +84,23 @@ public class CreatGroupTrainingActivity extends AppCompatActivity {
                 checkButtonAvailability();
             }
         });
+
+        RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radio_group_public_add_ex);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.radio_button_debutant_add_ex)
+                    groupTraining.setPublicTarget(0);
+                else if(checkedId == R.id.radio_button_confirme_add_ex)
+                    groupTraining.setPublicTarget(1);
+                else
+                    groupTraining.setPublicTarget(2);
+            }
+        });
     }
 
     private boolean checkButtonAvailability() {
-        if(groupTraining.getDifficulty()<0 || groupTraining.getThemes().isEmpty()) {
+        if(groupTraining.getDifficulty()<1 || groupTraining.getThemes().isEmpty()) {
             createButton.setEnabled(false);
             return false;
         }
@@ -93,5 +108,14 @@ public class CreatGroupTrainingActivity extends AppCompatActivity {
             createButton.setEnabled(true);
             return true;
         }
+    }
+
+    private void onCreatePressed(View v) {
+        Intent i = new Intent();
+        i.putExtra("diff", groupTraining.getDifficulty());
+        i.putExtra("themes", groupTraining.getThemes().toArray());
+        i.putExtra("public", groupTraining.getPublicTarget());
+        setResult(CreateSessionRandomActivity.RESULT_OK, i);
+        finish();
     }
 }
