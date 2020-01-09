@@ -7,7 +7,13 @@
     <string name="add_ex_desc">Description de l\'exercice</string>
     <string name="add_ex_diff">Difficulté:</string>
     <string name="add_ex_tag">Thématiques</string>
+    <string name="add_ex_duree">Durée</string>
     <string name="add_ex_public">Type de public:</string>
+    <string name="type_public_debutant">Débutant</string>
+    <string name="type_public_confirme">Confirmé</string>
 
+    <!-- Utils -->
+    <string name="confirm_util">Confirmer</string>
+    <string name="ajouter_util">Ajouter</string>
 
 </resources>
