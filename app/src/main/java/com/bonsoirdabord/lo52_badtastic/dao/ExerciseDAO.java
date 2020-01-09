@@ -35,4 +35,13 @@ public abstract class ExerciseDAO {
                 .getThemeForExercise(id, database).getValue());
         return exerciseLiveData;
     }
+
+    public LiveData<List<Exercise>> getAllExerciseCompleted(ExerciseDatabase database){
+        LiveData<List<Exercise>> exercisesLiveData = getAllExercise();
+        for (Exercise exercise : exercisesLiveData.getValue()) {
+            exercise.setThemes(database.themeDAO()
+                    .getThemeForExercise(exercise.getId(), database).getValue());
+        }
+        return exercisesLiveData;
+    }
 }
