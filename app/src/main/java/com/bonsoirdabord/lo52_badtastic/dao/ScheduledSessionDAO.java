@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
 import com.bonsoirdabord.lo52_badtastic.beans.Session;
@@ -22,6 +23,9 @@ public abstract class ScheduledSessionDAO {
 
     @Query("DELETE FROM " + ScheduledSession.TABLE_NAME)
     public abstract void deleteAll();
+
+    @Update
+    public abstract void update(ScheduledSession... scheduledSessions);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(ScheduledSession scheduledSession);
