@@ -125,6 +125,6 @@ public class SessionActivity extends AppCompatActivity {
             throw new Exception("Extra wasn't properly got");
 
         ScheduledSessionDAO_Impl scheduledSessionDAO = new ScheduledSessionDAO_Impl(ExerciseDatabase.getInstance(this));
-        return scheduledSessionDAO.getScheduledSessionCompleted(id, ExerciseDatabase.getInstance(this)).getValue();
+        return scheduledSessionDAO.getScheduledSessionCompleted(id, ExerciseDatabase.getInstance(this));
     }
 }

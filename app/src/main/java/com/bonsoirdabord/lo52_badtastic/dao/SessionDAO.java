@@ -16,10 +16,10 @@ import java.util.List;
 @Dao
 public abstract class SessionDAO {
     @Query("SELECT * FROM " + Session.TABLE_NAME)
-    public abstract LiveData<List<Session>> getAllSession();
+    public abstract List<Session> getAllSession();
 
     @Query("SELECT * FROM " + Session.TABLE_NAME + " WHERE id = :id")
-    public abstract LiveData<Session> getSession(int id);
+    public abstract Session getSession(int id);
 
     @Query("DELETE FROM " + Session.TABLE_NAME)
     public abstract void deleteAll();
@@ -30,12 +30,11 @@ public abstract class SessionDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(Session session);
 
-    public LiveData<Session> getSessionCompleted(int id, ExerciseDatabase database){
-        LiveData<Session> sessionLiveData = getSession(id);
+    public Session getSessionCompleted(int id, ExerciseDatabase database){
+        Session session = getSession(id);
         List<GroupTraining> groupTrainings = database.groupTrainingDAO()
-                .getGroupTrainingForSessionCompleted(sessionLiveData.getValue().getId(), database)
-                .getValue();
-        return sessionLiveData;
+                .getGroupTrainingForSessionCompleted(session.getId(), database);
+        return session;
     }
 
 }

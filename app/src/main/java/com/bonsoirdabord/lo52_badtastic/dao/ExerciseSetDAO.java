@@ -16,10 +16,10 @@ import java.util.List;
 @Dao
 public abstract class ExerciseSetDAO {
     @Query("SELECT * FROM " + ExerciseSet.TABLE_NAME)
-    public abstract LiveData<List<ExerciseSet>> getAllExerciseSet();
+    public abstract List<ExerciseSet> getAllExerciseSet();
 
     @Query("SELECT * FROM " + ExerciseSet.TABLE_NAME + " WHERE group_training_id =:groupTrainingId")
-    public abstract LiveData<List<ExerciseSet>> getExerciseSetForGroupTraining(int groupTrainingId);
+    public abstract List<ExerciseSet> getExerciseSetForGroupTraining(int groupTrainingId);
 
     @Query("DELETE FROM " + ExerciseSet.TABLE_NAME)
     public abstract void deleteAll();
@@ -30,19 +30,19 @@ public abstract class ExerciseSetDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(ExerciseSet exerciseSet);
 
-    public LiveData<List<ExerciseSet>> getExerciseSetForGroupTrainingCompleted(int groupTrainingId, ExerciseDatabase database){
-        LiveData<List<ExerciseSet>> exerciseSetLiveData = getExerciseSetForGroupTraining(groupTrainingId);
-        for (ExerciseSet exerciseSet : exerciseSetLiveData.getValue()) {
+    public List<ExerciseSet> getExerciseSetForGroupTrainingCompleted(int groupTrainingId, ExerciseDatabase database){
+        List<ExerciseSet> exerciseSets = getExerciseSetForGroupTraining(groupTrainingId);
+        for (ExerciseSet exerciseSet : exerciseSets) {
             exerciseSet.setExercise(database.exerciseDAO()
-                    .getExerciseCompleted(exerciseSet.getExerciseId(), database).getValue());
+                    .getExerciseCompleted(exerciseSet.getExerciseId(), database));
         }
-        exerciseSetLiveData.getValue().sort(new Comparator<ExerciseSet>() {
+        exerciseSets.sort(new Comparator<ExerciseSet>() {
             @Override
             public int compare(ExerciseSet o1, ExerciseSet o2) {
                 return (Integer.compare(o1.getOrder(), o2.getOrder()));
             }
         });
-        return exerciseSetLiveData;
+        return exerciseSets;
     }
 
 

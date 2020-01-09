@@ -15,10 +15,10 @@ import java.util.List;
 @Dao
 public abstract class GroupTrainingDAO {
     @Query("SELECT * FROM " + GroupTraining.TABLE_NAME)
-    public abstract LiveData<List<GroupTraining>> getAllGroupTraining();
+    public abstract List<GroupTraining> getAllGroupTraining();
 
     @Query("SELECT * FROM " + GroupTraining.TABLE_NAME + " WHERE session_id = :sessionId")
-    public abstract LiveData<List<GroupTraining>> getGroupTrainingForSession(final int sessionId);
+    public abstract List<GroupTraining> getGroupTrainingForSession(final int sessionId);
 
     @Query("DELETE FROM " + GroupTraining.TABLE_NAME)
     public abstract void deleteAll();
@@ -29,14 +29,14 @@ public abstract class GroupTrainingDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(GroupTraining groupTraining);
 
-    public LiveData<List<GroupTraining>> getGroupTrainingForSessionCompleted(final int sessionId, final ExerciseDatabase database){
-        LiveData<List<GroupTraining>> groupTrainingsLive = getGroupTrainingForSession(sessionId);
-        for (GroupTraining groupTraining : groupTrainingsLive.getValue()) {
+    public List<GroupTraining> getGroupTrainingForSessionCompleted(final int sessionId, final ExerciseDatabase database){
+        List<GroupTraining> groupTrainings = getGroupTrainingForSession(sessionId);
+        for (GroupTraining groupTraining : groupTrainings) {
             groupTraining.setThemes(database.themeDAO()
-                    .getThemeForGroupTraining(groupTraining.getId(), database).getValue());
+                    .getThemeForGroupTraining(groupTraining.getId(), database));
             groupTraining.setExerciseSets(database.exerciseSetDAO()
-                    .getExerciseSetForGroupTrainingCompleted(groupTraining.getId(), database).getValue());
+                    .getExerciseSetForGroupTrainingCompleted(groupTraining.getId(), database));
         }
-        return groupTrainingsLive;
+        return groupTrainings;
     }
 }

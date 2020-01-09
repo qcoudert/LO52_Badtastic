@@ -1,4 +1,4 @@
-package com.bonsoirdabord.lo52_badtastic.view_models;
+package com.bonsoirdabord.lo52_badtastic;
 
 import android.content.Context;
 
