@@ -29,6 +29,7 @@ public class Exercise {
      * Type de public adapté à l'exercice.
      * 0 -> Débutant
      * 1 -> Confirmé
+     * 2 -> Les deux
      */
     @ColumnInfo(name = "public_type")
     private int publicType;

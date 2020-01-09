@@ -122,7 +122,7 @@
         android:hint="@string/add_ex_duree"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+        app:layout_constraintTop_toBottomOf="@+id/chip_group_add_ex">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_duree_add_ex"
@@ -137,7 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView8"
@@ -147,7 +147,7 @@
             android:id="@+id/radio_button_debutant_add_ex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_margin="0dp"
             android:text="@string/type_public_debutant"
             android:buttonTint="@color/colorAccent"
             android:checked="true"/>
@@ -156,9 +156,18 @@
             android:id="@+id/radio_button_confirme_add_ex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_margin="0dp"
             android:text="@string/type_public_confirme"
             android:buttonTint="@color/colorAccent"/>
+
+        <RadioButton
+            android:id="@+id/radio_button_deux_add_ex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="@string/type_public_deux"
+            android:buttonTint="@color/colorAccent"/>
+
     </RadioGroup>
 
     <TextView
@@ -180,7 +189,7 @@
         android:layout_height="wrap_content"
         android:text="@string/ajouter_util"
         android:textSize="18sp"
-        android:backgroundTint="@color/colorGreyish"
+        android:backgroundTint="@color/colorAccent"
         android:onClick="onAddPressed"
         android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"

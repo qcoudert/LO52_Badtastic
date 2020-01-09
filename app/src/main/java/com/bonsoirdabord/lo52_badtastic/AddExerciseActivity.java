@@ -31,6 +31,7 @@ public class AddExerciseActivity extends AppCompatActivity {
 
     private Exercise exerciseToAdd;
     private MaterialButton addButton;
+    private int currentChipNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,19 +104,28 @@ public class AddExerciseActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 for (int i=0; i<s.length(); i++) {
-                    if(s.charAt(i)==' ' && i-1>0){
+                    if(s.charAt(i)==' ' && i-1>0 && currentChipNumber<5){
                         LayoutInflater layoutInflater = LayoutInflater.from(AddExerciseActivity.this);
-                        Chip chip = (Chip)layoutInflater.inflate(R.layout.chip_layout, chipGroup);
+                        Chip chip = (Chip)layoutInflater.inflate(R.layout.chip_layout, null);
                         chip.setText(s.subSequence(0,i));
                         Theme tag = new Theme(s.subSequence(0,i).toString());
+                        exerciseToAdd.getThemes().add(tag);
+                        s.delete(0,i);                                                              //On efface le texte responsable du chip
+                        chipGroup.addView(chip);
+                        currentChipNumber++;
 
+                        //Callback appelé lors de la fermeture d'un chip
                         chip.setOnCloseIconClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 exerciseToAdd.getThemes().remove(tag);
                                 chipGroup.removeView(v);
+                                currentChipNumber--;
+                                checkButtonAvailability();
                             }
                         });
+
+                        checkButtonAvailability();
                     }
                 }
             }
@@ -158,43 +168,21 @@ public class AddExerciseActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.radio_button_debutant_add_ex)
                     exerciseToAdd.setDifficulty(0);
-                else
+                else if(checkedId == R.id.radio_button_confirme_add_ex)
                     exerciseToAdd.setDifficulty(1);
+                else
+                    exerciseToAdd.setDifficulty(2);
             }
         });
-
-        //Tentative d'ajout de chips, à terminer plus tard ou retirer avant release
-        /*TextInputEditText tiet = (TextInputEditText) findViewById(R.id.edit_text_tags_add_ex);
-        tiet.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                for(int is = i1; is<=i2; is++) {
-                    if(charSequence.charAt(is)==' ') {
-                        ChipDrawable chip = ChipDrawable.createFromResource(AddExerciseActivity.get(), R.xml.chip);
-                        chip.setChipText(editable.subSequence(SpannedLength,editable.length()));
-                        chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
-                        ImageSpan span = new ImageSpan(chip);
-                        editable.setSpan(span, SpannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        SpannedLength = editable.length();
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });*/
     }
 
+    /**
+     * Fonction onClick du bouton "Ajouter".
+     * Ajoute l'exercice dans la base de données de l'utilisateur avant de fermer l'activité.
+     * @param v - View du bouton pressé.
+     */
     public void onAddPressed(View v) {
         ExerciseDatabase.getInstance(getApplicationContext()).exerciseDAO().insert(exerciseToAdd);
-        Toast.makeText(getApplicationContext(), "Exercice ajouté !", Toast.LENGTH_SHORT);
         finish();
     }
 
@@ -204,12 +192,10 @@ public class AddExerciseActivity extends AppCompatActivity {
      */
     public boolean checkButtonAvailability() {
         if(exerciseToAdd.getName()==null || exerciseToAdd.getDescriptino()==null || exerciseToAdd.getDifficulty()==-1 || exerciseToAdd.getDuration()<0 || exerciseToAdd.getThemes().isEmpty()){
-            addButton.setBackgroundColor(getColor(R.color.colorGreyish));
             addButton.setEnabled(false);
             return false;
         }
         else {
-            addButton.setBackgroundColor(getColor(R.color.colorAccent));
             addButton.setEnabled(true);
             return true;
         }
