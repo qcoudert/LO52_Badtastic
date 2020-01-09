@@ -22,16 +22,16 @@ public class Session {
     @ColumnInfo(name = "number_of_group")
     private int numberOfGroup;
 
-    @ColumnInfo(name = "session_time")
-    private int session_time;
+    @ColumnInfo(name = "sessionTime")
+    private int sessionTime;
 
     @Ignore
     private List<GroupTraining> groupTrainings;
 
-    public Session(boolean isFavourite, int numberOfGroup, int session_time) {
+    public Session(boolean isFavourite, int numberOfGroup, int sessionTime) {
         this.isFavourite = isFavourite;
         this.numberOfGroup = numberOfGroup;
-        this.session_time = session_time;
+        this.sessionTime = sessionTime;
         groupTrainings = new ArrayList<>();
     }
 
@@ -67,11 +67,11 @@ public class Session {
         this.groupTrainings = groupTrainings;
     }
 
-    public int getSession_time() {
-        return session_time;
+    public int getSessionTime() {
+        return sessionTime;
     }
 
-    public void setSession_time(int session_time) {
-        this.session_time = session_time;
+    public void setSessionTime(int sessionTime) {
+        this.sessionTime = sessionTime;
     }
 }
