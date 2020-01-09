@@ -9,15 +9,28 @@
     <string name="add_ex_tag">Thématiques</string>
     <string name="add_ex_duree">Durée</string>
     <string name="add_ex_public">Type de public:</string>
-    <string name="type_public_debutant">Débutant</string>
-    <string name="type_public_confirme">Confirmé</string>
-    <string name="type_public_deux">Les deux</string>
 
     <!-- Activité SessionActivity -->
     <string name="session_title">Exécuter une session (debug)</string>
 
+    <!-- Activité CreateSessionRandomActivity -->
+    <string name="create_session_title">Créer une session aléatoirement</string>
+    <string name="create_session_name">Nom de l\'exercice</string>
+    <string name="create_session_duration">Durée totale de la séance</string>
+
+    <!-- Activité CreateGroupTraining -->
+    <string name="create_group_title">Créer un groupe</string>
+    <string name="create_group_difficulte">Difficulté (1 à 5)</string>
+    <string name="create_group_tags">Thématiques</string>
+    <string name="create_group_public">Type de public:</string>
+
     <!-- Utils -->
     <string name="confirm_util">Confirmer</string>
     <string name="ajouter_util">Ajouter</string>
+    <string name="creer_util">Créer</string>
+
+    <string name="type_public_debutant">Débutant</string>
+    <string name="type_public_confirme">Confirmé</string>
+    <string name="type_public_deux">Les deux</string>
 
 </resources>

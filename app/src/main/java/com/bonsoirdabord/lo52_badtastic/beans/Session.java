@@ -16,6 +16,9 @@ public class Session {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name= "name")
+    private String name;
+
     @ColumnInfo(name = "is_favourite")
     private boolean isFavourite;
 
@@ -25,10 +28,18 @@ public class Session {
     @Ignore
     private List<GroupTraining> groupTrainings;
 
-    public Session(boolean isFavourite, int numberOfGroup) {
+    public Session(String name, boolean isFavourite, int numberOfGroup) {
+        this.name = name;
         this.isFavourite = isFavourite;
         this.numberOfGroup = numberOfGroup;
-        groupTrainings = new ArrayList<>();
+        this.groupTrainings = new ArrayList<>();
+    }
+
+    public Session() {
+        this.name = null;
+        this.isFavourite = false;
+        this.numberOfGroup = 0;
+        this.groupTrainings = new ArrayList<>();
     }
 
     public int getId() {
@@ -61,5 +72,13 @@ public class Session {
 
     public void setGroupTrainings(List<GroupTraining> groupTrainings) {
         this.groupTrainings = groupTrainings;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }
