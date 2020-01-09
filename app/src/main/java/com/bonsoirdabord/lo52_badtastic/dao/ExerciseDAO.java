@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
@@ -21,6 +22,9 @@ public abstract class ExerciseDAO {
 
     @Query("DELETE FROM " + Exercise.TABLE_NAME)
     public abstract void deleteAll();
+
+    @Update
+    public abstract void update(Exercise... exercises);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(Exercise exercise);

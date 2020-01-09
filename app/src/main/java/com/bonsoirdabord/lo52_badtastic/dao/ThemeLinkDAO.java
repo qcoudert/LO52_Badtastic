@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.bonsoirdabord.lo52_badtastic.beans.ThemeLink;
 
@@ -23,6 +24,9 @@ public interface ThemeLinkDAO {
 
     @Query("DELETE FROM " + ThemeLink.TABLE_NAME)
     void deleteAll();
+
+    @Update
+    public abstract void update(ThemeLink... themeLinks);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insert(ThemeLink themeLink);
