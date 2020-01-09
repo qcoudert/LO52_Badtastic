@@ -15,6 +15,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
+import com.bonsoirdabord.lo52_badtastic.beans.Theme;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipDrawable;
@@ -37,7 +38,7 @@ public class AddExerciseActivity extends AppCompatActivity {
         setSupportActionBar(tbar);
 
         exerciseToAdd = new Exercise();
-        exerciseToAdd.setThemes(new ArrayList<>());
+        exerciseToAdd.setThemes(new ArrayList<Theme>());
 
         addButton = (MaterialButton)findViewById(R.id.add_button_add_ex);
 
