@@ -49,6 +49,7 @@ public class SessionManagerFragment extends Fragment {
         view.setBackgroundColor(color);
 
         //getting the current Exercise and setting all informations
+
         Exercise exercise = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getExercise();
         maxRepetitions = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getReps();
         ((TextView)view.findViewById(R.id.textView)).setText(R.string.grp_nbr + index);
@@ -59,7 +60,7 @@ public class SessionManagerFragment extends Fragment {
 
         String themesText = "Thème(s) : ";
         for(int i = 0; i<exercise.getThemes().size(); i++) {
-            themesText += exercise.getThemes().get(i);
+            themesText += exercise.getThemes().get(i).getName();
 
             if(i != exercise.getThemes().size() - 1)
                 themesText += ", ";
@@ -68,12 +69,16 @@ public class SessionManagerFragment extends Fragment {
 
 
         chrono = view.findViewById(R.id.layoutchrono);
-        chrono.setBase((long)(SystemClock.elapsedRealtime() + exercise.getDuration()));
+        chrono.setBase((long)(SystemClock.elapsedRealtime() + exercise.getDuration() * 1000));
+
         chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-                if(chronometer.getText().equals("00:00"))
+                if(chronometer.getText().equals("00:00")){
                     setClickReaction();
+                    chrono = null;
+                }
+
             }
         });
         chrono.start();

@@ -45,14 +45,14 @@ public class SessionGenerator {
                 Exercise exercise = compatibleExercises.get(i);
                 int reps = 0;
                 if(exercise.getDuration() > EXERCISE_TIME_MAX){
-                    reps = (int)(Math.random()*VARIATION_TIME*2)+EXERCISE_TIME_MAX_REPS-VARIATION_TIME;
+                    reps = (int)(Math.random() * VARIATION_TIME * 2) + EXERCISE_TIME_MAX_REPS - VARIATION_TIME;
                 } else if(exercise.getDuration() < EXERCISE_TIME_MIN){
-                    reps = (int)(Math.random()*VARIATION_TIME*2)+EXERCISE_TIME_MIN_REPS-VARIATION_TIME;
+                    reps = (int)(Math.random() * VARIATION_TIME * 2) + EXERCISE_TIME_MIN_REPS - VARIATION_TIME;
                 } else{
-                    reps = (int)(Math.random()*VARIATION_TIME*2)+(EXERCISE_TIME_MIN_REPS+EXERCISE_TIME_MAX_REPS)/2-VARIATION_TIME;
+                    reps = (int)(Math.random() * VARIATION_TIME * 2) + (EXERCISE_TIME_MIN_REPS + EXERCISE_TIME_MAX_REPS) / 2 - VARIATION_TIME;
                 }
 
-                time += reps*exercise.getDuration();
+                time += reps * exercise.getDuration();
 
                 ExerciseSet exerciseSet = new ExerciseSet(i, reps, reps*exercise.getDuration(), 0, exercise.getId(), groupTraining.getId());
                 exerciseSet.setExercise(exercise);
@@ -66,7 +66,7 @@ public class SessionGenerator {
     private static List<Exercise> getCompatibleExercises(List<Exercise> exercises, GroupTraining groupTraining){
         List<Exercise> compatibles = new ArrayList<>();
         for (Exercise exercise : exercises) {
-            Boolean test = false;
+            boolean test = false;
             for (final Theme theme : groupTraining.getThemes()) {
                 for (Theme exerciseTheme : exercise.getThemes()) {
                     if(theme.equals(exerciseTheme)){

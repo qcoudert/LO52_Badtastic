@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
@@ -26,7 +27,7 @@ import com.bonsoirdabord.lo52_badtastic.dao.ThemeDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.ThemeLinkDAO;
 
 @Database(entities = {Exercise.class, ExerciseSet.class, GroupTraining.class, ScheduledSession.class,
-        Session.class, Theme.class, ThemeLink.class}, exportSchema = false, version = 4)
+        Session.class, Theme.class, ThemeLink.class}, exportSchema = false, version = 5)
 public abstract class ExerciseDatabase extends RoomDatabase {
     public static final String DB_NAME = "exercise_badtastic.db";
     private static ExerciseDatabase instance;
