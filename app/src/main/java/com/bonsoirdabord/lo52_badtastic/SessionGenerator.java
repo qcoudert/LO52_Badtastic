@@ -25,8 +25,7 @@ public class SessionGenerator {
 
     private static final float PUBLIC_MISMATCH_SCORE = 4.0f; //Constant to add if the target public doesn't match
     private static final float DIFFICULTY_MISMATCH_SCORE_MULTPLIER = 0.5f; //Value multiplied by the difference of difficulty
-    private static final float TIME_SCORE_EXP = 5.0f; //Formula is 1-exp(-|timeDiff| * TIME_SCORE_EXP)
-    private static final float TIME_SCORE_WEIGHT = 0.5f;
+    private static final float TIME_SCORE_EXP = 5.0f; //Formula is 1-exp(-relativeTimeError * TIME_SCORE_EXP)
 
     /***
      *  Get a Session with GroupTraining list and generate the exercise sets with parameter of the GroupTrainings.
@@ -110,7 +109,7 @@ public class SessionGenerator {
         float relativeTimeError = Math.abs(totalTime - (float) sess.getSessionTime()) / ((float) sess.getSessionTime());
         float timeScore = 1.0f - exp(-relativeTimeError * TIME_SCORE_EXP);
 
-        return (1.0f - TIME_SCORE_WEIGHT) * mismatchScore + TIME_SCORE_WEIGHT * timeScore; //Combine scores
+        return Math.max(mismatchScore, timeScore);
     }
 
     /**
