@@ -74,7 +74,6 @@ public class SessionGenerator {
                             compatibles.add(exercise);
                             test = true;
                             break;
-
                         }
                     }
                     if (test)
@@ -83,7 +82,6 @@ public class SessionGenerator {
             }
             compatibleExerciseMap.put(groupTraining.getId(), compatibles);
         }
-
         return compatibleExerciseMap;
     }
 }
