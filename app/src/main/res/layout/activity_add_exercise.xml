@@ -189,7 +189,6 @@
         android:layout_height="wrap_content"
         android:text="@string/ajouter_util"
         android:textSize="18sp"
-        android:backgroundTint="@color/colorAccent"
         android:onClick="onAddPressed"
         android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -33,9 +33,10 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
         sessionToCreate = new Session();
         sessionToCreate.setNumberOfGroup(1); //TODO:ENLEVER LE 1 APRES FINITION
+        groupTraining = new GroupTraining();
         sessionToCreate.getGroupTrainings().add(groupTraining); //TODO:ENLEVER APRES FINITION
         createButton = (MaterialButton)findViewById(R.id.valid_button_create_sess);
-        groupTraining = new GroupTraining();
+
         chipGroup = (ChipGroup)findViewById(R.id.chip_group_create_sess);
         currentChipNumber = 0;
 
@@ -72,7 +73,12 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                sessionToCreate.setSessionTime(Integer.valueOf(s.toString()));
+                try {
+                    sessionToCreate.setSessionTime(Integer.valueOf(s.toString()));
+                }
+                catch(NumberFormatException e){
+                    e.printStackTrace();
+                }
                 checkButtonAvailability();
             }
         });
@@ -91,7 +97,12 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                groupTraining.setDifficulty(Integer.valueOf(s.toString()));
+                try {
+                    groupTraining.setDifficulty(Integer.valueOf(s.toString()));
+                }
+                catch(NumberFormatException e){
+                    e.printStackTrace();
+                }
             }
         });
 

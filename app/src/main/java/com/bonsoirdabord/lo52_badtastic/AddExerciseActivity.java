@@ -146,7 +146,12 @@ public class AddExerciseActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                exerciseToAdd.setDuration(Double.valueOf(s.toString()));
+                try {
+                    exerciseToAdd.setDuration(Double.valueOf(s.toString()));
+                }
+                catch(NumberFormatException e) {
+                    e.printStackTrace();
+                }
                 checkButtonAvailability();
             }
         });
