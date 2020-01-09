@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/caldroid_white"
+    tools:context=".SessionActivity">
+
+    <LinearLayout
+        android:id="@+id/linlayout1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/globchrono">
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:background="@null"
+        android:gravity="center"
+        android:onClick="pauseChronometers"
+        android:scaleType="centerInside"
+        android:scaleX="4"
+        android:scaleY="4"
+        android:src="@android:drawable/ic_media_pause"
+        android:tint="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/globchrono"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/leave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="35dp"
+        android:background="@null"
+        android:gravity="center"
+        android:onClick="onBackPressed"
+        android:scaleType="centerInside"
+        android:scaleX="4"
+        android:scaleY="4"
+        android:src="@android:drawable/ic_delete"
+        android:tint="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/globchrono"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Chronometer
+        android:id="@+id/globchrono"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textAlignment="center"
+        android:textSize="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
