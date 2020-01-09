@@ -50,6 +50,8 @@ public class SessionGenerator {
                     reps = (int)(Math.random()*VARIATION_TIME*2)+(EXERCISE_TIME_MIN_REPS+EXERCISE_TIME_MAX_REPS)/2-VARIATION_TIME;
                 }
 
+                time += reps*exercise.getDuration();
+
                 ExerciseSet exerciseSet = new ExerciseSet(i, reps, reps*exercise.getDuration(), 0, exercise.getId(), groupTraining.getId());
                 exerciseSet.setExercise(exercise);
                 groupTraining.getExerciseSets().add(exerciseSet);
