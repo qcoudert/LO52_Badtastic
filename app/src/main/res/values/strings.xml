@@ -13,6 +13,9 @@
     <string name="type_public_confirme">Confirmé</string>
     <string name="type_public_deux">Les deux</string>
 
+    <!-- Activité SessionActivity -->
+    <string name="session_title">Exécuter une session (debug)</string>
+
     <!-- Utils -->
     <string name="confirm_util">Confirmer</string>
     <string name="ajouter_util">Ajouter</string>

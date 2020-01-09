@@ -14,6 +14,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    public void launchSessionActivity(View v) {
+        Intent i = new Intent(this.getApplicationContext(), SessionActivity.class);
+        startActivity(i);
+    }
+
     public void launchAddExercise(View v) {
         Intent i = new Intent(this.getApplicationContext(), AddExerciseActivity.class);
         startActivity(i);
