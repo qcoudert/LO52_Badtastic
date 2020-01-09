@@ -22,12 +22,16 @@ public class Session {
     @ColumnInfo(name = "number_of_group")
     private int numberOfGroup;
 
+    @ColumnInfo(name = "session_time")
+    private int session_time;
+
     @Ignore
     private List<GroupTraining> groupTrainings;
 
-    public Session(boolean isFavourite, int numberOfGroup) {
+    public Session(boolean isFavourite, int numberOfGroup, int session_time) {
         this.isFavourite = isFavourite;
         this.numberOfGroup = numberOfGroup;
+        this.session_time = session_time;
         groupTrainings = new ArrayList<>();
     }
 
@@ -61,5 +65,13 @@ public class Session {
 
     public void setGroupTrainings(List<GroupTraining> groupTrainings) {
         this.groupTrainings = groupTrainings;
+    }
+
+    public int getSession_time() {
+        return session_time;
+    }
+
+    public void setSession_time(int session_time) {
+        this.session_time = session_time;
     }
 }

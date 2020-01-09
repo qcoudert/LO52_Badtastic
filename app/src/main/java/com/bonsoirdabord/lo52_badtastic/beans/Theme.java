@@ -33,4 +33,6 @@ public class Theme {
     public void setId(int id) {
         this.id = id;
     }
+
+    public Boolean equals(Theme theme){return name.equals(theme.getName());}
 }

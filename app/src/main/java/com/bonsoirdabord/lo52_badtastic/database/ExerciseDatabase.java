@@ -26,7 +26,7 @@ import com.bonsoirdabord.lo52_badtastic.dao.ThemeDAO;
 import com.bonsoirdabord.lo52_badtastic.dao.ThemeLinkDAO;
 
 @Database(entities = {Exercise.class, ExerciseSet.class, GroupTraining.class, ScheduledSession.class,
-        Session.class, Theme.class, ThemeLink.class}, exportSchema = false, version = 3)
+        Session.class, Theme.class, ThemeLink.class}, exportSchema = false, version = 4)
 public abstract class ExerciseDatabase extends RoomDatabase {
     public static final String DB_NAME = "exercise_badtastic.db";
     private static ExerciseDatabase instance;
