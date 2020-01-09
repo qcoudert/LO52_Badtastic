@@ -6,6 +6,6 @@
     <color name="colorPale">#65B6F6</color>
     <color name="colorGreyish">#BBDEFB</color>
 
-    <color name="OnPrimary">#000000</color>
+    <color name="OnPrimary">#FFFFFF</color>
     <color name="OnPrimaryDark">#FFFFFF</color>
 </resources>
