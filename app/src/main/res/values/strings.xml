@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">LO52_Badtastic</string>
+
+    <!-- Activité AddExerciseActivity -->
+    <string name="add_ex_title">Ajouter un exercice</string>
+    <string name="add_ex_name">Nom de l\'exercice</string>
+    <string name="add_ex_desc">Description de l\'exercice</string>
+    <string name="add_ex_diff">Difficulté:</string>
+    <string name="add_ex_tag">Thématiques</string>
+    <string name="add_ex_duree">Durée</string>
+    <string name="add_ex_public">Type de public:</string>
+    <string name="type_public_debutant">Débutant</string>
+    <string name="type_public_confirme">Confirmé</string>
+    <string name="type_public_deux">Les deux</string>
+
+    <!-- Activité SessionActivity -->
+    <string name="session_title">Exécuter une session (debug)</string>
+
+    <!-- Utils -->
+    <string name="confirm_util">Confirmer</string>
+    <string name="ajouter_util">Ajouter</string>
+
 </resources>
