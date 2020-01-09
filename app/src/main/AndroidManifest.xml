@@ -18,6 +18,12 @@
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ExerciseBrowserActivity"
+            android:label="@string/placeholder"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
