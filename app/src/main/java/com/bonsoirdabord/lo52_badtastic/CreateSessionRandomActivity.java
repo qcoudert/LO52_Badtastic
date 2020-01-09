@@ -13,7 +13,6 @@ import android.widget.RadioGroup;
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.Session;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
-import com.bonsoirdabord.lo52_badtastic.view_models.SessionUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;

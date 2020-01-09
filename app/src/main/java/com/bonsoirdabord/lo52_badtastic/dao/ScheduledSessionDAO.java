@@ -16,10 +16,10 @@ import java.util.List;
 @Dao
 public abstract class ScheduledSessionDAO {
     @Query("SELECT * FROM " + ScheduledSession.TABLE_NAME)
-    public abstract LiveData<List<ScheduledSession>> getAllScheduledSession();
+    public abstract List<ScheduledSession> getAllScheduledSession();
 
     @Query("SELECT * FROM " + ScheduledSession.TABLE_NAME + " WHERE id =:id")
-    public abstract LiveData<ScheduledSession> getScheduledSession(int id);
+    public abstract ScheduledSession getScheduledSession(int id);
 
     @Query("DELETE FROM " + ScheduledSession.TABLE_NAME)
     public abstract void deleteAll();
@@ -30,10 +30,10 @@ public abstract class ScheduledSessionDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(ScheduledSession scheduledSession);
 
-    public LiveData<ScheduledSession> getScheduledSessionCompleted(int id, ExerciseDatabase database){
-        LiveData<ScheduledSession> scheduledSessionLiveData = getScheduledSession(id);
-        Session session = database.sessionDAO().getSessionCompleted(id, database).getValue();
-        scheduledSessionLiveData.getValue().setSession(session);
-        return scheduledSessionLiveData;
+    public ScheduledSession getScheduledSessionCompleted(int id, ExerciseDatabase database){
+        ScheduledSession scheduledSession = getScheduledSession(id);
+        Session session = database.sessionDAO().getSessionCompleted(id, database);
+        scheduledSession.setSession(session);
+        return scheduledSession;
     }
 }

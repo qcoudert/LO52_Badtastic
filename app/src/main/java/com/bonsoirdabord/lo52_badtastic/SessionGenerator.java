@@ -34,7 +34,7 @@ public class SessionGenerator {
      */
     public static void generateExerciseSetForSession(Context context, Session session){
         List<Exercise> exercises = ExerciseDatabase.getInstance(context).exerciseDAO()
-                .getAllExerciseCompleted(ExerciseDatabase.getInstance(context)).getValue();
+                .getAllExerciseCompleted(ExerciseDatabase.getInstance(context));
 
         Map<Integer,List<Exercise>> compatibleExerciseMap = getCompatibleExerciseMap(exercises, session);
 

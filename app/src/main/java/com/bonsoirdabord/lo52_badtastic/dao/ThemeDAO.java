@@ -18,13 +18,13 @@ import java.util.List;
 @Dao
 public abstract class ThemeDAO {
     @Query("SELECT * FROM " + Theme.TABLE_NAME)
-    public abstract LiveData<List<Theme>> getAllTheme();
+    public abstract List<Theme> getAllTheme();
 
     @Query("SELECT * FROM " + Theme.TABLE_NAME + " WHERE id = :id")
-    public abstract LiveData<Theme> getTheme(int id);
+    public abstract Theme getTheme(int id);
 
     @Query("SELECT * FROM " + Theme.TABLE_NAME + " WHERE id IN (:ids)")
-    public abstract LiveData<List<Theme>> getThemes(List<Integer> ids);
+    public abstract List<Theme> getThemes(List<Integer> ids);
 
     @Query("DELETE FROM " + Theme.TABLE_NAME)
     public abstract void deleteAll();
@@ -35,8 +35,8 @@ public abstract class ThemeDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(Theme theme);
 
-    public LiveData<List<Theme>> getThemeForGroupTraining(int groupTrainingId, ExerciseDatabase database){
-        List<ThemeLink> themeLinks = database.themeLinkDAO().getThemeLinkForGroupTraining(groupTrainingId).getValue();
+    public List<Theme> getThemeForGroupTraining(int groupTrainingId, ExerciseDatabase database){
+        List<ThemeLink> themeLinks = database.themeLinkDAO().getThemeLinkForGroupTraining(groupTrainingId);
         List<Integer> themes = new ArrayList<>();
         for (ThemeLink themeLink : themeLinks) {
             themes.add(themeLink.themeId);
@@ -44,8 +44,8 @@ public abstract class ThemeDAO {
         return getThemes(themes);
     }
 
-    public LiveData<List<Theme>> getThemeForExercise(int exerciseId, ExerciseDatabase database){
-        List<ThemeLink> themeLinks = database.themeLinkDAO().getThemeLinkForExercise(exerciseId).getValue();
+    public List<Theme> getThemeForExercise(int exerciseId, ExerciseDatabase database){
+        List<ThemeLink> themeLinks = database.themeLinkDAO().getThemeLinkForExercise(exerciseId);
         List<Integer> themes = new ArrayList<>();
         for (ThemeLink themeLink : themeLinks) {
             themes.add(themeLink.themeId);

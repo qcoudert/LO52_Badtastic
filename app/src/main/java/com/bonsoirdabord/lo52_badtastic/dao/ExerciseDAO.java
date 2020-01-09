@@ -15,10 +15,10 @@ import java.util.List;
 @Dao
 public abstract class ExerciseDAO {
     @Query("SELECT * FROM " + Exercise.TABLE_NAME)
-    public abstract LiveData<List<Exercise>> getAllExercise();
+    public abstract List<Exercise> getAllExercise();
 
     @Query("SELECT * FROM " + Exercise.TABLE_NAME + " WHERE id = :id")
-    public abstract LiveData<Exercise> getExercise(int id);
+    public abstract Exercise getExercise(int id);
 
     @Query("DELETE FROM " + Exercise.TABLE_NAME)
     public abstract void deleteAll();
@@ -29,19 +29,19 @@ public abstract class ExerciseDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(Exercise exercise);
 
-    public LiveData<Exercise> getExerciseCompleted(int id, ExerciseDatabase database){
-        LiveData<Exercise> exerciseLiveData = getExercise(id);
-        exerciseLiveData.getValue().setThemes(database.themeDAO()
-                .getThemeForExercise(id, database).getValue());
-        return exerciseLiveData;
+    public Exercise getExerciseCompleted(int id, ExerciseDatabase database){
+        Exercise exercise = getExercise(id);
+        exercise.setThemes(database.themeDAO()
+                .getThemeForExercise(id, database));
+        return exercise;
     }
 
-    public LiveData<List<Exercise>> getAllExerciseCompleted(ExerciseDatabase database){
-        LiveData<List<Exercise>> exercisesLiveData = getAllExercise();
-        for (Exercise exercise : exercisesLiveData.getValue()) {
+    public List<Exercise> getAllExerciseCompleted(ExerciseDatabase database){
+        List<Exercise> exercises = getAllExercise();
+        for (Exercise exercise : exercises) {
             exercise.setThemes(database.themeDAO()
-                    .getThemeForExercise(exercise.getId(), database).getValue());
+                    .getThemeForExercise(exercise.getId(), database));
         }
-        return exercisesLiveData;
+        return exercises;
     }
 }
