@@ -162,6 +162,9 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
     }
 
     public void onCreatePressed(View v ) {
-        //Do
+        //Do...
+        //sessionToCreate est la session à envoyer
+
+        finish();
     }
 }

@@ -10,7 +10,7 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="launchSessionActivity"
+        android:onClick="launchCreateSessionRandomActivity"
         android:text="@string/create_session_title"
         app:layout_constraintBottom_toTopOf="@id/button2"
         app:layout_constraintEnd_toEndOf="parent"
