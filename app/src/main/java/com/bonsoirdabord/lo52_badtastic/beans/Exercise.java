@@ -25,6 +25,12 @@ public class Exercise {
     @ColumnInfo(name = "difficulty")
     private int difficulty;
 
+    /**
+     * Type de public adapté à l'exercice.
+     * 0 -> Débutant
+     * 1 -> Confirmé
+     * 2 -> Les deux
+     */
     @ColumnInfo(name = "public_type")
     private int publicType;
 
@@ -48,6 +54,17 @@ public class Exercise {
         this.picturePath = picturePath;
         this.duration = duration;
         this.isFavourite = isFavourite;
+    }
+
+    public Exercise() {
+        this.name = null;
+        this.descriptino = null;
+        this.difficulty = -1;
+        this.publicType = 1;
+        this.picturePath = null;
+        this.duration = -1;
+        this.isFavourite = false;
+        this.themes = null;
     }
 
     public int getId() {
