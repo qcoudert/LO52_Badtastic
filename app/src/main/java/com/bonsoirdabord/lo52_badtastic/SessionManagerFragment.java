@@ -18,7 +18,7 @@ import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
 import java.util.ArrayList;
 
 public class SessionManagerFragment extends Fragment {
-
+    private boolean mutex = false;
     private int color;
     private int index;
     private int exerciceNbr;
@@ -76,7 +76,7 @@ public class SessionManagerFragment extends Fragment {
             public void onChronometerTick(Chronometer chronometer) {
                 if(chronometer.getText().equals("00:00")){
                     setClickReaction();
-                    chrono = null;
+                    chronometer.setOnChronometerTickListener(null);
                 }
 
             }
@@ -104,6 +104,11 @@ public class SessionManagerFragment extends Fragment {
     }
 
     private void setClickReaction() {
+        if(mutex){
+            return;
+        } else {
+            mutex = true;
+        }
         SessionManagerFragment newFragment = null;
         ArrayList<SessionManagerFragment> fragments = activity.getFragments();
         FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
@@ -171,5 +176,7 @@ public class SessionManagerFragment extends Fragment {
         }
         fragments.remove(this);
         fragments.add(newFragment);
+
+        mutex = false;
     }
 }
