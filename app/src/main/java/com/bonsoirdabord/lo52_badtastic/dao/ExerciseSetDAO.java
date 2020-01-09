@@ -10,6 +10,7 @@ import androidx.room.Update;
 import com.bonsoirdabord.lo52_badtastic.beans.ExerciseSet;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Dao
@@ -35,6 +36,12 @@ public abstract class ExerciseSetDAO {
             exerciseSet.setExercise(database.exerciseDAO()
                     .getExerciseCompleted(exerciseSet.getExerciseId(), database).getValue());
         }
+        exerciseSetLiveData.getValue().sort(new Comparator<ExerciseSet>() {
+            @Override
+            public int compare(ExerciseSet o1, ExerciseSet o2) {
+                return (Integer.compare(o1.getOrder(), o2.getOrder()));
+            }
+        });
         return exerciseSetLiveData;
     }
 
