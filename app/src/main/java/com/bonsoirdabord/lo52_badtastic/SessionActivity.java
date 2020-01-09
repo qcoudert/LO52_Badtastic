@@ -45,7 +45,7 @@ public class SessionActivity extends AppCompatActivity {
         firstFragment = createNewFragment(colors[0], 1);
 
         try {
-            for (int i = 1; i < getScheduledSession(id).getSession().getNumberOfGroup(); i++)
+            for (int i = 1; i < getScheduledSession(id).getSession().getGroupTrainings().size(); i++)
                 createNewFragment(colors[i % 3], i + 1);
         }
         catch(Exception e) {
