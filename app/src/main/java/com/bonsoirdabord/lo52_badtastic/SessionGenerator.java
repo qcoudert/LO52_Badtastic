@@ -23,6 +23,11 @@ public class SessionGenerator {
     private static final int EXERCISE_TIME_MIN_REPS = 8;
     private static final int VARIATION_TIME = 1;
 
+    private static final float PUBLIC_MISMATCH_SCORE = 4.0f; //Constant to add if the target public doesn't match
+    private static final float DIFFICULTY_MISMATCH_SCORE_MULTPLIER = 0.5f; //Value multiplied by the difference of difficulty
+    private static final float TIME_SCORE_EXP = 5.0f; //Formula is 1-exp(-|timeDiff| * TIME_SCORE_EXP)
+    private static final float TIME_SCORE_WEIGHT = 0.5f;
+
     /***
      *  Get a Session with GroupTraining list and generate the exercise sets with parameter of the GroupTrainings.
      * @param context : Context of the app for database
@@ -78,5 +83,52 @@ public class SessionGenerator {
         }
 
         return compatibleExerciseMap;
+    }
+
+    private static float exp(float x) {
+        return (float) Math.exp((double) x);
+    }
+
+    private static float computeGroupTrainingDiscrepanciesScore(Session sess, GroupTraining gt) {
+        float totalTime = 0.0f;
+        float mismatchScore = 0.0f;
+        List<ExerciseSet> exercises = gt.getExerciseSets();
+
+        for(ExerciseSet es : exercises) {
+            Exercise e = es.getExercise();
+
+            totalTime += (float) e.getDuration();
+            mismatchScore += ((float) Math.abs(gt.getDifficulty() - e.getDifficulty())) * DIFFICULTY_MISMATCH_SCORE_MULTPLIER;
+
+            if(gt.getPublicTarget() != 2 && e.getPublicType() != 2 && gt.getPublicTarget() != e.getPublicType())
+                mismatchScore += PUBLIC_MISMATCH_SCORE;
+        }
+
+        float worstCaseScenario = (4.0f * DIFFICULTY_MISMATCH_SCORE_MULTPLIER + PUBLIC_MISMATCH_SCORE) * ((float) exercises.size());
+        mismatchScore /= worstCaseScenario; //Normalize the mistmatch score (value between 0.0 and 1.0)
+
+        float relativeTimeError = Math.abs(totalTime - (float) sess.getSessionTime()) / ((float) sess.getSessionTime());
+        float timeScore = 1.0f - exp(-relativeTimeError * TIME_SCORE_EXP);
+
+        return (1.0f - TIME_SCORE_WEIGHT) * mismatchScore + TIME_SCORE_WEIGHT * timeScore; //Combine scores
+    }
+
+    /**
+     * Computes the correlation score between the generation parameters provided by the user
+     * and the generated session.
+     *
+     * This returned value is between 0.0 and 1.0, where 0.0 means
+     * that the session doesn't match the requested parameters at all and 1.0 means that the
+     * session perfectly matches the user's requirements.
+     *
+     * @param sess The session we want the correlation score from
+     * @return The correlation score, between 0.0 and 1.0 (0.0 = no match, 1.0 = perfect match)
+     */
+    public static float computeSessionCorrelationScore(Session sess) {
+        float maxErrScore = 0.0f;
+        for(GroupTraining gt : sess.getGroupTrainings())
+            maxErrScore = Math.max(maxErrScore, computeGroupTrainingDiscrepanciesScore(sess, gt));
+
+        return 1.0f - maxErrScore; //Convert discrepancies score to correlation score
     }
 }
