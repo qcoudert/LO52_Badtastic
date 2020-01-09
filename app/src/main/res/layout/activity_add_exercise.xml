@@ -116,10 +116,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/add_ex_duree"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +128,7 @@
             android:id="@+id/edit_text_duree_add_ex"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="time"/>
+            android:inputType="time" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -189,5 +187,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radio_group_public_add_ex" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_add_ex"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

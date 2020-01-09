@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -18,7 +19,9 @@ import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -39,6 +42,8 @@ public class AddExerciseActivity extends AppCompatActivity {
 
         exerciseToAdd = new Exercise();
         exerciseToAdd.setThemes(new ArrayList<Theme>());
+
+        ChipGroup chipGroup = (ChipGroup)findViewById(R.id.chip_group_add_ex);
 
         addButton = (MaterialButton)findViewById(R.id.add_button_add_ex);
 
@@ -92,12 +97,27 @@ public class AddExerciseActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //TODO: CHIPS AND FILL THE LIST
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                for (int i=0; i<s.length(); i++) {
+                    if(s.charAt(i)==' ' && i-1>0){
+                        LayoutInflater layoutInflater = LayoutInflater.from(AddExerciseActivity.this);
+                        Chip chip = (Chip)layoutInflater.inflate(R.layout.chip_layout, chipGroup);
+                        chip.setText(s.subSequence(0,i));
+                        Theme tag = new Theme(s.subSequence(0,i).toString());
 
+                        chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                exerciseToAdd.getThemes().remove(tag);
+                                chipGroup.removeView(v);
+                            }
+                        });
+                    }
+                }
             }
         });
 
