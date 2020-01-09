@@ -32,7 +32,6 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_session_random);
 
         sessionToCreate = new Session();
-        sessionToCreate.setNumberOfGroup(1); //TODO:ENLEVER LE 1 APRES FINITION
         groupTraining = new GroupTraining();
         sessionToCreate.getGroupTrainings().add(groupTraining); //TODO:ENLEVER APRES FINITION
         createButton = (MaterialButton)findViewById(R.id.valid_button_create_sess);
@@ -163,7 +162,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
     }
 
     public boolean checkButtonAvailability() {
-        if(sessionToCreate.getName()==null || sessionToCreate.getNumberOfGroup() == 0 || sessionToCreate.getGroupTrainings().isEmpty()) {
+        if(sessionToCreate.getName()==null || sessionToCreate.getGroupTrainings().isEmpty()) {
             createButton.setEnabled(false);
             return false;
         }
