@@ -21,6 +21,7 @@ public class SessionActivity extends AppCompatActivity {
     public final int red = 0xffcf2a27;
     public final int green = 0xff93c47d;
     public final int blue = 0xff9fc5f8;
+    public final int[] colors = {green, blue, red};
 
     private ArrayList<SessionManagerFragment> fragments;
     private ArrayList<Chronometer> chronos;
@@ -41,9 +42,15 @@ public class SessionActivity extends AppCompatActivity {
         chronos = new ArrayList<>();
         timeChrono = 0;
 
-        firstFragment = createNewFragment(green, 1);
-        createNewFragment(blue, 2);
-        createNewFragment(red, 3);
+        firstFragment = createNewFragment(colors[0], 1);
+
+        try {
+            for (int i = 1; i < getScheduledSession(id).getSession().getNumberOfGroup(); i++)
+                createNewFragment(colors[i % 3], i + 1);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
 
         globChrono = findViewById(R.id.globchrono);
         globChrono.start();
@@ -99,7 +106,13 @@ public class SessionActivity extends AppCompatActivity {
     }
 
     private SessionManagerFragment createNewFragment(int color, int index){
-        SessionManagerFragment sessionManagerFragment = new SessionManagerFragment(color, index, this, getScheduledSession(id));
+        SessionManagerFragment sessionManagerFragment = null;
+        try {
+            sessionManagerFragment = new SessionManagerFragment(color, index, 1, 1,  this, getScheduledSession(id));
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.linlayout1, sessionManagerFragment, "fragment"+index);
         fragmentTransaction.commitNow();
@@ -107,7 +120,10 @@ public class SessionActivity extends AppCompatActivity {
         return sessionManagerFragment;
     }
 
-    private ScheduledSession getScheduledSession(int id){
+    private ScheduledSession getScheduledSession(int id) throws Exception{
+        if(id == -1)
+            throw new Exception("Extra wasn't properly got");
+
         ScheduledSessionDAO_Impl scheduledSessionDAO = new ScheduledSessionDAO_Impl(ExerciseDatabase.getInstance(this));
         return scheduledSessionDAO.getScheduledSessionCompleted(id, ExerciseDatabase.getInstance(this)).getValue();
     }

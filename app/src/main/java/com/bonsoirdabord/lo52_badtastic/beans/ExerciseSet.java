@@ -1,5 +1,6 @@
 package com.bonsoirdabord.lo52_badtastic.beans;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -17,6 +18,9 @@ public class ExerciseSet {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @ColumnInfo(name = "order")
+    private int order;
 
     @ColumnInfo(name = "reps")
     private int reps;
@@ -36,7 +40,8 @@ public class ExerciseSet {
     @Ignore
     private Exercise exercise;
 
-    public ExerciseSet(int reps, double duration, int intensity, int exerciseId, int groupTrainingId) {
+    public ExerciseSet(int order, int reps, double duration, int intensity, int exerciseId, int groupTrainingId) {
+        this.order = order;
         this.reps = reps;
         this.duration = duration;
         this.intensity = intensity;
@@ -98,5 +103,13 @@ public class ExerciseSet {
 
     public void setExercise(Exercise exercise) {
         this.exercise = exercise;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 }
