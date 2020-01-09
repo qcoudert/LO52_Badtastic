@@ -23,4 +23,9 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this.getApplicationContext(), AddExerciseActivity.class);
         startActivity(i);
     }
+
+    public void launchCreateSessionRandomActivity(View v) {
+        Intent i = new Intent(this.getApplicationContext(), CreateSessionRandomActivity.class);
+        startActivity(i);
+    }
 }

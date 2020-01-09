@@ -167,11 +167,11 @@ public class AddExerciseActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.radio_button_debutant_add_ex)
-                    exerciseToAdd.setDifficulty(0);
+                    exerciseToAdd.setPublicType(0);
                 else if(checkedId == R.id.radio_button_confirme_add_ex)
-                    exerciseToAdd.setDifficulty(1);
+                    exerciseToAdd.setPublicType(1);
                 else
-                    exerciseToAdd.setDifficulty(2);
+                    exerciseToAdd.setPublicType(2);
             }
         });
     }

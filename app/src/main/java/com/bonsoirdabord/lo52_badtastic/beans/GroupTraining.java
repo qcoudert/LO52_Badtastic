@@ -43,6 +43,13 @@ public class GroupTraining {
         exerciseSets = new ArrayList<>();
     }
 
+    public GroupTraining() {
+        this.publicTarget = 0;
+        this.difficulty = -1;
+        this.exerciseSets = new ArrayList<>();
+        this.themes = new ArrayList<>();
+    }
+
     public int getSessionId() {
         return sessionId;
     }
