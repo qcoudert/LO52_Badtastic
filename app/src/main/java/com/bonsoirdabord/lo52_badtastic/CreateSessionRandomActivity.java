@@ -2,6 +2,7 @@ package com.bonsoirdabord.lo52_badtastic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import android.widget.RadioGroup;
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.Session;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
+import com.bonsoirdabord.lo52_badtastic.view_models.SessionUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -162,8 +164,19 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
     }
 
     public void onCreatePressed(View v ) {
+
         //Do...
         //sessionToCreate est la session à envoyer
+        SessionGenerator.generateExerciseSetForSession(this, sessionToCreate);
+
+        //temp
+
+        Intent i = new Intent(this.getApplicationContext(), SessionActivity.class);
+        i.putExtra("scheduled_session", SessionUtils.saveSession(this, sessionToCreate).getId());
+        startActivity(i);
+
+
+
 
         finish();
     }
