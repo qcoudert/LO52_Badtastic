@@ -67,13 +67,18 @@ public class SessionGenerator {
         for (GroupTraining groupTraining : session.getGroupTrainings()) {
             List<Exercise> compatibles = new ArrayList<>();
             for (Exercise exercise : exercises) {
+                Boolean test = false;
                 for (final Theme theme : groupTraining.getThemes()) {
                     for (Theme exerciseTheme : exercise.getThemes()) {
                         if(theme.equals(exerciseTheme)){
                             compatibles.add(exercise);
+                            test = true;
                             break;
+
                         }
                     }
+                    if (test)
+                        break;
                 }
             }
             compatibleExerciseMap.put(groupTraining.getId(), compatibles);
