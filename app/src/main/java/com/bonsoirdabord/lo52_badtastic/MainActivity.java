@@ -33,4 +33,9 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(getApplicationContext(), CalendarActivity.class);
         startActivity(i);
     }
+
+    public void launchExerciseBrowser(View v) {
+        Intent i = new Intent(getApplicationContext(), ExerciseBrowserActivity.class);
+        startActivity(i);
+    }
 }

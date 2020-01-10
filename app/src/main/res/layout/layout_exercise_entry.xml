@@ -9,38 +9,25 @@
     android:focusableInTouchMode="false"
     android:padding="16dp">
 
-    <ImageButton
-        android:id="@+id/deleteSessionButton"
-        style="@android:style/Widget.Material.ImageButton"
+    <TextView
+        android:id="@+id/exerciseDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:minHeight="40dp"
-        android:minWidth="40dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_delete_black"
-        android:tint="#8B8B8B"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="@string/very_long_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseName" />
 
     <TextView
-        android:id="@+id/sessionTime"
+        android:id="@+id/exerciseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/placeholder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sessionNumberLabel" />
-
-    <TextView
-        android:id="@+id/sessionNumberLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/session_number_format"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/sessionTime"
+        app:layout_constraintBottom_toTopOf="@+id/exerciseDesc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

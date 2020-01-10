@@ -38,6 +38,7 @@
     <string name="validate_changes">Valider</string>
     <string name="label_date">Date</string>
     <string name="label_hour">Heure</string>
+    <string name="very_long_placeholder">Placeholder that is extremely long so that we can make sure that ellipsize actually works</string>
 
     <!-- Levels -->
     <string name="type_public_debutant">Débutant</string>
@@ -56,4 +57,7 @@
     <string name="session_select">Choix de la séance</string>
     <string name="session_search">Rechercher une séance&#8230;</string>
     <string name="session_invalid">Séance inexistante</string>
+
+    <!-- Exercise browser -->
+    <string name="browse_exercise_title">Exercices</string>
 </resources>
