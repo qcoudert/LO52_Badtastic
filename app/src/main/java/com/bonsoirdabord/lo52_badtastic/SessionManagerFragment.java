@@ -53,13 +53,13 @@ public class SessionManagerFragment extends Fragment {
         //    scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().remove(i);
         Exercise exercise = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getExercise();
         maxRepetitions = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getReps();
-        ((TextView)view.findViewById(R.id.textView)).setText("Groupe " + index);
-        ((TextView)view.findViewById(R.id.textView7)).setText("Exercice numéro " + exerciceNbr);
-        ((TextView)view.findViewById(R.id.textView6)).setText("Nom : " + exercise.getName());
-        ((TextView)view.findViewById(R.id.textView4)).setText("Répétition : " + repetitionNbr +"/" + maxRepetitions);
-        ((TextView)view.findViewById(R.id.textView3)).setText("Descriptif : " + exercise.getDescriptino());
+        ((TextView)view.findViewById(R.id.textView)).setText(getString(R.string.grp_nbr) + index);
+        ((TextView)view.findViewById(R.id.textView7)).setText(getString(R.string.exercise_nbr) + exerciceNbr);
+        ((TextView)view.findViewById(R.id.textView6)).setText(getString(R.string.exercise_name) + exercise.getName());
+        ((TextView)view.findViewById(R.id.textView4)).setText(getString(R.string.exercise_rep) + repetitionNbr +"/" + maxRepetitions);
+        ((TextView)view.findViewById(R.id.textView3)).setText(getString(R.string.exercise_desc) + exercise.getDescriptino());
 
-        String themesText = "Thème(s) : ";
+        String themesText = getString(R.string.exercise_theme);
         for(int i = 0; i<exercise.getThemes().size(); i++) {
             themesText += exercise.getThemes().get(i).getName();
 
@@ -116,12 +116,13 @@ public class SessionManagerFragment extends Fragment {
         FragmentTransaction ft = supportFragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
+        // this group has finished, we delete the fragment
         if((exerciceNbr == scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size()) && (repetitionNbr == maxRepetitions))
         {
             ft.remove(this);
             ft.commitNow();
         }
-        else if(index == 1) {
+        else if(index == 1) { // We must remove the second and the third fragment (if they exist...) and put them back
             SessionManagerFragment secondFrag = null;
             SessionManagerFragment lastFrag = null;
 
@@ -169,24 +170,8 @@ public class SessionManagerFragment extends Fragment {
                 ft5.commitNow();
                 lastFrag.startChrono();
             }
-            /*
-               The replace method has a bug : "the ghost Fragment", the first green fragment stay behind the new ones.
-               The only way to hide it from the user during transition is to do a hide & show. (remove, only hide etc...
-               will result on a deleting of the whole fragment. We could as well use the same method as for index 2 (remove the 2 other
-               fragments, add the new green one and put back the 2 others, but it would have a bigger computational cost
-
-            if(repetitionNbr < maxRepetitions)
-                newFragment = new SessionManagerFragment(activity.green, 1, exerciceNbr, repetitionNbr + 1, activity, scheduledSession);
-            else
-                newFragment = new SessionManagerFragment(activity.green, 1, exerciceNbr + 1, 1, activity, scheduledSession);
-
-            ft.replace(R.id.fragment, newFragment);
-            ft.hide(activity.getFirstFragment());
-            ft.show(activity.getFirstFragment());
-            ft.commitNow();*/
         }
-        else if(index == 2) {
-            // We remove the last fragment for adding the new second fragment before
+        else if(index == 2) {// We remove the last fragment and add it back
             SessionManagerFragment lastFrag = null;
             for(SessionManagerFragment fragment : fragments)
                 if(fragment.index == 3)
@@ -231,6 +216,9 @@ public class SessionManagerFragment extends Fragment {
 
         if(newFragment != null)
             fragments.add(newFragment);
+
+        if(fragments.isEmpty())
+            activity.onBackPressed();
 
         mutex = false;
     }
