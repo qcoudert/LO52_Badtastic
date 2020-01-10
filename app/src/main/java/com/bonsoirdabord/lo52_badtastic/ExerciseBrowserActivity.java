@@ -74,7 +74,7 @@ public class ExerciseBrowserActivity extends AppCompatActivity {
         loadExercises();
     }
 
-    private String limitLength(String str) {
+    private static String limitLength(String str) {
         //Trim the string to avoid filling the RAM
         //Don't care if we cut it right in the middle because the UI then uses ellipsize
         //This is used to shorten descriptions as they might get very long

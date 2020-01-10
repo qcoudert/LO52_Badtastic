@@ -25,11 +25,14 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
     public static int RESULT_OK = 0;
     public static int RESULT_FAIL = -1;
 
+    public static String START_ON_CREATE = "startOnCreate";
+
     private Session sessionToCreate;
     private MaterialButton createButton;
     private MaterialButton addButton;
     private ListView listView;
     private BasicDeleteAdapter basicDeleteAdapter;
+    private boolean startOnCreate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,8 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+        startOnCreate = intent.getBooleanExtra(START_ON_CREATE, true);
     }
 
     public void checkButtonAvailability() {
@@ -109,11 +114,14 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
         //Do...
         //sessionToCreate est la session à envoyer
         SessionGenerator.generateExerciseSetForSession(this, sessionToCreate);
+        int savedSessId = SessionUtils.saveSession(this, sessionToCreate).getId();
         //temp
 
-        Intent i = new Intent(this.getApplicationContext(), SessionActivity.class);
-        i.putExtra("scheduled_session", SessionUtils.saveSession(this, sessionToCreate).getId());
-        startActivity(i);
+        if(startOnCreate) {
+            Intent i = new Intent(this.getApplicationContext(), SessionActivity.class);
+            i.putExtra("scheduled_session", savedSessId);
+            startActivity(i);
+        }
 
 
 

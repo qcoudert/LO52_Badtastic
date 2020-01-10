@@ -20,6 +20,9 @@ public abstract class SessionDAO {
     @Query("SELECT * FROM " + Session.TABLE_NAME + " WHERE id = :id")
     public abstract Session getSession(int id);
 
+    @Query("DELETE FROM " + Session.TABLE_NAME + " WHERE id = :id")
+    public abstract void deleteSession(int id);
+
     @Query("DELETE FROM " + Session.TABLE_NAME)
     public abstract void deleteAll();
 

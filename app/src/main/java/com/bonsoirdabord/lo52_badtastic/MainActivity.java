@@ -34,4 +34,9 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(getApplicationContext(), ExerciseBrowserActivity.class);
         startActivity(i);
     }
+
+    public void launchSessionBrowser(View v) {
+        Intent i = new Intent(getApplicationContext(), SessionBrowserActivity.class);
+        startActivity(i);
+    }
 }
