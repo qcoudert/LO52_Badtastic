@@ -43,6 +43,10 @@ public class ScheduledSessionAdapter extends ArrayAdapter<ScheduledSessionAdapte
         void deleteEntry(Entry e);
     }
 
+    public interface EntryStartListener {
+        void startEntry(Entry e);
+    }
+
     private static class ViewHolder {
         private TextView sessionNumberLabel;
         private TextView sessionTimeLabel;
@@ -57,8 +61,18 @@ public class ScheduledSessionAdapter extends ArrayAdapter<ScheduledSessionAdapte
         }
     }
 
+    private class StartButtonListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            if(startListener != null)
+                startListener.startEntry(((ViewHolder) view.getTag()).entry);
+        }
+    }
+
     private final DeleteButtonListener deleteButtonOnClickListener = new DeleteButtonListener();
+    private final StartButtonListener startButtonOnClickListener = new StartButtonListener();
     private EntryDeleteListener deleteListener;
+    private EntryStartListener startListener;
 
     public ScheduledSessionAdapter(Context ctx) {
         super(ctx, R.layout.layout_sched_entry);
@@ -66,6 +80,10 @@ public class ScheduledSessionAdapter extends ArrayAdapter<ScheduledSessionAdapte
 
     public void setDeleteListener(EntryDeleteListener edl) {
         deleteListener = edl;
+    }
+
+    public void setStartListener(EntryStartListener esl) {
+        startListener = esl;
     }
 
     @NonNull
@@ -83,7 +101,11 @@ public class ScheduledSessionAdapter extends ArrayAdapter<ScheduledSessionAdapte
             ImageButton deleteButton = convertView.findViewById(R.id.deleteSessionButton);
             deleteButton.setOnClickListener(deleteButtonOnClickListener);
 
+            ImageButton startButton = convertView.findViewById(R.id.startSessionButton);
+            startButton.setOnClickListener(startButtonOnClickListener);
+
             deleteButton.setTag(vh);
+            startButton.setTag(vh);
             convertView.setTag(vh);
         }
 

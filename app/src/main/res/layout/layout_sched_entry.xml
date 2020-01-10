@@ -10,6 +10,21 @@
     android:padding="16dp">
 
     <ImageButton
+        android:id="@+id/startSessionButton"
+        style="@android:style/Widget.Material.ImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:minHeight="40dp"
+        android:minWidth="40dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_arrow_forward_gray"
+        android:tint="#8B8B8B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteSessionButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
         android:id="@+id/deleteSessionButton"
         style="@android:style/Widget.Material.ImageButton"
         android:layout_width="wrap_content"

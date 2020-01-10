@@ -68,7 +68,12 @@ public class SessionBrowserActivity extends AppCompatActivity {
         sessionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                //TODO: edit/view session
+                ExerciseAdapter.Entry entry = sessionAdapter.getItem(pos);
+
+                Intent intent = new Intent(getApplicationContext(), SessionActivity.class);
+                intent.putExtra("scheduled_session", entry.getID());
+
+                startActivity(intent);
             }
         });
 

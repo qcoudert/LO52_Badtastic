@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
+import com.bonsoirdabord.lo52_badtastic.beans.Session;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 import com.roomorama.caldroid.CaldroidListener;
 
@@ -94,6 +95,24 @@ public class CalendarActivity extends AppCompatActivity {
                         .setNegativeButton(android.R.string.no, null)
                         .setIcon(R.drawable.ic_delete_black)
                         .show();
+            }
+        });
+
+        daySessions.setStartListener(new ScheduledSessionAdapter.EntryStartListener() {
+            @Override
+            public void startEntry(ScheduledSessionAdapter.Entry e) {
+                ScheduledSession ss = ExerciseDatabase.getInstance(CalendarActivity.this).scheduledSessionDAO().getScheduledSession(e.getID());
+
+                if(ss != null) {
+                    Session s = ExerciseDatabase.getInstance(CalendarActivity.this).sessionDAO().getSession(ss.getSessionId());
+
+                    if(s != null) {
+                        Intent intent = new Intent(getApplicationContext(), SessionActivity.class);
+                        intent.putExtra("scheduled_session", s.getId());
+
+                        startActivity(intent);
+                    }
+                }
             }
         });
 
