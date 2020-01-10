@@ -18,7 +18,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class SessionManagerFragment extends Fragment {
-    private boolean mutex = false;
+    private static boolean isFirstProcessing = false; // mutex for avoiding double adding of the third fragment while first and second fragments are changed
+    private boolean mutex = false; // mutex for avoiding a click on the button and a time-out at the same time
     private int color;
     private int index;
     private int exerciceNbr;
@@ -49,12 +50,12 @@ public class SessionManagerFragment extends Fragment {
         view.setBackgroundColor(color);
 
         //getting the current Exercise and setting all informations
-        //for(int i = 5; i<scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size(); i++)  // TODO : REMOVE THOSE 2 LINES AFTER DEBUG
+        //for(int i = 4; i<scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size(); i++)  // TODO : REMOVE THOSE 2 LINES AFTER DEBUG
         //    scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().remove(i);
         Exercise exercise = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getExercise();
         maxRepetitions = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getReps();
-        ((TextView)view.findViewById(R.id.textView)).setText(getString(R.string.grp_nbr) + index);
-        ((TextView)view.findViewById(R.id.textView7)).setText(getString(R.string.exercise_nbr) + exerciceNbr);
+        ((TextView)view.findViewById(R.id.textView)).setText(getString(R.string.grp_nbr) + " " + index);
+        ((TextView)view.findViewById(R.id.textView7)).setText(getString(R.string.exercise_nbr) + " " + exerciceNbr +"/" + scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size());
         ((TextView)view.findViewById(R.id.textView6)).setText(getString(R.string.exercise_name) + exercise.getName());
         ((TextView)view.findViewById(R.id.textView4)).setText(getString(R.string.exercise_rep) + repetitionNbr +"/" + maxRepetitions);
         ((TextView)view.findViewById(R.id.textView3)).setText(getString(R.string.exercise_desc) + exercise.getDescriptino());
@@ -75,7 +76,7 @@ public class SessionManagerFragment extends Fragment {
         chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-                if(chronometer.getText().equals("00:00")){
+                if((chronometer.getBase() - SystemClock.elapsedRealtime()) <= 0.0){
                     setClickReaction();
                     chronometer.setOnChronometerTickListener(null);
                 }
@@ -117,18 +118,19 @@ public class SessionManagerFragment extends Fragment {
         ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
         // this group has finished, we delete the fragment
-        if((exerciceNbr == scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size()) && (repetitionNbr == maxRepetitions))
-        {
+        if((exerciceNbr == scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size()) && (repetitionNbr == maxRepetitions)) {
             ft.remove(this);
             ft.commitNow();
         }
         else if(index == 1) { // We must remove the second and the third fragment (if they exist...) and put them back
             SessionManagerFragment secondFrag = null;
             SessionManagerFragment lastFrag = null;
+            isFirstProcessing = true;
 
             for(SessionManagerFragment fragment : fragments) {
-                if (fragment.index == 3)
+                if(fragment.index == 3)
                     lastFrag = fragment;
+
                 if(fragment.index == 2)
                     secondFrag = fragment;
             }
@@ -157,7 +159,7 @@ public class SessionManagerFragment extends Fragment {
 
             if(secondFrag != null) {
                 FragmentTransaction ft4 = supportFragmentManager.beginTransaction();
-                ft4.add(R.id.linlayout1, lastFrag);
+                ft4.add(R.id.linlayout1, secondFrag);
                 secondFrag.stopChrono(); // done here to lose the minimum amount of time
                 ft4.commitNow();
                 secondFrag.startChrono();
@@ -170,14 +172,21 @@ public class SessionManagerFragment extends Fragment {
                 ft5.commitNow();
                 lastFrag.startChrono();
             }
+
+            isFirstProcessing = false;
         }
         else if(index == 2) {// We remove the last fragment and add it back
             SessionManagerFragment lastFrag = null;
+            boolean shouldManageLast = true;
+
+            if(isFirstProcessing)
+                shouldManageLast = false;
+
             for(SessionManagerFragment fragment : fragments)
                 if(fragment.index == 3)
                     lastFrag = fragment;
 
-            if(lastFrag != null) {
+            if(lastFrag != null && shouldManageLast) {
                 FragmentTransaction ft2 = supportFragmentManager.beginTransaction();
                 ft2.remove(lastFrag);
                 ft2.commitNow();
@@ -193,11 +202,11 @@ public class SessionManagerFragment extends Fragment {
             ft.commitNow();
 
             //We put back the third fragment
-            if(lastFrag != null) {
-                FragmentTransaction ft3 = supportFragmentManager.beginTransaction();
-                ft3.add(R.id.linlayout1, lastFrag);
+            if(lastFrag != null && shouldManageLast) {
+                FragmentTransaction ft4 = supportFragmentManager.beginTransaction();
+                ft4.add(R.id.linlayout1, lastFrag);
                 lastFrag.stopChrono(); // done here to lose the minimum amount of time
-                ft3.commitNow();
+                ft4.commitNow();
                 lastFrag.startChrono();
             }
         }
@@ -218,7 +227,7 @@ public class SessionManagerFragment extends Fragment {
             fragments.add(newFragment);
 
         if(fragments.isEmpty())
-            activity.onBackPressed();
+            activity.finish();
 
         mutex = false;
     }

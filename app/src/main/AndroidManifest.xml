@@ -22,7 +22,8 @@
         <activity android:name=".CreatGroupTrainingActivity" />
         <activity android:name=".CreateSessionRandomActivity" />
         <activity android:name=".AddExerciseActivity" />
-        <activity android:name=".SessionActivity" />
+        <activity android:name=".SessionActivity"
+            android:screenOrientation="landscape"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -41,7 +41,7 @@ public class SessionActivity extends AppCompatActivity {
         timeChrono = 0;
 
         try {
-            for (int i = 1; i < getScheduledSession(id).getSession().getGroupTrainings().size(); i++)
+            for (int i = 0; i < getScheduledSession(id).getSession().getGroupTrainings().size(); i++)
                 createNewFragment(colors[i % 3], i + 1);
         }
         catch(Exception e) {
@@ -59,7 +59,7 @@ public class SessionActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Fermeture de l'entraînement")
                 .setMessage("Etes-vous certain de vouloir mettre fin à l'entraînement ?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -67,7 +67,7 @@ public class SessionActivity extends AppCompatActivity {
                     }
 
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton("Non", null)
                 .show();
     }
 
@@ -113,7 +113,7 @@ public class SessionActivity extends AppCompatActivity {
 
     private ScheduledSession getScheduledSession(int id) throws Exception{
         if(id == -1)
-            throw new Exception("Extra wasn't properly got");
+            throw new Exception("Extra wasn't properly got"); // Data base lecture problem
 
         return ExerciseDatabase.getInstance(this).scheduledSessionDAO()
                 .getScheduledSessionCompleted(id, ExerciseDatabase.getInstance(this));
