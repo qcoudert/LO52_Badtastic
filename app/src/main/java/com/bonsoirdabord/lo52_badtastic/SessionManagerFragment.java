@@ -18,6 +18,7 @@ import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
 import java.util.ArrayList;
 
 public class SessionManagerFragment extends Fragment {
+    private static boolean isFirstProcessing = false;
     private boolean mutex = false;
     private int color;
     private int index;
@@ -117,14 +118,14 @@ public class SessionManagerFragment extends Fragment {
         ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
         // this group has finished, we delete the fragment
-        if((exerciceNbr == scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size()) && (repetitionNbr == maxRepetitions))
-        {
+        if((exerciceNbr == scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size()) && (repetitionNbr == maxRepetitions)) {
             ft.remove(this);
             ft.commitNow();
         }
         else if(index == 1) { // We must remove the second and the third fragment (if they exist...) and put them back
             SessionManagerFragment secondFrag = null;
             SessionManagerFragment lastFrag = null;
+            isFirstProcessing = true;
 
             for(SessionManagerFragment fragment : fragments) {
                 if(fragment.index == 3)
@@ -138,8 +139,13 @@ public class SessionManagerFragment extends Fragment {
             if(secondFrag != null) {
                 FragmentTransaction ft2 = supportFragmentManager.beginTransaction();
                 ft2.remove(secondFrag);
-                ft2.remove(lastFrag);
                 ft2.commitNow();
+            }
+
+            if(lastFrag != null) {
+                FragmentTransaction ft3 = supportFragmentManager.beginTransaction();
+                ft3.remove(lastFrag);
+                ft3.commitNow();
             }
 
             if(repetitionNbr < maxRepetitions)
@@ -152,23 +158,35 @@ public class SessionManagerFragment extends Fragment {
             ft.commitNow();
 
             if(secondFrag != null) {
-                FragmentTransaction ft3 = supportFragmentManager.beginTransaction();
-                ft3.add(R.id.linlayout1, secondFrag);
-                ft3.add(R.id.linlayout1, lastFrag);
+                FragmentTransaction ft4 = supportFragmentManager.beginTransaction();
+                ft4.add(R.id.linlayout1, secondFrag);
                 secondFrag.stopChrono(); // done here to lose the minimum amount of time
-                lastFrag.stopChrono();
-                ft3.commitNow();
+                ft4.commitNow();
                 secondFrag.startChrono();
+            }
+
+            if(lastFrag != null) {
+                FragmentTransaction ft5 = supportFragmentManager.beginTransaction();
+                ft5.add(R.id.linlayout1, lastFrag);
+                lastFrag.stopChrono(); // done here to lose the minimum amount of time
+                ft5.commitNow();
                 lastFrag.startChrono();
             }
+
+            isFirstProcessing = false;
         }
         else if(index == 2) {// We remove the last fragment and add it back
             SessionManagerFragment lastFrag = null;
+            boolean shouldManageLast = true;
+
+            if(isFirstProcessing)
+                shouldManageLast = false;
+
             for(SessionManagerFragment fragment : fragments)
                 if(fragment.index == 3)
                     lastFrag = fragment;
 
-            if(lastFrag != null) {
+            if(lastFrag != null && shouldManageLast) {
                 FragmentTransaction ft2 = supportFragmentManager.beginTransaction();
                 ft2.remove(lastFrag);
                 ft2.commitNow();
@@ -184,7 +202,7 @@ public class SessionManagerFragment extends Fragment {
             ft.commitNow();
 
             //We put back the third fragment
-            if(lastFrag != null) {
+            if(lastFrag != null && shouldManageLast) {
                 FragmentTransaction ft4 = supportFragmentManager.beginTransaction();
                 ft4.add(R.id.linlayout1, lastFrag);
                 lastFrag.stopChrono(); // done here to lose the minimum amount of time
