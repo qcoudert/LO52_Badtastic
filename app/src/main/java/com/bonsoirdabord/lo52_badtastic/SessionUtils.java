@@ -7,6 +7,7 @@ import com.bonsoirdabord.lo52_badtastic.beans.ExerciseSet;
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
 import com.bonsoirdabord.lo52_badtastic.beans.Session;
+import com.bonsoirdabord.lo52_badtastic.beans.Theme;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 
 public class SessionUtils {
@@ -22,6 +23,9 @@ public class SessionUtils {
             for (ExerciseSet exerciseSet : groupTraining.getExerciseSets()) {
                 exerciseSet.setGroupTrainingId(groupTraining.getId());
                 exerciseSet.setId((int) database.exerciseSetDAO().insert(exerciseSet));
+            }
+            for (Theme theme : groupTraining.getThemes()) {
+                theme.setId((int)database.themeDAO().insertThemeByGroupTraining(theme, groupTraining, database));
             }
         }
 

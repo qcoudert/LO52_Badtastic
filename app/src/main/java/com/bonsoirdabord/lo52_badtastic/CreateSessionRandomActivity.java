@@ -112,7 +112,6 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
         //Do...
         //sessionToCreate est la session à envoyer
         SessionGenerator.generateExerciseSetForSession(this, sessionToCreate);
-
         //temp
 
         Intent i = new Intent(this.getApplicationContext(), SessionActivity.class);
