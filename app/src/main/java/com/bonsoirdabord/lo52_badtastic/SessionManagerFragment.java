@@ -127,8 +127,9 @@ public class SessionManagerFragment extends Fragment {
             SessionManagerFragment lastFrag = null;
 
             for(SessionManagerFragment fragment : fragments) {
-                if (fragment.index == 3)
+                if(fragment.index == 3)
                     lastFrag = fragment;
+
                 if(fragment.index == 2)
                     secondFrag = fragment;
             }
@@ -157,7 +158,7 @@ public class SessionManagerFragment extends Fragment {
 
             if(secondFrag != null) {
                 FragmentTransaction ft4 = supportFragmentManager.beginTransaction();
-                ft4.add(R.id.linlayout1, lastFrag);
+                ft4.add(R.id.linlayout1, secondFrag);
                 secondFrag.stopChrono(); // done here to lose the minimum amount of time
                 ft4.commitNow();
                 secondFrag.startChrono();
