@@ -64,4 +64,9 @@
     <string name="browse_exercise_title">Exercices</string>
     <string name="confirm_exercise_deletion_title">Supprimer un exercice</string>
     <string name="confirm_exercise_deletion_text">Voulez-vous vraiment supprimer l\'exercice « %s » ?</string>
+
+    <!-- Session browser -->
+    <string name="browse_sessions_title">Sessions</string>
+    <string name="confirm_sessions_deletion_title">Supprimer une session</string>
+    <string name="confirm_sessions_deletion_text">Voulez-vous vraiment supprimer la session « %s » ?</string>
 </resources>
