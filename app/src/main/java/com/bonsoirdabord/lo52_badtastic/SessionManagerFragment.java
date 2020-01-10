@@ -54,7 +54,7 @@ public class SessionManagerFragment extends Fragment {
         Exercise exercise = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getExercise();
         maxRepetitions = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getReps();
         ((TextView)view.findViewById(R.id.textView)).setText(getString(R.string.grp_nbr) + index);
-        ((TextView)view.findViewById(R.id.textView7)).setText(getString(R.string.exercise_nbr) + exerciceNbr +"/" + scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size());
+        ((TextView)view.findViewById(R.id.textView7)).setText(getString(R.string.exercise_nbr) + " " + exerciceNbr +"/" + scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size());
         ((TextView)view.findViewById(R.id.textView6)).setText(getString(R.string.exercise_name) + exercise.getName());
         ((TextView)view.findViewById(R.id.textView4)).setText(getString(R.string.exercise_rep) + repetitionNbr +"/" + maxRepetitions);
         ((TextView)view.findViewById(R.id.textView3)).setText(getString(R.string.exercise_desc) + exercise.getDescriptino());
@@ -197,9 +197,11 @@ public class SessionManagerFragment extends Fragment {
             if(lastFrag != null) {
                 FragmentTransaction ft3 = supportFragmentManager.beginTransaction();
                 ft3.remove(lastFrag);
-                ft3.add(R.id.linlayout1, lastFrag);
-                lastFrag.stopChrono(); // done here to lose the minimum amount of time
                 ft3.commitNow();
+                FragmentTransaction ft4 = supportFragmentManager.beginTransaction();
+                ft4.add(R.id.linlayout1, lastFrag);
+                lastFrag.stopChrono(); // done here to lose the minimum amount of time
+                ft4.commitNow();
                 lastFrag.startChrono();
             }
         }
