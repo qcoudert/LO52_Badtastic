@@ -2,7 +2,6 @@ package com.bonsoirdabord.lo52_badtastic;
 
 import android.content.Context;
 
-import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
 import com.bonsoirdabord.lo52_badtastic.beans.ExerciseSet;
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;

@@ -9,6 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".AddScheduledSessionActivity"
+            android:label="@string/title_activity_add_scheduled_session" />
+
+        <activity
+            android:name=".CalendarActivity"
+            android:label="@string/title_activity_calendar" />
+
+        <activity
+            android:name=".ExerciseBrowserActivity"
+            android:label="@string/placeholder_util" />
+
         <activity android:name=".CreatGroupTrainingActivity"></activity>
         <activity android:name=".CreateSessionRandomActivity" />
         <activity android:name=".AddExerciseActivity" />

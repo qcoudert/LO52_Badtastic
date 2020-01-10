@@ -7,13 +7,13 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.Chronometer;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 public class SessionActivity extends AppCompatActivity {
 

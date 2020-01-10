@@ -1,31 +1,25 @@
 package com.bonsoirdabord.lo52_badtastic;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class AddExerciseActivity extends AppCompatActivity {
 

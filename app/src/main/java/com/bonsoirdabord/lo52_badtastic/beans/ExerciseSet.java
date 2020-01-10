@@ -1,6 +1,5 @@
 package com.bonsoirdabord.lo52_badtastic.beans;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;

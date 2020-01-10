@@ -1,12 +1,12 @@
 package com.bonsoirdabord.lo52_badtastic.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(tableName = Session.TABLE_NAME)
 public class Session {

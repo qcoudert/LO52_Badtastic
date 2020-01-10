@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.bonsoirdabord.lo52_badtastic.R;
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
-import com.bonsoirdabord.lo52_badtastic.beans.Theme;
 
 import java.util.ArrayList;
 import java.util.List;

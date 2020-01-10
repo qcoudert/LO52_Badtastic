@@ -1,15 +1,14 @@
 package com.bonsoirdabord.lo52_badtastic.dao;
 
-import androidx.lifecycle.LiveData;
+import com.bonsoirdabord.lo52_badtastic.beans.ThemeLink;
+
+import java.util.List;
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
-
-import com.bonsoirdabord.lo52_badtastic.beans.ThemeLink;
-
-import java.util.List;
 
 @Dao
 public interface ThemeLinkDAO {

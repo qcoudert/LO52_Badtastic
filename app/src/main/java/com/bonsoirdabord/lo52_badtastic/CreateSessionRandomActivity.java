@@ -1,33 +1,23 @@
 package com.bonsoirdabord.lo52_badtastic;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.Session;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
 import com.bonsoirdabord.lo52_badtastic.listViewAdapters.BasicDeleteAdapter;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CreateSessionRandomActivity extends AppCompatActivity {
 
@@ -37,6 +27,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
     private Session sessionToCreate;
     private MaterialButton createButton;
+    private MaterialButton addButton;
     private ListView listView;
     private BasicDeleteAdapter basicDeleteAdapter;
 
@@ -47,6 +38,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
         sessionToCreate = new Session();
         createButton = (MaterialButton)findViewById(R.id.valid_button_create_sess);
+        addButton = (MaterialButton)findViewById(R.id.add_group_button_create_sess);
         listView = (ListView)findViewById(R.id.group_list_create_sess);
         basicDeleteAdapter = new BasicDeleteAdapter(sessionToCreate.getGroupTrainings(),new ArrayList<>(), getApplicationContext());
         listView.setAdapter(basicDeleteAdapter);
@@ -96,14 +88,19 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
     }
 
-    public boolean checkButtonAvailability() {
+    public void checkButtonAvailability() {
         if(sessionToCreate.getName()==null || sessionToCreate.getGroupTrainings().isEmpty() || sessionToCreate.getSessionTime()<0) {
             createButton.setEnabled(false);
-            return false;
         }
         else {
             createButton.setEnabled(true);
-            return true;
+        }
+
+        if(sessionToCreate.getGroupTrainings().size()<3){
+            addButton.setEnabled(true);
+        }
+        else {
+            addButton.setEnabled(false);
         }
     }
 
@@ -133,7 +130,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == GROUP_REQUEST_CODE && resultCode == RESULT_OK){
+        if(requestCode == GROUP_REQUEST_CODE && resultCode == RESULT_OK && sessionToCreate.getGroupTrainings().size()<4){
             GroupTraining groupTraining = new GroupTraining();
 
             groupTraining.setDifficulty(data.getIntExtra("diff", 1));
