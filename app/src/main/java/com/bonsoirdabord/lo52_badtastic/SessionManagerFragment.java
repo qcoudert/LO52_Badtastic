@@ -18,8 +18,8 @@ import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
 import java.util.ArrayList;
 
 public class SessionManagerFragment extends Fragment {
-    private static boolean isFirstProcessing = false;
-    private boolean mutex = false;
+    private static boolean isFirstProcessing = false; // mutex for avoiding double adding of the third fragment while first and second fragments are changed
+    private boolean mutex = false; // mutex for avoiding a click on the button and a time-out at the same time
     private int color;
     private int index;
     private int exerciceNbr;
