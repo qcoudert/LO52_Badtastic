@@ -119,20 +119,62 @@ public class SessionManagerFragment extends Fragment {
         if((exerciceNbr == scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size()) && (repetitionNbr == maxRepetitions))
         {
             ft.remove(this);
-            ft.remove(activity.getFirstFragment());
             ft.commitNow();
-            fragments.remove(this);
-            mutex = false;
-            return;
         }
+        else if(index == 1) {
+            SessionManagerFragment secondFrag = null;
+            SessionManagerFragment lastFrag = null;
 
-        if(index == 1) {
+            for(SessionManagerFragment fragment : fragments) {
+                if (fragment.index == 3)
+                    lastFrag = fragment;
+                if(fragment.index == 2)
+                    secondFrag = fragment;
+            }
+
+
+            if(secondFrag != null) {
+                FragmentTransaction ft2 = supportFragmentManager.beginTransaction();
+                ft2.remove(secondFrag);
+                ft2.commitNow();
+            }
+
+            if(lastFrag != null) {
+                FragmentTransaction ft3 = supportFragmentManager.beginTransaction();
+                ft3.remove(lastFrag);
+                ft3.commitNow();
+            }
+
+            if(repetitionNbr < maxRepetitions)
+                newFragment = new SessionManagerFragment(activity.green, 1, exerciceNbr, repetitionNbr + 1, activity, scheduledSession);
+            else
+                newFragment = new SessionManagerFragment(activity.green, 1, exerciceNbr + 1, 1, activity, scheduledSession);
+
+            ft.remove(this);
+            ft.add(R.id.linlayout1, newFragment);
+            ft.commitNow();
+
+            if(secondFrag != null) {
+                FragmentTransaction ft4 = supportFragmentManager.beginTransaction();
+                ft4.add(R.id.linlayout1, lastFrag);
+                secondFrag.stopChrono(); // done here to lose the minimum amount of time
+                ft4.commitNow();
+                secondFrag.startChrono();
+            }
+
+            if(lastFrag != null) {
+                FragmentTransaction ft5 = supportFragmentManager.beginTransaction();
+                ft5.add(R.id.linlayout1, lastFrag);
+                lastFrag.stopChrono(); // done here to lose the minimum amount of time
+                ft5.commitNow();
+                lastFrag.startChrono();
+            }
             /*
                The replace method has a bug : "the ghost Fragment", the first green fragment stay behind the new ones.
                The only way to hide it from the user during transition is to do a hide & show. (remove, only hide etc...
                will result on a deleting of the whole fragment. We could as well use the same method as for index 2 (remove the 2 other
                fragments, add the new green one and put back the 2 others, but it would have a bigger computational cost
-             */
+
             if(repetitionNbr < maxRepetitions)
                 newFragment = new SessionManagerFragment(activity.green, 1, exerciceNbr, repetitionNbr + 1, activity, scheduledSession);
             else
@@ -141,7 +183,7 @@ public class SessionManagerFragment extends Fragment {
             ft.replace(R.id.fragment, newFragment);
             ft.hide(activity.getFirstFragment());
             ft.show(activity.getFirstFragment());
-            ft.commitNow();
+            ft.commitNow();*/
         }
         else if(index == 2) {
             // We remove the last fragment for adding the new second fragment before
@@ -186,7 +228,9 @@ public class SessionManagerFragment extends Fragment {
             ft.commitNow();
         }
         fragments.remove(this);
-        fragments.add(newFragment);
+
+        if(newFragment != null)
+            fragments.add(newFragment);
 
         mutex = false;
     }
