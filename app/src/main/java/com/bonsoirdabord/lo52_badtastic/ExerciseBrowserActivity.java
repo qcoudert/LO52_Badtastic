@@ -1,5 +1,6 @@
 package com.bonsoirdabord.lo52_badtastic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -56,5 +57,10 @@ public class ExerciseBrowserActivity extends AppCompatActivity {
 
         for(Exercise ex : exercises)
             exerciseAdapter.add(new ExerciseAdapter.Entry(ex.getId(), ex.getName(), limitLength(ex.getDescriptino())));
+    }
+
+    public void addNewExercise(View v) {
+        Intent i = new Intent(getApplicationContext(), AddExerciseActivity.class);
+        startActivity(i);
     }
 }

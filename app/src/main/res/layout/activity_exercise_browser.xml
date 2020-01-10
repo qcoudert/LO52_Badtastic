@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ExerciseBrowserActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addExcerciseFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:clickable="true"
+        android:onClick="addNewExercise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -20,7 +32,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:navigationIcon="@drawable/ic_action_back"
-            app:title="@string/browse_exercise_title" />
+            app:title="@string/browse_exercise_title"
+            android:theme="?attr/actionBarTheme"
+            app:titleTextColor="@color/OnPrimary" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ListView
@@ -34,6 +48,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" >
+
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

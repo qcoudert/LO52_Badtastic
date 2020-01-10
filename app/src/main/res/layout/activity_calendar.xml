@@ -17,7 +17,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:navigationIcon="@drawable/ic_action_back"
-            app:title="@string/sched_session_manager_name" />
+            app:title="@string/sched_session_manager_name"
+            app:titleTextColor="@color/OnPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
