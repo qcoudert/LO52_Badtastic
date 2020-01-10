@@ -138,13 +138,8 @@ public class SessionManagerFragment extends Fragment {
             if(secondFrag != null) {
                 FragmentTransaction ft2 = supportFragmentManager.beginTransaction();
                 ft2.remove(secondFrag);
+                ft2.remove(lastFrag);
                 ft2.commitNow();
-            }
-
-            if(lastFrag != null) {
-                FragmentTransaction ft3 = supportFragmentManager.beginTransaction();
-                ft3.remove(lastFrag);
-                ft3.commitNow();
             }
 
             if(repetitionNbr < maxRepetitions)
@@ -157,18 +152,13 @@ public class SessionManagerFragment extends Fragment {
             ft.commitNow();
 
             if(secondFrag != null) {
-                FragmentTransaction ft4 = supportFragmentManager.beginTransaction();
-                ft4.add(R.id.linlayout1, secondFrag);
+                FragmentTransaction ft3 = supportFragmentManager.beginTransaction();
+                ft3.add(R.id.linlayout1, secondFrag);
+                ft3.add(R.id.linlayout1, lastFrag);
                 secondFrag.stopChrono(); // done here to lose the minimum amount of time
-                ft4.commitNow();
+                lastFrag.stopChrono();
+                ft3.commitNow();
                 secondFrag.startChrono();
-            }
-
-            if(lastFrag != null) {
-                FragmentTransaction ft5 = supportFragmentManager.beginTransaction();
-                ft5.add(R.id.linlayout1, lastFrag);
-                lastFrag.stopChrono(); // done here to lose the minimum amount of time
-                ft5.commitNow();
                 lastFrag.startChrono();
             }
         }
@@ -195,9 +185,6 @@ public class SessionManagerFragment extends Fragment {
 
             //We put back the third fragment
             if(lastFrag != null) {
-                FragmentTransaction ft3 = supportFragmentManager.beginTransaction();
-                ft3.remove(lastFrag);
-                ft3.commitNow();
                 FragmentTransaction ft4 = supportFragmentManager.beginTransaction();
                 ft4.add(R.id.linlayout1, lastFrag);
                 lastFrag.stopChrono(); // done here to lose the minimum amount of time
