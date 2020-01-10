@@ -49,8 +49,8 @@
     <string name="title_activity_calendar">CalendarActivity</string>
     <string name="sched_session_manager_name">Sessions planifiées</string>
     <string name="session_number_format">Séance %d</string>
-    <string name="confirm_deletion_title">Supprimer une séance</string>
-    <string name="confirm_deletion_text">Voulez-vous vraiment supprimer la séance de %s ?</string>
+    <string name="confirm_session_deletion_title">Supprimer une séance</string>
+    <string name="confirm_session_deletion_text">Voulez-vous vraiment supprimer la séance de %s ?</string>
     <string name="title_activity_add_scheduled_session">AddScheduledSessionActivity</string>
     <string name="sched_session_add">Planification d\'une nouvelle séance</string>
     <string name="sched_session_edit">Modification d\'une séance planifiée</string>
@@ -60,4 +60,6 @@
 
     <!-- Exercise browser -->
     <string name="browse_exercise_title">Exercices</string>
+    <string name="confirm_exercise_deletion_title">Supprimer un exercice</string>
+    <string name="confirm_exercise_deletion_text">Voulez-vous vraiment supprimer l\'exercice « %s » ?</string>
 </resources>

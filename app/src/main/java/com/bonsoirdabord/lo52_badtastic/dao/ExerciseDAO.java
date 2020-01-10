@@ -19,6 +19,9 @@ public abstract class ExerciseDAO {
     @Query("SELECT * FROM " + Exercise.TABLE_NAME + " WHERE id = :id")
     public abstract Exercise getExercise(int id);
 
+    @Query("DELETE FROM " + Exercise.TABLE_NAME + " WHERE id = :id")
+    public abstract void deleteExercise(int id);
+
     @Query("DELETE FROM " + Exercise.TABLE_NAME)
     public abstract void deleteAll();
 

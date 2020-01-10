@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,14 +37,33 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseAdapter.Entry> {
         }
     }
 
+    public interface EntryDeleteListener {
+        void deleteEntry(Entry e);
+    }
+
     private static class ViewHolder {
         private TextView nameView;
         private TextView descView;
         private Entry entry;
     }
 
+    private class DeleteButtonListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            if(deleteListener != null)
+                deleteListener.deleteEntry(((ViewHolder) view.getTag()).entry);
+        }
+    }
+
+    private final DeleteButtonListener deleteButtonOnClickListener = new DeleteButtonListener();
+    private EntryDeleteListener deleteListener;
+
     public ExerciseAdapter(@NonNull Context context) {
         super(context, R.layout.layout_exercise_entry);
+    }
+
+    public void setDeleteListener(EntryDeleteListener edl) {
+        deleteListener = edl;
     }
 
     @NonNull
@@ -58,6 +78,10 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseAdapter.Entry> {
             vh.nameView = convertView.findViewById(R.id.exerciseName);
             vh.descView = convertView.findViewById(R.id.exerciseDesc);
 
+            ImageButton deleteButton = convertView.findViewById(R.id.deleteExerciseButton);
+            deleteButton.setOnClickListener(deleteButtonOnClickListener);
+
+            deleteButton.setTag(vh);
             convertView.setTag(vh);
         }
 

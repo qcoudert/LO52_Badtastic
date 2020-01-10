@@ -76,8 +76,8 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void deleteEntry(final ScheduledSessionAdapter.Entry e) {
                 new AlertDialog.Builder(CalendarActivity.this)
-                        .setTitle(R.string.confirm_deletion_title)
-                        .setMessage(String.format(Locale.getDefault(), getString(R.string.confirm_deletion_text), TimeSeparators.H.format(e.getStartHour())))
+                        .setTitle(R.string.confirm_session_deletion_title)
+                        .setMessage(String.format(Locale.getDefault(), getString(R.string.confirm_session_deletion_text), TimeSeparators.H.format(e.getStartHour())))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface di, int which) {
