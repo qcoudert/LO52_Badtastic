@@ -70,7 +70,7 @@
 
     <!-- Exercise Viewer -->
     <string name="exercise_viewer_title">Consulter un exercice</string>
-    <string name="exercise_viewer_duration">Durée de l\'exercice: %f</string>
+    <string name="exercise_viewer_duration">Durée de l\'exercice: %d s</string>
     <string name="exercise_viewer_public">Type de public: %s</string>
 
     <!-- Session browser -->

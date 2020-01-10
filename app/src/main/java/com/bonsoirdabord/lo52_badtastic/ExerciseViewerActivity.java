@@ -33,7 +33,7 @@ public class ExerciseViewerActivity extends AppCompatActivity {
         tv.setText(exercise.getDescriptino());
 
         tv = (TextView)findViewById(R.id.exercise_viewer_tv_duration);
-        tv.setText(String.format(tv.getText().toString(), exercise.getDuration()));
+        tv.setText(String.format(tv.getText().toString(), (int)exercise.getDuration()));
 
         tv = (TextView)findViewById(R.id.exercise_viewer_tv_public);
         switch(exercise.getPublicType()) {
@@ -49,7 +49,7 @@ public class ExerciseViewerActivity extends AppCompatActivity {
         }
 
         RatingBar ratingBar = (RatingBar)findViewById(R.id.exercise_viewer_rating_bar);
-        ratingBar.setNumStars(exercise.getDifficulty());
+        ratingBar.setRating(exercise.getDifficulty());
     }
 
     public void onDeleteExercisePressed(View v) {
