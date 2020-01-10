@@ -118,8 +118,7 @@ public class SessionManagerFragment extends Fragment {
         if((exerciceNbr == scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size()) && (repetitionNbr == maxRepetitions))
         {
             ft.remove(this);
-            ft.hide(activity.getFirstFragment());
-            ft.show(activity.getFirstFragment());
+            ft.remove(activity.getFirstFragment());
             ft.commitNow();
             fragments.remove(this);
             mutex = false;
