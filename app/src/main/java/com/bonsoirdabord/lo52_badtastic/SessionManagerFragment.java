@@ -54,7 +54,7 @@ public class SessionManagerFragment extends Fragment {
         Exercise exercise = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getExercise();
         maxRepetitions = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getReps();
         ((TextView)view.findViewById(R.id.textView)).setText(getString(R.string.grp_nbr) + index);
-        ((TextView)view.findViewById(R.id.textView7)).setText(getString(R.string.exercise_nbr) + exerciceNbr);
+        ((TextView)view.findViewById(R.id.textView7)).setText(getString(R.string.exercise_nbr) + exerciceNbr +"/" + scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size());
         ((TextView)view.findViewById(R.id.textView6)).setText(getString(R.string.exercise_name) + exercise.getName());
         ((TextView)view.findViewById(R.id.textView4)).setText(getString(R.string.exercise_rep) + repetitionNbr +"/" + maxRepetitions);
         ((TextView)view.findViewById(R.id.textView3)).setText(getString(R.string.exercise_desc) + exercise.getDescriptino());
@@ -218,7 +218,7 @@ public class SessionManagerFragment extends Fragment {
             fragments.add(newFragment);
 
         if(fragments.isEmpty())
-            activity.onBackPressed();
+            activity.finish();
 
         mutex = false;
     }
