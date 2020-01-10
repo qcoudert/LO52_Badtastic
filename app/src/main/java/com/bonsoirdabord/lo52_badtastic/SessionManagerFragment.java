@@ -49,7 +49,7 @@ public class SessionManagerFragment extends Fragment {
         view.setBackgroundColor(color);
 
         //getting the current Exercise and setting all informations
-        //for(int i = 5; i<scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size(); i++)  // TODO : REMOVE THOSE 2 LINES AFTER DEBUG
+        //for(int i = 4; i<scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size(); i++)  // TODO : REMOVE THOSE 2 LINES AFTER DEBUG
         //    scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().remove(i);
         Exercise exercise = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getExercise();
         maxRepetitions = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getReps();

@@ -63,6 +63,15 @@ public class SessionGenerator {
         }
     }
 
+    /***
+     * Get the compatibles exercises for a group training, due to :
+     *  1. type of public
+     *  2. theme
+     *  3. difficulty
+     * @param exercises
+     * @param groupTraining
+     * @return
+     */
     private static List<Exercise> getCompatibleExercises(List<Exercise> exercises, GroupTraining groupTraining){
         List<Exercise> compatibles = new ArrayList<>();
         for (Exercise exercise : exercises) {
@@ -81,6 +90,28 @@ public class SessionGenerator {
         }
         return compatibles;
     }
+
+    /***
+     * Get the Compatibility score of an exercise du to :
+     * 1. type of public
+     * 2. theme
+     * 3. difficulty
+     * @param exercise
+     * @param groupTraining
+     * @return the score between 0 and 1;
+     */
+    private static float getExerciseCompatibiltyScore(Exercise exercise, GroupTraining groupTraining){
+        if(groupTraining.getPublicTarget() == 1 && exercise.getPublicType() == 2
+                || groupTraining.getPublicTarget() == 2 && exercise.getPublicType() == 1)
+            return 0;
+
+        float score = 0;
+
+
+        return score;
+    }
+
+
 
     private static float exp(float x) {
         return (float) Math.exp((double) x);
