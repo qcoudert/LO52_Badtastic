@@ -24,6 +24,8 @@
     <string name="create_session_name">Nom de la session</string>
     <string name="create_session_duration">Durée totale de la séance (en min)</string>
     <string name="create_session_add_group">Ajouter un groupe</string>
+    <string name="create_session_low_cor">Corrélation faible !</string>
+    <string name="create_session_low_cor_desc">La session généré ne peut pas répondre exactement à vos demandes. Il est recommandé d\'ajouter plus d\'exercices pour obtenir un résultat satisfaisant.\nSouhaitez-vous conserver la session ?</string>
 
     <!-- Activité CreateGroupTraining -->
     <string name="create_group_title">Créer un groupe</string>
@@ -35,6 +37,7 @@
     <string name="confirm_util">Confirmer</string>
     <string name="ajouter_util">Ajouter</string>
     <string name="creer_util">Créer</string>
+    <string name="modif_util">Modifier</string>
     <string name="validate_changes">Valider</string>
     <string name="label_date">Date</string>
     <string name="label_hour">Heure</string>
@@ -64,6 +67,11 @@
     <string name="browse_exercise_title">Exercices</string>
     <string name="confirm_exercise_deletion_title">Supprimer un exercice</string>
     <string name="confirm_exercise_deletion_text">Voulez-vous vraiment supprimer l\'exercice « %s » ?</string>
+
+    <!-- Exercise Viewer -->
+    <string name="exercise_viewer_title">Consulter un exercice</string>
+    <string name="exercise_viewer_duration">Durée de l\'exercice: %f</string>
+    <string name="exercise_viewer_public">Type de public: %s</string>
 
     <!-- Session browser -->
     <string name="browse_sessions_title">Sessions</string>

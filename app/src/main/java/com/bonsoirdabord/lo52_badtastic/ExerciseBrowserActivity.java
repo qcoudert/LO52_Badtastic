@@ -67,7 +67,9 @@ public class ExerciseBrowserActivity extends AppCompatActivity {
         exerciseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                //TODO: edit/view exercise
+                Intent i = new Intent(ExerciseBrowserActivity.this, ExerciseViewerActivity.class);
+                i.putExtra(ExerciseViewerActivity.EXERCISE_ID_KEY, exerciseAdapter.getItem(pos).getID());
+                startActivity(i);
             }
         });
 

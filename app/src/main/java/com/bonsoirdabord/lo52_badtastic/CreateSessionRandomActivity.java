@@ -1,5 +1,6 @@
 package com.bonsoirdabord.lo52_badtastic;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CreateSessionRandomActivity extends AppCompatActivity {
@@ -89,8 +91,6 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        startOnCreate = intent.getBooleanExtra(START_ON_CREATE, true);
     }
 
     public void checkButtonAvailability() {
@@ -114,6 +114,23 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
         //Do...
         //sessionToCreate est la session à envoyer
         SessionGenerator.generateExerciseSetForSession(this, sessionToCreate);
+        if(SessionGenerator.computeSessionCorrelationScore(sessionToCreate)<0.66){
+            new AlertDialog.Builder(this).setTitle(R.string.create_session_low_cor)
+                                                 .setMessage(R.string.create_session_low_cor_desc)
+                                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                                     @Override
+                                                     public void onClick(DialogInterface dialog, int which) {
+                                                         SessionUtils.saveSession(CreateSessionRandomActivity.this, sessionToCreate);
+                                                     }
+                                                 })
+                                                 .setNegativeButton(android.R.string.no, null)
+                                                 .setIcon(R.drawable.ic_warning_black_24dp)
+                                                 .show();
+        }
+        else {
+            SessionUtils.saveSession(this, sessionToCreate);
+        }
+
         int savedSessId = SessionUtils.saveSession(this, sessionToCreate).getId();
         //temp
 
