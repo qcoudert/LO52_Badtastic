@@ -64,7 +64,6 @@ public class SessionActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
-                        //TODO : implement save before leaving
                     }
 
                 })

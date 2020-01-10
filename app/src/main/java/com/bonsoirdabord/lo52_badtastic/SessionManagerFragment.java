@@ -217,6 +217,9 @@ public class SessionManagerFragment extends Fragment {
         if(newFragment != null)
             fragments.add(newFragment);
 
+        if(fragments.isEmpty())
+            activity.onBackPressed();
+
         mutex = false;
     }
 }
