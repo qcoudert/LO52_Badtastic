@@ -202,7 +202,7 @@ public class AddExerciseActivity extends AppCompatActivity {
      * @return Vrai si le bouton peut être pressé, faux sinon
      */
     public boolean checkButtonAvailability() {
-        if(exerciseToAdd.getName()==null || exerciseToAdd.getDescriptino()==null || exerciseToAdd.getDifficulty()==-1 || exerciseToAdd.getDuration()<0 || exerciseToAdd.getThemes().isEmpty()){
+        if(exerciseToAdd.getName()==null || exerciseToAdd.getDescriptino()==null || exerciseToAdd.getDifficulty()<1 || exerciseToAdd.getDuration()<0 || exerciseToAdd.getThemes().isEmpty()){
             addButton.setEnabled(false);
             return false;
         }
