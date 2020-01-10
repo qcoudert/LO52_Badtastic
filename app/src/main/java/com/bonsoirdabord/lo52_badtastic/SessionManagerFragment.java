@@ -75,7 +75,7 @@ public class SessionManagerFragment extends Fragment {
         chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-                if(chronometer.getText().equals("00:00")){
+                if((chronometer.getBase() - SystemClock.elapsedRealtime()) <= 0.0){
                     setClickReaction();
                     chronometer.setOnChronometerTickListener(null);
                 }
