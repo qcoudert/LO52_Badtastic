@@ -4,27 +4,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RadioGroup;
+import android.widget.ListView;
 
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.Session;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
+import com.bonsoirdabord.lo52_badtastic.listViewAdapters.BasicDeleteAdapter;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CreateSessionRandomActivity extends AppCompatActivity {
 
+    public static int GROUP_REQUEST_CODE = 420;
+    public static int RESULT_OK = 0;
+    public static int RESULT_FAIL = -1;
+
     private Session sessionToCreate;
     private MaterialButton createButton;
-    private GroupTraining groupTraining;
-    private ChipGroup chipGroup;
-    private int currentChipNumber;
+    private ListView listView;
+    private BasicDeleteAdapter basicDeleteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +36,10 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_session_random);
 
         sessionToCreate = new Session();
-        groupTraining = new GroupTraining();
-        sessionToCreate.getGroupTrainings().add(groupTraining); //TODO:ENLEVER APRES FINITION
         createButton = (MaterialButton)findViewById(R.id.valid_button_create_sess);
-
-        chipGroup = (ChipGroup)findViewById(R.id.chip_group_create_sess);
-        currentChipNumber = 0;
+        listView = (ListView)findViewById(R.id.group_list_create_sess);
+        basicDeleteAdapter = new BasicDeleteAdapter(sessionToCreate.getGroupTrainings(),new ArrayList<>(), getApplicationContext());
+        listView.setAdapter(basicDeleteAdapter);
 
         TextInputEditText tiet = (TextInputEditText)findViewById(R.id.edit_text_name_create_sess);
         tiet.addTextChangedListener(new TextWatcher() {
@@ -82,87 +84,10 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
             }
         });
 
-        tiet = (TextInputEditText)findViewById(R.id.edit_text_difficulte_create_sess);
-        tiet.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    groupTraining.setDifficulty(Integer.valueOf(s.toString()));
-                }
-                catch(NumberFormatException e){
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        tiet = (TextInputEditText)findViewById(R.id.edit_text_tags_create_sess);
-        tiet.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                for (int i=0; i<s.length(); i++) {
-                    if(s.charAt(i)==' ' && i-1>0 && currentChipNumber<5){
-                        LayoutInflater layoutInflater = LayoutInflater.from(CreateSessionRandomActivity.this);
-                        Chip chip = (Chip)layoutInflater.inflate(R.layout.chip_layout, null);
-                        chip.setText(s.subSequence(0,i));
-                        Theme tag = new Theme(s.subSequence(0,i).toString());
-                        groupTraining.getThemes().add(tag);
-                        s.delete(0,i);                                                              //On efface le texte responsable du chip
-                        chipGroup.addView(chip);
-                        currentChipNumber++;
-
-                        //Callback appelé lors de la fermeture d'un chip
-                        chip.setOnCloseIconClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                groupTraining.getThemes().remove(tag);
-                                chipGroup.removeView(v);
-                                currentChipNumber--;
-                                checkButtonAvailability();
-                            }
-                        });
-
-                        checkButtonAvailability();
-                    }
-                }
-            }
-        });
-
-        RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radio_group_public_add_ex);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.radio_button_debutant_add_ex)
-                    groupTraining.setPublicTarget(0);
-                else if(checkedId == R.id.radio_button_confirme_add_ex)
-                    groupTraining.setPublicTarget(1);
-                else
-                    groupTraining.setPublicTarget(2);
-            }
-        });
     }
 
     public boolean checkButtonAvailability() {
-        if(sessionToCreate.getName()==null || sessionToCreate.getGroupTrainings().isEmpty()) {
+        if(sessionToCreate.getName()==null || sessionToCreate.getGroupTrainings().isEmpty() || sessionToCreate.getSessionTime()<0) {
             createButton.setEnabled(false);
             return false;
         }
@@ -172,12 +97,11 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
         }
     }
 
-    public void onCreatePressed(View v ) {
+    public void onCreatePressed(View v) {
 
         //Do...
         //sessionToCreate est la session à envoyer
         SessionGenerator.generateExerciseSetForSession(this, sessionToCreate);
-
         //temp
 
         Intent i = new Intent(this.getApplicationContext(), SessionActivity.class);
@@ -188,5 +112,34 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
 
         finish();
+    }
+
+    public void onAddGroup(View v) {
+        Intent i = new Intent(this.getApplicationContext(), CreatGroupTrainingActivity.class);
+        startActivityForResult(i, GROUP_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == GROUP_REQUEST_CODE && resultCode == RESULT_OK){
+            GroupTraining groupTraining = new GroupTraining();
+
+            groupTraining.setDifficulty(data.getIntExtra("diff", 1));
+
+            ArrayList<String> thStrings = data.getStringArrayListExtra("themes");
+            for(String str : thStrings) {
+                groupTraining.getThemes().add(new Theme(str));
+            }
+
+            groupTraining.setPublicTarget(data.getIntExtra("public", 2));
+
+            sessionToCreate.getGroupTrainings().add(groupTraining);
+            String s = "Difficulté: " + groupTraining.getDifficulty() + " Thèmes: " + groupTraining.getThemes().get(0).getName() + "..";
+            basicDeleteAdapter.add(s);
+            basicDeleteAdapter.notifyDataSetChanged();
+            checkButtonAvailability();
+        }
     }
 }

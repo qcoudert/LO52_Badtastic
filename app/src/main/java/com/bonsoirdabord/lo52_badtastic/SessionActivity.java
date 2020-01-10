@@ -28,7 +28,6 @@ public class SessionActivity extends AppCompatActivity {
     private boolean isChronoPaused;
     private long timeChrono;
     private int id;
-    private SessionManagerFragment firstFragment; // necessary to fix the ghost Fragment bug
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +39,6 @@ public class SessionActivity extends AppCompatActivity {
         fragments = new ArrayList<>();
         chronos = new ArrayList<>();
         timeChrono = 0;
-
-        firstFragment = createNewFragment(colors[0], 1);
 
         try {
             for (int i = 1; i < getScheduledSession(id).getSession().getGroupTrainings().size(); i++)
@@ -67,7 +64,6 @@ public class SessionActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
-                        //TODO : implement save before leaving
                     }
 
                 })
@@ -100,10 +96,6 @@ public class SessionActivity extends AppCompatActivity {
         return fragments;
     }
 
-    public SessionManagerFragment getFirstFragment() {
-        return firstFragment;
-    }
-
     private SessionManagerFragment createNewFragment(int color, int index){
         SessionManagerFragment sessionManagerFragment = null;
         try {
@@ -121,8 +113,9 @@ public class SessionActivity extends AppCompatActivity {
 
     private ScheduledSession getScheduledSession(int id) throws Exception{
         if(id == -1)
-            throw new Exception("Extra wasn't properly got i did a six month internship from san fransisco");
+            throw new Exception("Extra wasn't properly got");
 
-        return ExerciseDatabase.getInstance(this).scheduledSessionDAO().getScheduledSession(id);
+        return ExerciseDatabase.getInstance(this).scheduledSessionDAO()
+                .getScheduledSessionCompleted(id, ExerciseDatabase.getInstance(this));
     }
 }

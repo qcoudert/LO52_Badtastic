@@ -181,7 +181,13 @@ public class AddExerciseActivity extends AppCompatActivity {
      * @param v - View du bouton pressé.
      */
     public void onAddPressed(View v) {
-        ExerciseDatabase.getInstance(getApplicationContext()).exerciseDAO().insert(exerciseToAdd);
+        exerciseToAdd.setId((int) ExerciseDatabase.getInstance(getApplicationContext()).exerciseDAO().insert(exerciseToAdd));
+        for (Theme theme : exerciseToAdd.getThemes()) {
+            theme.setId((int) ExerciseDatabase.getInstance(getApplicationContext())
+                    .themeDAO()
+                    .insertThemeByExercise(theme, exerciseToAdd, ExerciseDatabase
+                            .getInstance(getApplicationContext())));
+        }
         finish();
     }
 
@@ -190,7 +196,7 @@ public class AddExerciseActivity extends AppCompatActivity {
      * @return Vrai si le bouton peut être pressé, faux sinon
      */
     public boolean checkButtonAvailability() {
-        if(exerciseToAdd.getName()==null || exerciseToAdd.getDescriptino()==null || exerciseToAdd.getDifficulty()==-1 || exerciseToAdd.getDuration()<0 || exerciseToAdd.getThemes().isEmpty()){
+        if(exerciseToAdd.getName()==null || exerciseToAdd.getDescriptino()==null || exerciseToAdd.getDifficulty()<1 || exerciseToAdd.getDuration()<0 || exerciseToAdd.getThemes().isEmpty()){
             addButton.setEnabled(false);
             return false;
         }

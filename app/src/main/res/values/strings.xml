@@ -23,6 +23,7 @@
     <string name="create_session_title">Créer une session aléatoirement</string>
     <string name="create_session_name">Nom de la session</string>
     <string name="create_session_duration">Durée totale de la séance (en min)</string>
+    <string name="create_session_add_group">Ajouter un groupe</string>
 
     <!-- Activité CreateGroupTraining -->
     <string name="create_group_title">Créer un groupe</string>
@@ -34,11 +35,12 @@
     <string name="confirm_util">Confirmer</string>
     <string name="ajouter_util">Ajouter</string>
     <string name="creer_util">Créer</string>
-    <string name="placeholder">Placeholder</string>
     <string name="validate_changes">Valider</string>
     <string name="label_date">Date</string>
     <string name="label_hour">Heure</string>
     <string name="very_long_placeholder">Placeholder that is extremely long so that we can make sure that ellipsize actually works</string>
+    <string name="placeholder_util">Placeholder</string>
+    <string name="suppr_util">Supprimer</string>
 
     <!-- Levels -->
     <string name="type_public_debutant">Débutant</string>

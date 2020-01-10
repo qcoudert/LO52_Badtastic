@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchSessionActivity(View v) {
         Intent i = new Intent(getApplicationContext(), SessionActivity.class);
+        i.putExtra("scheduled_session", 1);
         startActivity(i);
     }
 

@@ -1,5 +1,7 @@
 package com.bonsoirdabord.lo52_badtastic.dao;
 
+import com.bonsoirdabord.lo52_badtastic.beans.Exercise;
+import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
 import com.bonsoirdabord.lo52_badtastic.beans.ThemeLink;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
@@ -49,5 +51,17 @@ public abstract class ThemeDAO {
             themes.add(themeLink.themeId);
         }
         return getThemes(themes);
+    }
+
+    public long insertThemeByExercise(Theme theme, Exercise exercise, ExerciseDatabase database){
+        theme.setId((int)insert(theme));
+        ThemeLink themeLink = new ThemeLink(theme.getId(), true, exercise.getId(), null);
+        return database.themeLinkDAO().insert(themeLink);
+    }
+
+    public long insertThemeByGroupTraining(Theme theme, GroupTraining groupTraining, ExerciseDatabase database){
+        theme.setId((int)insert(theme));
+        ThemeLink themeLink = new ThemeLink(theme.getId(), false, null, groupTraining.getId());
+        return database.themeLinkDAO().insert(themeLink);
     }
 }

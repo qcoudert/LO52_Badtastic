@@ -24,12 +24,12 @@ public class ThemeLink {
     public boolean isExerciseLink;
 
     @ColumnInfo(name = "exercise_id")
-    public int exerciseId;
+    public Integer exerciseId;
 
     @ColumnInfo(name = "group_training_id")
-    public int groupTrainingId;
+    public Integer groupTrainingId;
 
-    public ThemeLink(int themeId, boolean isExerciseLink, int exerciseId, int groupTrainingId) {
+    public ThemeLink(int themeId, boolean isExerciseLink, Integer exerciseId, Integer groupTrainingId) {
         this.themeId = themeId;
         this.isExerciseLink = isExerciseLink;
         this.exerciseId = exerciseId;
@@ -44,27 +44,27 @@ public class ThemeLink {
         isExerciseLink = exerciseLink;
     }
 
-    public int getExerciseId() {
+    public Integer getExerciseId() {
         return exerciseId;
     }
 
-    public void setExerciseId(int exerciseId) {
+    public void setExerciseId(Integer exerciseId) {
         this.exerciseId = exerciseId;
     }
 
-    public int getGroupTrainingId() {
+    public Integer getGroupTrainingId() {
         return groupTrainingId;
     }
 
-    public void setGroupTrainingId(int groupTrainingId) {
+    public void setGroupTrainingId(Integer groupTrainingId) {
         this.groupTrainingId = groupTrainingId;
     }
 
-    public int getThemeId() {
+    public Integer getThemeId() {
         return themeId;
     }
 
-    public void setThemeId(int themeId) {
+    public void setThemeId(Integer themeId) {
         this.themeId = themeId;
     }
 }

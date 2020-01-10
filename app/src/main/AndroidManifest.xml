@@ -19,7 +19,7 @@
 
         <activity
             android:name=".ExerciseBrowserActivity"
-            android:label="@string/placeholder" />
+            android:label="@string/placeholder_util" />
 
         <activity android:name=".CreatGroupTrainingActivity"></activity>
         <activity android:name=".CreateSessionRandomActivity" />

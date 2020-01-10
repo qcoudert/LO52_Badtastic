@@ -1,10 +1,12 @@
 package com.bonsoirdabord.lo52_badtastic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
@@ -13,6 +15,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -82,10 +86,23 @@ public class CreatGroupTrainingActivity extends AppCompatActivity {
                 checkButtonAvailability();
             }
         });
+
+        RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radio_group_public_add_ex);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.radio_button_debutant_add_ex)
+                    groupTraining.setPublicTarget(0);
+                else if(checkedId == R.id.radio_button_confirme_add_ex)
+                    groupTraining.setPublicTarget(1);
+                else
+                    groupTraining.setPublicTarget(2);
+            }
+        });
     }
 
     private boolean checkButtonAvailability() {
-        if(groupTraining.getDifficulty()<0 || groupTraining.getThemes().isEmpty()) {
+        if(groupTraining.getDifficulty()<1 || groupTraining.getThemes().isEmpty()) {
             createButton.setEnabled(false);
             return false;
         }
@@ -93,5 +110,18 @@ public class CreatGroupTrainingActivity extends AppCompatActivity {
             createButton.setEnabled(true);
             return true;
         }
+    }
+
+    public void onCreateGroupPressed(View v) {
+        Intent i = new Intent();
+        i.putExtra("diff", groupTraining.getDifficulty());
+        ArrayList<String> tmp = new ArrayList<>();
+        for(Theme t : groupTraining.getThemes()) {
+            tmp.add(t.getName());
+        }
+        i.putStringArrayListExtra("themes", tmp);
+        i.putExtra("public", groupTraining.getPublicTarget());
+        setResult(CreateSessionRandomActivity.RESULT_OK, i);
+        finish();
     }
 }

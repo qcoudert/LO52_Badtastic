@@ -33,6 +33,7 @@ public abstract class SessionDAO {
         Session session = getSession(id);
         List<GroupTraining> groupTrainings = database.groupTrainingDAO()
                 .getGroupTrainingForSessionCompleted(session.getId(), database);
+        session.setGroupTrainings(groupTrainings);
         return session;
     }
 
