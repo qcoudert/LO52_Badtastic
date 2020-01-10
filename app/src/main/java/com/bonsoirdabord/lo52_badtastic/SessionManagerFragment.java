@@ -196,6 +196,7 @@ public class SessionManagerFragment extends Fragment {
             //We put back the third fragment
             if(lastFrag != null) {
                 FragmentTransaction ft3 = supportFragmentManager.beginTransaction();
+                ft3.remove(lastFrag);
                 ft3.add(R.id.linlayout1, lastFrag);
                 lastFrag.stopChrono(); // done here to lose the minimum amount of time
                 ft3.commitNow();
