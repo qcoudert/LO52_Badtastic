@@ -37,6 +37,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
     private Session sessionToCreate;
     private MaterialButton createButton;
+    private MaterialButton addButton;
     private ListView listView;
     private BasicDeleteAdapter basicDeleteAdapter;
 
@@ -47,6 +48,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
         sessionToCreate = new Session();
         createButton = (MaterialButton)findViewById(R.id.valid_button_create_sess);
+        addButton = (MaterialButton)findViewById(R.id.add_group_button_create_sess);
         listView = (ListView)findViewById(R.id.group_list_create_sess);
         basicDeleteAdapter = new BasicDeleteAdapter(sessionToCreate.getGroupTrainings(),new ArrayList<>(), getApplicationContext());
         listView.setAdapter(basicDeleteAdapter);
@@ -96,14 +98,19 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
 
     }
 
-    public boolean checkButtonAvailability() {
+    public void checkButtonAvailability() {
         if(sessionToCreate.getName()==null || sessionToCreate.getGroupTrainings().isEmpty() || sessionToCreate.getSessionTime()<0) {
             createButton.setEnabled(false);
-            return false;
         }
         else {
             createButton.setEnabled(true);
-            return true;
+        }
+
+        if(sessionToCreate.getGroupTrainings().size()<3){
+            addButton.setEnabled(true);
+        }
+        else {
+            addButton.setEnabled(false);
         }
     }
 
@@ -133,7 +140,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == GROUP_REQUEST_CODE && resultCode == RESULT_OK){
+        if(requestCode == GROUP_REQUEST_CODE && resultCode == RESULT_OK && sessionToCreate.getGroupTrainings().size()<4){
             GroupTraining groupTraining = new GroupTraining();
 
             groupTraining.setDifficulty(data.getIntExtra("diff", 1));
