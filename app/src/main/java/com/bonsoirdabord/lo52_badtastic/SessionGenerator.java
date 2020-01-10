@@ -95,8 +95,8 @@ public class SessionGenerator {
      * @return the score between 0 and 1;
      */
     private static float getExerciseCompatibilityScore(Exercise exercise, GroupTraining groupTraining){
-        if(groupTraining.getPublicTarget() == 1 && exercise.getPublicType() == 2
-                || groupTraining.getPublicTarget() == 2 && exercise.getPublicType() == 1)
+        if(groupTraining.getPublicTarget() == 0 && exercise.getPublicType() == 1
+                || groupTraining.getPublicTarget() == 1 && exercise.getPublicType() == 0)
             return 0;
 
         float score = 0;
