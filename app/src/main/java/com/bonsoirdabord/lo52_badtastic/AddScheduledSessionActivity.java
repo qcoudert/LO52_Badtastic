@@ -18,12 +18,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
+import com.bonsoirdabord.lo52_badtastic.beans.Session;
 import com.bonsoirdabord.lo52_badtastic.dao.ScheduledSessionDAO;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -44,6 +46,7 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
     private EditText dateField;
     private EditText timeField;
     private ArrayAdapter<String> sessionAutoComplete;
+    private AutoCompleteTextView sessionSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +82,17 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
         TextView title = findViewById(R.id.session_label);
         dateField = findViewById(R.id.date_field);
         timeField = findViewById(R.id.time_field);
-        AutoCompleteTextView sessionSelect = findViewById(R.id.session_field);
+        sessionSelect = findViewById(R.id.session_field);
 
         title.setText(String.format(Locale.getDefault(), getString(R.string.session_number_format), sessionNumber + 1));
         dateField.setText(dateFormat.format(sessionDate.getTime()));
         timeField.setText(TIME_SEP.format(sessionTime));
 
         sessionAutoComplete = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        sessionAutoComplete.addAll("Ceci", "Est", "Un", "Test");
+
+        List<Session> sessions = ExerciseDatabase.getInstance(this).sessionDAO().getAllSession();
+        for(Session s : sessions)
+            sessionAutoComplete.add(s.getName());
 
         sessionSelect.setAdapter(sessionAutoComplete);
         sessionSelect.setThreshold(1);
@@ -108,6 +114,17 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        if(sid >= 0) {
+            ScheduledSession ss = ExerciseDatabase.getInstance(this).scheduledSessionDAO().getScheduledSession(sid);
+
+            if(ss != null) {
+                Session s = ExerciseDatabase.getInstance(this).sessionDAO().getSession(ss.getSessionId());
+
+                if(s != null)
+                    sessionSelect.setText(s.getName());
+            }
+        }
     }
 
     @Override
@@ -129,8 +146,21 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
                 if(time < 0)
                     throw new ParseException("Could not parse time", 0);
 
+                List<Session> sessions = ExerciseDatabase.getInstance(this).sessionDAO().getAllSession();
+                int sessId = -1;
+
+                for(Session s : sessions) {
+                    if(s.getName().equalsIgnoreCase(sessionSelect.getText().toString())) {
+                        sessId = s.getId();
+                        break;
+                    }
+                }
+
+                if(sessId < 0)
+                    return true;
+
                 ScheduledSessionDAO ssdao = ExerciseDatabase.getInstance(this).scheduledSessionDAO();
-                ScheduledSession bean = new ScheduledSession(sqlDate, time, 0); //TODO: Fill in the good ID
+                ScheduledSession bean = new ScheduledSession(sqlDate, time, sessId);
 
                 if(sid < 0)
                     ssdao.insert(bean);
@@ -191,7 +221,7 @@ public class AddScheduledSessionActivity extends AppCompatActivity {
         tpd.show();
     }
 
-    private boolean validateSession(AutoCompleteTextView sessionSelect) {
+    private boolean validateSession(AutoCompleteTextView actv) {
         String val = sessionSelect.getText().toString();
         boolean wrong = true;
 

@@ -33,6 +33,9 @@ public class CalendarActivity extends AppCompatActivity {
     private static final int EDIT_SCHEDSESS_REQUEST = 0xBEEF;
 
     public static Date parseSQLDate(String date) throws ParseException {
+        if(date.isEmpty())
+            return new Date();
+
         return SQL_DATE_FORMAT.parse(date);
     }
 
