@@ -10,11 +10,10 @@ import com.bonsoirdabord.lo52_badtastic.beans.Theme;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class SessionGenerator {
     private static final int EXERCISE_TIME_MAX = 120;
@@ -36,11 +35,11 @@ public class SessionGenerator {
         List<Exercise> exercises = ExerciseDatabase.getInstance(context).exerciseDAO()
                 .getAllExerciseCompleted(ExerciseDatabase.getInstance(context));
 
+
         for (GroupTraining groupTraining : session.getGroupTrainings()) {
             List<Exercise> compatibleExercises = getCompatibleExercises(exercises, groupTraining);
             int time = 0; // time of the actual session
             int i = 0;
-            Collections.shuffle(compatibleExercises, new Random());
             while(time < session.getSessionTime() && i < compatibleExercises.size()){
                 Exercise exercise = compatibleExercises.get(i);
                 int reps = 0;
@@ -64,35 +63,30 @@ public class SessionGenerator {
     }
 
     /***
-     * Get the compatibles exercises for a group training, due to :
-     *  1. type of public
-     *  2. theme
-     *  3. difficulty
+     * Get the list of exercise sorted by compatibility for a group training
      * @param exercises
      * @param groupTraining
-     * @return
+     * @return A
      */
     private static List<Exercise> getCompatibleExercises(List<Exercise> exercises, GroupTraining groupTraining){
         List<Exercise> compatibles = new ArrayList<>();
-        for (Exercise exercise : exercises) {
-            boolean test = false;
-            for (final Theme theme : groupTraining.getThemes()) {
-                for (Theme exerciseTheme : exercise.getThemes()) {
-                    if(theme.equals(exerciseTheme)){
-                        compatibles.add(exercise);
-                        test = true;
-                        break;
-                    }
-                }
-                if (test)
-                    break;
+        compatibles.addAll(exercises);
+        exercises.sort(new Comparator<Exercise>() {
+            @Override
+            public int compare(Exercise e1, Exercise e2) {
+                if(getExerciseCompatibilityScore(e1, groupTraining) > getExerciseCompatibilityScore(e2, groupTraining))
+                    return -1;
+                else if(getExerciseCompatibilityScore(e1, groupTraining) < getExerciseCompatibilityScore(e2, groupTraining))
+                    return 1;
+                else
+                    return 0;
             }
-        }
+        });
         return compatibles;
     }
 
     /***
-     * Get the Compatibility score of an exercise du to :
+     * Get the Compatibility score of an exercise due to :
      * 1. type of public
      * 2. theme
      * 3. difficulty
@@ -100,13 +94,24 @@ public class SessionGenerator {
      * @param groupTraining
      * @return the score between 0 and 1;
      */
-    private static float getExerciseCompatibiltyScore(Exercise exercise, GroupTraining groupTraining){
+    private static float getExerciseCompatibilityScore(Exercise exercise, GroupTraining groupTraining){
         if(groupTraining.getPublicTarget() == 1 && exercise.getPublicType() == 2
                 || groupTraining.getPublicTarget() == 2 && exercise.getPublicType() == 1)
             return 0;
 
         float score = 0;
+        float theme_score = 0.9f;
+        for (Theme exerciseTheme : exercise.getThemes()) {
+            for (final Theme theme : groupTraining.getThemes()) {
+                if(theme.equals(exerciseTheme)){
+                    score = score + theme_score / groupTraining.getThemes().size();
+                    break;
+                }
+            }
+        }
 
+        float difficulty_score = 1-0.9f;
+        score = score + difficulty_score / (Math.abs(exercise.getDifficulty() - groupTraining.getDifficulty())+1);
 
         return score;
     }
