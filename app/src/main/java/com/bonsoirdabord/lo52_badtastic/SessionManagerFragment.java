@@ -18,8 +18,8 @@ import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
 import java.util.ArrayList;
 
 public class SessionManagerFragment extends Fragment {
-    private static boolean isFirstProcessing = false;
-    private boolean mutex = false;
+    private static boolean isFirstProcessing = false; // mutex for avoiding double adding of the third fragment while first and second fragments are changed
+    private boolean mutex = false; // mutex for avoiding a click on the button and a time-out at the same time
     private int color;
     private int index;
     private int exerciceNbr;
@@ -54,7 +54,7 @@ public class SessionManagerFragment extends Fragment {
         //    scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().remove(i);
         Exercise exercise = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getExercise();
         maxRepetitions = scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().get(exerciceNbr - 1).getReps();
-        ((TextView)view.findViewById(R.id.textView)).setText(getString(R.string.grp_nbr) + index);
+        ((TextView)view.findViewById(R.id.textView)).setText(getString(R.string.grp_nbr) + " " + index);
         ((TextView)view.findViewById(R.id.textView7)).setText(getString(R.string.exercise_nbr) + " " + exerciceNbr +"/" + scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size());
         ((TextView)view.findViewById(R.id.textView6)).setText(getString(R.string.exercise_name) + exercise.getName());
         ((TextView)view.findViewById(R.id.textView4)).setText(getString(R.string.exercise_rep) + repetitionNbr +"/" + maxRepetitions);
