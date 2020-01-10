@@ -116,12 +116,13 @@ public class SessionManagerFragment extends Fragment {
         FragmentTransaction ft = supportFragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
+        // this group has finished, we delete the fragment
         if((exerciceNbr == scheduledSession.getSession().getGroupTrainings().get(index - 1).getExerciseSets().size()) && (repetitionNbr == maxRepetitions))
         {
             ft.remove(this);
             ft.commitNow();
         }
-        else if(index == 1) {
+        else if(index == 1) { // We must remove the second and the third fragment (if they exist...) and put them back
             SessionManagerFragment secondFrag = null;
             SessionManagerFragment lastFrag = null;
 
@@ -170,8 +171,7 @@ public class SessionManagerFragment extends Fragment {
                 lastFrag.startChrono();
             }
         }
-        else if(index == 2) {
-            // We remove the last fragment for adding the new second fragment before
+        else if(index == 2) {// We remove the last fragment and add it back
             SessionManagerFragment lastFrag = null;
             for(SessionManagerFragment fragment : fragments)
                 if(fragment.index == 3)
