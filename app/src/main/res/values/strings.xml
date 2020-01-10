@@ -36,6 +36,7 @@
     <string name="ajouter_util">Ajouter</string>
     <string name="creer_util">Créer</string>
     <string name="placeholder_util">Placeholder</string>
+    <string name="suppr_util">Supprimer</string>
 
     <string name="type_public_debutant">Débutant</string>
     <string name="type_public_confirme">Confirmé</string>

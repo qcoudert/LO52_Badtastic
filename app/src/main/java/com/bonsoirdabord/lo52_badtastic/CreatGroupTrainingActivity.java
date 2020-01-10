@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -17,6 +18,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreatGroupTrainingActivity extends AppCompatActivity {
 
@@ -110,10 +114,14 @@ public class CreatGroupTrainingActivity extends AppCompatActivity {
         }
     }
 
-    private void onCreatePressed(View v) {
+    public void onCreateGroupPressed(View v) {
         Intent i = new Intent();
         i.putExtra("diff", groupTraining.getDifficulty());
-        i.putExtra("themes", groupTraining.getThemes().toArray());
+        ArrayList<String> tmp = new ArrayList<>();
+        for(Theme t : groupTraining.getThemes()) {
+            tmp.add(t.getName());
+        }
+        i.putStringArrayListExtra("themes", tmp);
         i.putExtra("public", groupTraining.getPublicTarget());
         setResult(CreateSessionRandomActivity.RESULT_OK, i);
         finish();

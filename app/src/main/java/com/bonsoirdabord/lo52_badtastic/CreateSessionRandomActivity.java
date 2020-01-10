@@ -7,15 +7,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.bonsoirdabord.lo52_badtastic.beans.GroupTraining;
 import com.bonsoirdabord.lo52_badtastic.beans.Session;
 import com.bonsoirdabord.lo52_badtastic.beans.Theme;
+import com.bonsoirdabord.lo52_badtastic.listViewAdapters.BasicDeleteAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -34,8 +38,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
     private Session sessionToCreate;
     private MaterialButton createButton;
     private ListView listView;
-    private ArrayAdapter<String> arrayAdapter;
-    private String[] groups;
+    private BasicDeleteAdapter basicDeleteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +48,8 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
         sessionToCreate = new Session();
         createButton = (MaterialButton)findViewById(R.id.valid_button_create_sess);
         listView = (ListView)findViewById(R.id.group_list_create_sess);
-        groups = new String[0];
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.basic_list_member_layout, R.id.member_tv_list_view, groups);
-        listView.setAdapter(arrayAdapter);
+        basicDeleteAdapter = new BasicDeleteAdapter(sessionToCreate.getGroupTrainings(),new ArrayList<>(), getApplicationContext());
+        listView.setAdapter(basicDeleteAdapter);
 
         TextInputEditText tiet = (TextInputEditText)findViewById(R.id.edit_text_name_create_sess);
         tiet.addTextChangedListener(new TextWatcher() {
@@ -91,10 +93,11 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
                 checkButtonAvailability();
             }
         });
+
     }
 
     public boolean checkButtonAvailability() {
-        if(sessionToCreate.getName()==null || sessionToCreate.getNumberOfGroup() == 0 || sessionToCreate.getGroupTrainings().isEmpty()) {
+        if(sessionToCreate.getName()==null || sessionToCreate.getNumberOfGroup() == 0 || sessionToCreate.getSessionTime()<0) {
             createButton.setEnabled(false);
             return false;
         }
@@ -134,17 +137,21 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
         if(requestCode == GROUP_REQUEST_CODE && resultCode == RESULT_OK){
             GroupTraining groupTraining = new GroupTraining();
 
-            List l = new ArrayList<>();
-            l.addAll(Arrays.asList(data.getStringArrayExtra("themes")));
-            groupTraining.setThemes(l);
-
             groupTraining.setDifficulty(data.getIntExtra("diff", 1));
+
+            ArrayList<String> thStrings = data.getStringArrayListExtra("themes");
+            for(String str : thStrings) {
+                groupTraining.getThemes().add(new Theme(str));
+            }
 
             groupTraining.setPublicTarget(data.getIntExtra("public", 2));
 
             sessionToCreate.getGroupTrainings().add(groupTraining);
-            arrayAdapter.add("Difficulté: " + groupTraining.getDifficulty() + " Thèmes: " + groupTraining.getThemes().get(0).getName() + "..");
-            arrayAdapter.notifyDataSetChanged();
+            String s = "Difficulté: " + groupTraining.getDifficulty() + " Thèmes: " + groupTraining.getThemes().get(0).getName() + "..";
+            basicDeleteAdapter.add(s);
+            sessionToCreate.setNumberOfGroup(basicDeleteAdapter.getCount());
+            basicDeleteAdapter.notifyDataSetChanged();
+            checkButtonAvailability();
         }
     }
 }
