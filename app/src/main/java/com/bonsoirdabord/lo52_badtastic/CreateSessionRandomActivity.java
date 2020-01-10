@@ -97,7 +97,7 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
     }
 
     public boolean checkButtonAvailability() {
-        if(sessionToCreate.getName()==null || sessionToCreate.getNumberOfGroup() == 0 || sessionToCreate.getSessionTime()<0) {
+        if(sessionToCreate.getName()==null || sessionToCreate.getGroupTrainings().isEmpty() || sessionToCreate.getSessionTime()<0) {
             createButton.setEnabled(false);
             return false;
         }
@@ -149,7 +149,6 @@ public class CreateSessionRandomActivity extends AppCompatActivity {
             sessionToCreate.getGroupTrainings().add(groupTraining);
             String s = "Difficulté: " + groupTraining.getDifficulty() + " Thèmes: " + groupTraining.getThemes().get(0).getName() + "..";
             basicDeleteAdapter.add(s);
-            sessionToCreate.setNumberOfGroup(basicDeleteAdapter.getCount());
             basicDeleteAdapter.notifyDataSetChanged();
             checkButtonAvailability();
         }
