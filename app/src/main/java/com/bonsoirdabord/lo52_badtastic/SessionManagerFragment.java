@@ -169,21 +169,6 @@ public class SessionManagerFragment extends Fragment {
                 ft5.commitNow();
                 lastFrag.startChrono();
             }
-            /*
-               The replace method has a bug : "the ghost Fragment", the first green fragment stay behind the new ones.
-               The only way to hide it from the user during transition is to do a hide & show. (remove, only hide etc...
-               will result on a deleting of the whole fragment. We could as well use the same method as for index 2 (remove the 2 other
-               fragments, add the new green one and put back the 2 others, but it would have a bigger computational cost
-
-            if(repetitionNbr < maxRepetitions)
-                newFragment = new SessionManagerFragment(activity.green, 1, exerciceNbr, repetitionNbr + 1, activity, scheduledSession);
-            else
-                newFragment = new SessionManagerFragment(activity.green, 1, exerciceNbr + 1, 1, activity, scheduledSession);
-
-            ft.replace(R.id.fragment, newFragment);
-            ft.hide(activity.getFirstFragment());
-            ft.show(activity.getFirstFragment());
-            ft.commitNow();*/
         }
         else if(index == 2) {
             // We remove the last fragment for adding the new second fragment before

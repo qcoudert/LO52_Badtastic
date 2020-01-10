@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bonsoirdabord.lo52_badtastic.beans.ScheduledSession;
-import com.bonsoirdabord.lo52_badtastic.dao.ScheduledSessionDAO_Impl;
 import com.bonsoirdabord.lo52_badtastic.database.ExerciseDatabase;
 
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ public class SessionActivity extends AppCompatActivity {
     private boolean isChronoPaused;
     private long timeChrono;
     private int id;
-    private SessionManagerFragment firstFragment; // necessary to fix the ghost Fragment bug
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +39,6 @@ public class SessionActivity extends AppCompatActivity {
         fragments = new ArrayList<>();
         chronos = new ArrayList<>();
         timeChrono = 0;
-
-        firstFragment = createNewFragment(colors[0], 1);
 
         try {
             for (int i = 1; i < getScheduledSession(id).getSession().getGroupTrainings().size(); i++)
@@ -99,10 +95,6 @@ public class SessionActivity extends AppCompatActivity {
 
     public ArrayList<SessionManagerFragment> getFragments() {
         return fragments;
-    }
-
-    public SessionManagerFragment getFirstFragment() {
-        return firstFragment;
     }
 
     private SessionManagerFragment createNewFragment(int color, int index){
